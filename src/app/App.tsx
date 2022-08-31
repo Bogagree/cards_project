@@ -5,7 +5,7 @@ import {RoutesPage} from "../common/Components/RoutesPages/RoutesPages";
 function App() {
     return (
         <div className="App">
-            <h1>cards project</h1>
+            <h1>Cards project</h1>
             <RoutesPage/>
         </div>
     );

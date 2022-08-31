@@ -28,11 +28,12 @@ export const RoutesPage = () => {
             </ul>
 
             <Routes>
+                {/*побаловаться и порадоваться ракете*/}
                 <Route path={'/'} element={<Navigate to={'*'}/>}/>
                 {/*<Route path={'/'} element={<Navigate to={Path.LOGIN}/>}/>*/}
-                {routes.map(({path, component}) => (
+                {routes.map(({path, component}, index) => (
                     // что поставить в качестве key, пока поставил index, но думаю можно что-то еще?
-                    <Route key={path} path={path} element={component}/>
+                    <Route key={index} path={path} element={component}/>
                 ))}
             </Routes>
 
