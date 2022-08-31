@@ -24,17 +24,17 @@ export const RoutesPage = () => {
     return (
         <div>
             <ul className={style.header}>
-                {routes.map( ({path}) => <li><NavLink to={path} children={path}></NavLink></li>) }
+                {routes.map( ({path}) => <li><NavLink to={path} children={path} className={style.link}></NavLink></li>) }
             </ul>
 
             <Routes>
-                <Route path={'/'} element={<Navigate to={Path.LOGIN}/>}/>
+                <Route path={'/'} element={<Navigate to={'*'}/>}/>
+                {/*<Route path={'/'} element={<Navigate to={Path.LOGIN}/>}/>*/}
                 {routes.map(({path, component}) => (
                     // что поставить в качестве key, пока поставил index, но думаю можно что-то еще?
                     <Route key={path} path={path} element={component}/>
                 ))}
             </Routes>
-
 
         </div>
     )
