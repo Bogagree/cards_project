@@ -1,12 +1,12 @@
 import React from 'react';
 import {Navigate, NavLink, Route, Routes} from "react-router-dom";
-import {Path} from "../../enum/path";
-import {Login} from "../../../features/auth/Login/Login";
-import {Registration} from "../../../features/auth/Registration/Registration";
-import {Profile} from "../../../features/auth/Profile/Profile";
-import {ForgotPassword} from "../../../features/forgot/ForgotPassword/ForgotPassword";
-import {NewPassword} from "../../../features/forgot/NewPassword/NewPassword";
-import {CheckEmail} from "../../../features/forgot/CheckEmail/CheckEmail";
+import {Path} from "../enum/path";
+import {Login} from "../../features/auth/Login/Login";
+import {Registration} from "../../features/auth/Registration/Registration";
+import {Profile} from "../../features/auth/Profile/Profile";
+import {ForgotPassword} from "../../features/forgot/ForgotPassword/ForgotPassword";
+import {NewPassword} from "../../features/forgot/NewPassword/NewPassword";
+import {CheckEmail} from "../../features/forgot/CheckEmail/CheckEmail";
 import {Error404} from "../Error404/Error404";
 import style from './RoutesPages.module.css'
 

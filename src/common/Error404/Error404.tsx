@@ -1,7 +1,7 @@
 import React from 'react';
 import style from './Error404.module.css'
 import {NavLink} from "react-router-dom";
-import {Path} from "../../enum/path";
+import {Path} from "../enum/path";
 
 export const Error404 = () => {
     return (
