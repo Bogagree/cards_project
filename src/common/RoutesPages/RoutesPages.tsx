@@ -1,5 +1,5 @@
-import React from 'react';
-import {Navigate, NavLink, Route, Routes} from "react-router-dom";
+import React, {useEffect} from 'react';
+import {Navigate, NavLink, Route, Routes, useNavigate} from "react-router-dom";
 import {Path} from "../enum/path";
 import {Login} from "../../features/auth/Login/Login";
 import {Registration} from "../../features/auth/Registration/Registration";
@@ -9,8 +9,14 @@ import {NewPassword} from "../../features/forgot/NewPassword/NewPassword";
 import {CheckEmail} from "../../features/forgot/CheckEmail/CheckEmail";
 import {Error404} from "../Error404/Error404";
 import style from './RoutesPages.module.css'
+import {useSelector} from "react-redux";
+import {AppStateType} from "../../app/store";
 
 export const RoutesPage = () => {
+
+  const navigate = useNavigate()
+  const isLogged = useSelector((state: AppStateType) => state.auth.isLogged)
+
     const routes = [
         {path: Path.LOGIN, component: <Login/>},
         {path: Path.REGISTRATION, component: <Registration/>},
@@ -20,6 +26,12 @@ export const RoutesPage = () => {
         {path: Path.CHECK_EMAIL, component: <CheckEmail/>},
         {path: '*', component: <Error404/>},
     ]
+
+  useEffect(() => {
+    if(!isLogged){
+      navigate(Path.LOGIN)
+    }
+  },[])
 
     return (
         <div>
