@@ -1,0 +1,95 @@
+.wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.form {
+  width: 413px;
+  /*height: 552px;*/
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 35px 5%;
+  box-sizing: border-box;
+
+
+  box-shadow: 0 1px 4px 1px rgb(0 0 0 / 25%);
+}
+.title {
+
+  margin: 0 0 41px 0;
+}
+.form input {
+
+  margin-bottom: 24px;
+
+  border: none;
+  border-bottom: 2px solid rgb(0 0 0 / 20%);
+
+  font-weight: 500;
+  font-size: 16px;
+
+}
+form input:focus-visible {
+  outline: none;
+}
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
+}
+.inputWrapper label{
+  font-weight: 400;
+  font-size: 13px;
+  opacity: .5;
+}
+.passwordIcon {
+  position: absolute;
+  right: 10px;
+  bottom: 27px;
+
+  cursor: pointer;
+}
+.checkboxWrapper {
+  align-self: flex-start;
+}
+.checkboxWrapper label {
+  font-weight: 500;
+  font-size: 14px;
+}
+.form button {
+  width: 100%;
+  height: 36px;
+
+  margin-bottom: 30px;
+  border-radius: 18px;
+  border: none;
+  background: #366EFF;
+  color: white;
+  box-shadow: 0 4px 18px 0 rgba(54, 110, 255, 0.35);
+  font-weight: 500;
+  font-size: 16px;
+}
+.linkForgotPassword {
+  font-weight: 500;
+  font-size: 14px;
+  color: #000000;
+  text-decoration: none;
+  align-self: flex-end;
+  margin-bottom: 70px;
+}
+.text {
+  margin-bottom: 15px;
+  font-weight: 600;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.5);
+  /*opacity: .5;*/
+}
+.linkSignUp {
+  font-weight: 600;
+  font-size: 16px;
+  color: #366EFF;
+}
