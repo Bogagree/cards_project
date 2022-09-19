@@ -1,0 +1,55 @@
+:root {
+    --color-light: white;
+    --color-dark: #366EFF;
+    --color-signal: #D9D9D9;
+    --color-background: var(--color-dark);
+    --color-accent: var(--color-signal);
+    --size-bezel: .6rem;
+}
+
+.default {
+    width: 113px;
+    height: 36px;
+    color: var(--color-light);
+    background: var(--color-background);
+    border: none;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    box-shadow: 0 4px 18px rgba(54, 110, 255, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    border-radius: 30px;
+}
+
+
+.blue {
+    background: #366EFF;
+    color: var(--color-signal);
+}
+
+button:disabled {
+    border: 1px solid #999999;
+    background-color: #cccccc;
+    color: #666666;
+}
+
+
+@keyframes blink {
+    0% {
+        left: -130%;
+    }
+    100% {
+        left: 130%;
+    }
+}
+
+
+button:hover:enabled {
+    cursor: pointer;
+    opacity: 0.75;
+}
+
+.default:active {
+    color: #fff;
+}
+
