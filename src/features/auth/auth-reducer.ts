@@ -1,3 +1,6 @@
+import {Dispatch} from "redux";
+import {authAPI} from "../../api/cards-api";
+
 type ActionType = {
     type: string
 }
@@ -10,3 +13,13 @@ export const authReducer = (state = initialState, action: ActionType) => {
             return state
     }
 };
+
+
+export const loginTC = () => async (dispatch: Dispatch) => {
+    try {
+        const res = await authAPI.login()
+        console.log(res.data)
+    } catch (e) {
+
+        }
+    }
