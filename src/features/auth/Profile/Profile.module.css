@@ -1,0 +1,65 @@
+.profileContainer {
+    background-color: #F9F9FA;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.profileBox {
+    background-color: #FFFFFF;
+    width: 413px;
+    height: 408px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: -1px -1px 2px rgba(0, 0, 0, 0.1), 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.profileTitle {
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 26.82px;
+    margin-top: 27px;
+}
+
+.profileAvatar {
+    width: 96px;
+    height: 96px;
+    margin-top: 30px;
+}
+
+.profileNameBox {
+    display: flex;
+    align-items: end;
+    justify-content: center;
+}
+
+.profileName {
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 24px;
+    margin-top: 17px;
+}
+
+.profilePencil {
+ margin-left: 5px;
+}
+
+.profileEmail {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 24px;
+    color: #000000;
+    margin-top: 14px;
+}
+
+.profileBox button {
+    background-color: #FCFCFC;
+    color: #000000;
+    letter-spacing: 0.5px;
+    width: 127px;
+    height: 36px;
+    box-shadow: 0px 2px 10px rgba(109, 109, 109, 0.25), inset 0px 1px 0px rgba(255, 255, 255, 0.3);
+    margin-top: 17px;
+}
