@@ -51,4 +51,3 @@ button:hover:enabled {
 .default:active {
     animation: blink 3s linear infinite;
 }
-

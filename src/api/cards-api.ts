@@ -16,6 +16,9 @@ export const authAPI = {
         return instance.post<UserType>('/auth/me', {})
             .then(res => res.data)
     },
+    updateUser(name: string) {
+        return instance.put('/auth/me', {name: name})
+    },
     logout() {
         return instance.delete('auth/me', {})
     },

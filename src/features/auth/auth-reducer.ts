@@ -22,6 +22,10 @@ const initialState: initialStateType = {
 export const authReducer = (state = initialState, action: AuthActionType) => {
   switch (action.type) {
     case "LOGIN": return {...state, ...action.userData, isLogged: true}
+    case 'CHANGE-USER':
+      return {
+        ...state, user:{...state.user, name: action.name}
+      }
     default:
       return state
   }
@@ -55,6 +59,15 @@ export const logoutTC = () => async (dispatch: Dispatch) => {
   }
 }
 
+export const loginTC = () => async (dispatch: Dispatch) => {
+    try {
+        const res = await authAPI.login()
+        console.log(res.data)
+    } catch (e) {
+
+        }
+    }
+
 export const registrationTC = (data: RegistrationDataType) => async (dispatch: Dispatch) => {
   try {
     const res = await authAPI.registration(data)
@@ -79,6 +92,31 @@ export const sendPingDataTC = () => async (dispatch: Dispatch) => {
     console.log(res2.data)
   } catch (e) {
 
+  }
+}
+
+export const logoutTC = () => async (dispatch: Dispatch<ActionsType>) => {
+  try {
+    const res = await authAPI.logout()
+    console.log(res)
+  } catch (e: any) {
+    const error = e.response
+      ? e.response.data.error
+      : (e.message + ', more details in the console');
+  }
+}
+
+export const changeUserAC = (name: string) => ({
+  type: 'CHANGE-USER', name} as const)
+
+export const changeUserTC = (name: string) => async (dispatch: Dispatch<ActionsType>) => {
+  try {
+    const res = await authAPI.updateUser(name)
+    dispatch(changeUserAC(res.data.updatedUser.name))
+  } catch (e: any) {
+    const error = e.response
+      ? e.response.data.error
+      : (e.message + ', more details in the console');
   }
 }
 
