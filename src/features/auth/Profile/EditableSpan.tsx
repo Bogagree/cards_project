@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useState } from 'react';
 import style from './Profile.module.css';
 import pencil from '../../../assets/icons/pencil.svg';
-import {CommonButton} from '../../../common/c2-SuperButton/CommonButton';
+import {CommonButton} from "../../../common/Button/CommonButton";
 
 type EditableSpanPropsType = {
     value: string
