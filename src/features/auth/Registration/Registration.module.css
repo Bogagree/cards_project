@@ -16,7 +16,7 @@
     align-items: center;
     justify-content: space-around;
     width: 347px;
-    height: 288px;
+    min-height: 288px;
 }
 
 .form {

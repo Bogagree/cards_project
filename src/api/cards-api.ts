@@ -1,4 +1,5 @@
 import axios from 'axios'
+import {RegistrationDataType} from "../features/auth/auth-reducer";
 
 export const instance = axios.create({
     // baseURL: process.env.REACT_APP_BACK_URL || 'http://localhost:7542/2.0/' ,
@@ -8,15 +9,25 @@ export const instance = axios.create({
 
 export const authAPI = {
     login() {
-        return instance.post('auth/login',{
+        return instance.post('auth/login', {
             email: "nya-admin@nya.nya",
             password: "1qazxcvBG",
-            rememberMe: false })
+            rememberMe: false
+        })
     },
     me() {
         return ''
     },
     logout() {
-        return ''
+        return instance.delete('auth/me', {})
+    },
+    registration(data: RegistrationDataType) {
+        return instance.post('auth/register', { ...data})
+    },
+    ping() {
+        return instance.get('/ping')
+    },
+    sendPingData() {
+        return instance.post('/ping',{frontTime: Date.now()})
     }
 }

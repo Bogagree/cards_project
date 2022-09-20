@@ -1,0 +1,11 @@
+.preloader {
+    position: absolute;
+    border-radius: 50%;
+    bottom: 15%;
+    animation: loader 5s infinite;
+}
+
+@keyframes loader {
+    from { top: 150px; left: 0; }
+    to   { top: 150px; left: 100%; }
+}

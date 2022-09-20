@@ -1,37 +1,26 @@
 import React from 'react';
-import {CommonInputText} from "../../../common/InputText/CommonInputText";
-import {CommonButton} from "../../../common/Button/CommonButton";
 import style from "./Registration.module.css"
-import {NavLink} from "react-router-dom";
+import {sendPingDataTC} from "../auth-reducer";
+import {useAppDispatch} from "../../../app/store";
+import {RegistrationForm} from "./RegistrationForm/RegistrationForm";
+
 
 export const Registration = () => {
 
+    const dispatch = useAppDispatch()
+
+    const pingOrLogOut = () => {
+        dispatch(sendPingDataTC())
+    };
 
     return (
-        <div className={style.container}>
-         <h2>Sign up</h2>
-            <form action="" className={style.formContainer}>
-                <CommonInputText
-                    id={"email"}
-                    inputName={'Email'}
-                    type={"text"}
-                />
-                <CommonInputText
-                    inputName={"Password"}
-                    id={"password"}
-                    type={"text"}
-                />
-                <CommonInputText
-                    inputName={"Confirm password"}
-                    id={"confirmPassword"}
-                    type={"text"}
-                />
-                <CommonButton children={'Sign Up'} />
+        <>
+            <div className={style.container}>
+                <h2>Sign up</h2>
+                <button onClick={pingOrLogOut}>ping</button>
 
-            </form>
-            <NavLink to={'/'}>Already have an account?</NavLink>
-            <NavLink to={'/'}>Sign in</NavLink>
-
-        </div>
+                <RegistrationForm/>
+            </div>
+        </>
     );
 };
