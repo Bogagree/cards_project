@@ -2,9 +2,18 @@ import React from 'react';
 import style from './Profile.module.css'
 import avatar from '../../../assets/img/avatar.png';
 import pencil from '../../../assets/icons/pencil.svg';
-import {CommonButton} from '../../../common/c2-SuperButton/CommonButton';
+import {CommonButton} from "../../../common/Button/CommonButton";
+import {logoutTC} from "../auth-reducer";
+import {useAppDispatch} from "../../../app/store";
+
 
 export const Profile = () => {
+    const dispatch = useAppDispatch()
+
+    const onClickHandler = () => {
+        dispatch(logoutTC())
+    }
+
     return (
         <div className={style.profileContainer}>
             <div className={style.profileBox}>
@@ -15,7 +24,7 @@ export const Profile = () => {
                     <img className={style.profilePencil} src={pencil} alt="pencil"/>
                 </div>
                 <div className={style.profileEmail}>j&johnson@gmail.com</div>
-                <CommonButton children={'Log out'}/>
+                <CommonButton children={'Log out'} onClick={onClickHandler}/>
             </div>
         </div>
     );
