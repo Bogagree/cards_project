@@ -4,6 +4,7 @@ import {AppActionType, appReducer} from './app-reducer'
 import { authReducer} from "../features/auth/auth-reducer";
 import {forgotReducer} from "../features/forgot/forgot-reducer";
 import {useDispatch} from "react-redux";
+import {TypedUseSelectorHook, useSelector} from 'react-redux';
 
 declare global {
     interface Window {
@@ -21,8 +22,9 @@ const reducers = combineReducers({
 
 export type AppStateType = ReturnType<typeof reducers>
 
-export const useAppDispatch = () => useDispatch<ThunkDispatch<AppStateType,unknown,AnyAction> & AppDispatch>()
-export type AppDispatch = typeof store.dispatch
+export const useAppDispatch = () => useDispatch<ThunkDispatch<AppStateType,unknown,AnyAction> & AppDispatchType>()
+export type AppDispatchType = typeof store.dispatch
+export const useAppSelector: TypedUseSelectorHook<AppStateType> = useSelector
 
 export type ActionsType = AppActionType
 

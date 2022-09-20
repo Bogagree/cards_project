@@ -1,21 +1,36 @@
 import React from 'react';
 import style from './Profile.module.css'
 import avatar from '../../../assets/img/avatar.png';
-import pencil from '../../../assets/icons/pencil.svg';
 import {CommonButton} from '../../../common/c2-SuperButton/CommonButton';
+import {EditableSpan} from './EditableSpan';
+import {useAppDispatch, useAppSelector} from '../../../app/store';
+import {changeUserTC, logoutTC} from '../auth-reducer';
+import {useNavigate} from 'react-router-dom';
 
 export const Profile = () => {
+
+    const user = useAppSelector(state => state.auth.user)
+    const dispatch = useAppDispatch()
+    const navigate = useNavigate();
+
+    const changeUser = (name: string) => {
+        const thunk = changeUserTC(name)
+        dispatch(thunk)
+    }
+
+    const logOutHandler = () => {
+        dispatch(logoutTC())
+        navigate('/login');
+    }
+
     return (
         <div className={style.profileContainer}>
             <div className={style.profileBox}>
                 <p className={style.profileTitle}>Personal Information</p>
                 <img className={style.profileAvatar} src={avatar} alt="avatar"/>
-                <div className={style.profileNameBox}>
-                    <div className={style.profileName}>Ivan</div>
-                    <img className={style.profilePencil} src={pencil} alt="pencil"/>
-                </div>
-                <div className={style.profileEmail}>j&johnson@gmail.com</div>
-                <CommonButton children={'Log out'}/>
+                <EditableSpan value={user.name} onChange={changeUser}/>
+                <div className={style.profileEmail}>{user.email}</div>
+                <CommonButton onClick={logOutHandler} children={'Log out'}/>
             </div>
         </div>
     );
