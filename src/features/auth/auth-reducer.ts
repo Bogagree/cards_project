@@ -1,6 +1,7 @@
 import {Dispatch} from "redux";
 import {authAPI, UserType} from "../../api/cards-api";
 import {ActionsType, AppThunkType} from "../../app/store";
+import {setAppStatusAC} from "../../app/app-reducer";
 
 const initialState: initialStateType = {
   isLogged: false,
@@ -41,11 +42,14 @@ export const changeUserAC = (name: string) => ({
 } as const)
 
 export const loginTC = (email: string, password: string, rememberMe: boolean): AppThunkType => async dispatch => {
+  dispatch(setAppStatusAC('loading'))
   try {
     const res = await authAPI.login(email, password, rememberMe)
     dispatch(loginAC(res))
   } catch (error: any) {
     alert('LOGIN : ' + error.response.data.error)
+  }finally {
+    dispatch(setAppStatusAC('succeeded'))
   }
 }
 export const authMeTC = (): AppThunkType => async dispatch => {

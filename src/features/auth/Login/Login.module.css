@@ -50,11 +50,17 @@ form input:focus-visible {
 
 .checkboxWrapper {
   align-self: flex-start;
+  margin-bottom: 25px;
 }
-
+.checkboxWrapper input {
+  margin-bottom: 0;
+}
 .checkboxWrapper label {
   font-weight: 500;
   font-size: 14px;
+}
+.checkboxWrapper span {
+  margin-top: 5px;
 }
 
 .form button {
