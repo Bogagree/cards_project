@@ -71,7 +71,9 @@ export const Login = () => {
             checked={formik.values.rememberMe}
             onChange={formik.handleChange}
           />
+
           <label htmlFor="rememberMe">rememberMe</label>
+
         </div>
 
         <Link to={Path.FORGOT_PASSWORD} className={styles.linkForgotPassword}>Forgot Password?</Link>

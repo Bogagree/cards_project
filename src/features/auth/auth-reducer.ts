@@ -1,11 +1,6 @@
+import { Dispatch } from "redux";
 import {authAPI, UserType} from "../../api/cards-api";
 import {AppThunkType} from "../../app/store";
-
-export type AuthActionType = ReturnType<typeof loginAC>
-
-type initialStateType = {
-  isLogged: boolean
-} & UserType
 
 const initialState: initialStateType = {
   isLogged: false,
@@ -51,15 +46,47 @@ export const authMeTC = (): AppThunkType => async dispatch => {
   }
 }
 
-export const sendPingDataTC = () => async (dispatch: Dispatch) => {
-    try {
-        const res2 = await authAPI.sendPingData()
-        console.log(res2.data)
-    } catch (e) {
+export const logoutTC = () => async (dispatch: Dispatch) => {
+  try {
+    const res = await authAPI.logout()
+    console.log(res)
+  } catch (e) {
 
-    }
+  }
 }
 
+export const registrationTC = (data: RegistrationDataType) => async (dispatch: Dispatch) => {
+  try {
+    const res = await authAPI.registration(data)
+    console.log(res)
+  } catch (e) {
+
+  }
+}
+
+export const pingTC = () => async (dispatch: Dispatch) => {
+  try {
+    const res = await authAPI.ping()
+    authAPI.sendPingData()
+  } catch (e) {
+
+  }
+}
+
+export const sendPingDataTC = () => async (dispatch: Dispatch) => {
+  try {
+    const res2 = await authAPI.sendPingData()
+    console.log(res2.data)
+  } catch (e) {
+
+  }
+}
+
+export type AuthActionType = ReturnType<typeof loginAC>
+
+type initialStateType = {
+  isLogged: boolean
+} & UserType
 
 export type RegistrationDataType = {
     email: string

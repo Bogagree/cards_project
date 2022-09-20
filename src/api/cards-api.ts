@@ -17,13 +17,6 @@ export const authAPI = {
             .then(res => res.data)
     },
     logout() {
-        return ''
-    },
-    authMe() {
-        return instance.post<UserType>('/auth/me', {})
-            .then(res => res.data)
-    },
-    logout() {
         return instance.delete('auth/me', {})
     },
     registration(data: RegistrationDataType) {

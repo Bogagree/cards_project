@@ -49,9 +49,6 @@ export const RegistrationForm = () => {
         },
 
         onSubmit: values => {
-            console.log(values)
-            console.log(formik.errors)
-            console.log(formik.errors.confirmPassword)
             dispatch(registrationTC(values))
             // formik.resetForm()
         },
