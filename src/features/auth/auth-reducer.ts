@@ -1,63 +1,52 @@
-import {Dispatch} from "redux";
-import {authAPI} from "../../api/cards-api";
+import {authAPI, UserType} from "../../api/cards-api";
+import {AppThunkType} from "../../app/store";
 
-type ActionType = {
-    name: string;
-    type: string
+export type AuthActionType = ReturnType<typeof loginAC>
+
+type initialStateType = {
+  isLogged: boolean
+} & UserType
+
+const initialState: initialStateType = {
+  isLogged: false,
+  avatar: '',
+  created: '',
+  email: '',
+  isAdmin: false,
+  name: '',
+  publicCardPacksCount: 0,
+  rememberMe: false,
+  token: '',
+  tokenDeathTime: 0,
+  updated: '',
+  verified: false,
+  __v: 0,
+  _id: '',
 }
 
-const initialState = {
-
-}
-
-export const authReducer = (state = initialState, action: ActionType) => {
-    switch (action.type) {
-        case 'CHANGE-USER':
-            return {
-                ...state, user:{...state.user, name: action.name}
-            }
-        default:
-            return state
-    }
+export const authReducer = (state = initialState, action: AuthActionType) => {
+  switch (action.type) {
+    case "LOGIN": return {...state, ...action.userData, isLogged: true}
+    default:
+      return state
+  }
 };
 
+const loginAC = (userData: UserType) => ({type: 'LOGIN', userData})
 
-export const loginTC = () => async (dispatch: Dispatch) => {
-    try {
-        const res = await authAPI.login()
-
-    } catch (e) {
-
-        }
-    }
-
-
-
-
-export const changeUserAC = (name: string) => ({
-    type: 'CHANGE-USER', name} as const)
-
-export const changeUserTC = (name: string) => async (dispatch: Dispatch<ActionsType>) => {
-    try {
-        const res = await authAPI.updateUser(name)
-        dispatch(changeUserAC(res.data.updatedUser.name))
-    } catch (e: any) {
-        const error = e.response
-            ? e.response.data.error
-            : (e.message + ', more details in the console');
-    }
+export const loginTC = (email: string, password: string, rememberMe: boolean): AppThunkType => async dispatch => {
+  try {
+    const res = await authAPI.login(email, password, rememberMe)
+    dispatch(loginAC(res))
+  } catch (error: any) {
+    alert('LOGIN : ' + error.response.data.error)
+  }
 }
-
-export const logoutTC = () => async (dispatch: Dispatch<ActionsType>) => {
-    try {
-        const res = await authAPI.logout()
-        console.log(res)
-    } catch (e: any) {
-        const error = e.response
-            ? e.response.data.error
-            : (e.message + ', more details in the console');
-    }
+export const authMeTC = (): AppThunkType => async dispatch => {
+  try {
+    const res = await authAPI.authMe()
+    dispatch(loginAC(res))
+  } catch (error: any) {
+    alert('AUTH_ME : ' + error.response.data.error)
+  }
 }
-
-type ActionsType =
-    | ReturnType<typeof changeUserAC>
