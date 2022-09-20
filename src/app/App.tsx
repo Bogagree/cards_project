@@ -4,13 +4,14 @@ import {RoutesPage} from "../common/RoutesPages/RoutesPages";
 import {Header} from "../Components/Header/Header";
 import {useAppDispatch} from "./store";
 import style from  './App.module.css'
+import {authMeTC} from "../features/auth/auth-reducer";
 
 function App() {
 
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-         // dispatch( loginTC())
+         dispatch(authMeTC())
     }, [])
 
     return (

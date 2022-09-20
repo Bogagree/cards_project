@@ -33,11 +33,20 @@ export const authReducer = (state = initialState, action: AuthActionType) => {
 };
 
 const loginAC = (userData: UserType) => ({type: 'LOGIN', userData})
+
 export const loginTC = (email: string, password: string, rememberMe: boolean): AppThunkType => async dispatch => {
   try {
     const res = await authAPI.login(email, password, rememberMe)
     dispatch(loginAC(res))
-  } catch (e) {
-
+  } catch (error: any) {
+    alert('LOGIN : ' + error.response.data.error)
+  }
+}
+export const authMeTC = (): AppThunkType => async dispatch => {
+  try {
+    const res = await authAPI.authMe()
+    dispatch(loginAC(res))
+  } catch (error: any) {
+    alert('AUTH_ME : ' + error.response.data.error)
   }
 }

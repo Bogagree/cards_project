@@ -11,8 +11,9 @@ export const authAPI = {
     return instance.post<UserType>('auth/login', {email, password, rememberMe})
       .then(res => res.data)
   },
-  me() {
-    return ''
+  authMe() {
+    return instance.post<UserType>('/auth/me', {})
+      .then(res => res.data)
   },
   logout() {
     return ''
