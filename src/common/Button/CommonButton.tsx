@@ -14,6 +14,8 @@ export const CommonButton: React.FC<CommonButtonPropsType> = (
         ...restProps
     }
 ) => {
+
+
     const finalClassName = `${red ? style.blue : style.default} ${className}`
 
     return (

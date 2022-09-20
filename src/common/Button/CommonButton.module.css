@@ -2,7 +2,6 @@
     --color-light: white;
     --color-dark: #366EFF;
     --color-signal: #D9D9D9;
-    --color-background: var(--color-dark);
     --color-accent: var(--color-signal);
     --size-bezel: .6rem;
 }
@@ -11,7 +10,7 @@
     width: 113px;
     height: 36px;
     color: var(--color-light);
-    background: var(--color-background);
+    background: var(--color-dark);
     border: none;
     font-style: normal;
     font-weight: 500;
@@ -25,6 +24,7 @@
 .blue {
     background: #366EFF;
     color: var(--color-signal);
+
 }
 
 button:disabled {
@@ -33,16 +33,15 @@ button:disabled {
     color: #666666;
 }
 
-
 @keyframes blink {
     0% {
         left: -130%;
+        color: black;
     }
     100% {
         left: 130%;
     }
 }
-
 
 button:hover:enabled {
     cursor: pointer;
@@ -50,6 +49,6 @@ button:hover:enabled {
 }
 
 .default:active {
-    color: #fff;
+    animation: blink 3s linear infinite;
 }
 

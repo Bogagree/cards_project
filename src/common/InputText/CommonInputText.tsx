@@ -5,40 +5,41 @@ import style from "./CommonInputText.module.css";
 type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
 
 
-type CommonInputTextPropsType = DefaultInputPropsType & {
+type CommonInputTextPropsType = DefaultInputPropsType & { 
     onChangeText?: (value: string) => void
     onEnter?: () => void
     error?: string
     spanClassName?: string
+    inputName: string
 }
 
 export const CommonInputText: React.FC<CommonInputTextPropsType> = (
     {
-        type,
+        type, 
         onChange, onChangeText,
         onKeyPress, onEnter,
-        error,
+        error, inputName,
         className, spanClassName,
 
         ...restProps
     }
 ) => {
     const onChangeCallback = (e: ChangeEvent<HTMLInputElement> ) => {
-        onChange
-        && onChange(e)
+        onChange 
+        && onChange(e) 
 
         onChangeText && onChangeText(e.currentTarget.value)
     }
     const onKeyPressCallback = (e: KeyboardEvent<HTMLInputElement>) => {
         onKeyPress && onKeyPress(e);
 
-        onEnter
-        && e.key === 'Enter'
-        && onEnter()
+        onEnter 
+        && e.key === 'Enter' 
+        && onEnter() 
     }
 
     const finalSpanClassName = `${style.error} ${spanClassName ? spanClassName : ''}`
-    const finalInputClassName = `${style.input__field} ${error ? style.errorInput : ''} ${className}`
+    const finalInputClassName = `${style.input__field} ${error ? style.errorInput : ''} ${className}` 
 
     return (
         <>
@@ -52,7 +53,7 @@ export const CommonInputText: React.FC<CommonInputTextPropsType> = (
 
                     {...restProps}
                 />
-                <span className={style.input__label}>Input for Samurai way</span>
+                <span className={style.input__label}>{inputName}</span>
 
                 {error && <span className={`${style.form__label} ${finalSpanClassName}`}>{error}</span>}
             </label>

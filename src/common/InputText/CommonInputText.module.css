@@ -1,0 +1,62 @@
+.errorInput {
+    border: 3px solid lime;
+    background: red;
+}
+
+.error {
+    color: red;
+}
+
+:root {
+    --color-light: white;
+    --color-dark: #366EFF;
+    --color-signal: #D9D9D9;
+    --color-text: #2D2E46;
+    color: var(--color-text);
+}
+
+.input {
+    box-sizing: border-box;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.input__label {
+    position: absolute;
+    left: 0.5rem;
+    top: 0;
+    padding: calc(var(--size-bezel) * 0.85) calc(var(--size-bezel) * 0.1);
+    margin: calc(var(--size-bezel) * 0.45 + 5px) calc(var(--size-bezel) * 0.1);
+    transform: translate(0, 0);
+    transform-origin: 0 1px;
+    transition: transform 120ms ease-in;
+    font-weight: bold;
+    line-height: 1.0;
+}
+
+.input__field {
+    display: block;
+    outline: 0 !important;
+    padding: calc(var(--size-bezel)) 0;
+    margin: 0.5rem;
+    background: transparent;
+    border-color: transparent;
+    border-bottom: 1px solid black;
+    width: 347px;
+}
+
+.input__field:focus + .input__label, .input__field:not(:placeholder-shown) + .input__label {
+    transform: translate(0.25rem, -45%) scale(0.7);
+    color: var(--color-dark);
+    background: var(--color-light);
+}
+
+.hidden {
+    display: none;
+}
+
+.input:hover {
+    cursor: pointer;
+}
