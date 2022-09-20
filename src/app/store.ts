@@ -6,12 +6,11 @@ import {forgotReducer} from "../features/forgot/forgot-reducer";
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 
 declare global {
-    interface Window {
-        REDUX_DEVTOOLS_EXTENSION_COMPOSE?: typeof compose;
-    }
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+  }
 }
-
-const composeEnhancers = window.REDUX_DEVTOOLS_EXTENSION_COMPOSE || compose;
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const reducers = combineReducers({
     app: appReducer,
@@ -21,13 +20,14 @@ const reducers = combineReducers({
 
 export type AppStateType = ReturnType<typeof reducers>
 
-export const useAppDispatch = () => useDispatch<ThunkDispatch<AppStateType, unknown, AnyAction> & AppDispatchType>()
+export const useAppDispatch = () => useDispatch<ThunkDispatch<AppStateType,unknown,AnyAction> & AppDispatch>()
 
-export const useAppSelector: TypedUseSelectorHook<AppStateType> = useSelector
+export const useAppSelector: TypedUseSelectorHook<AppStateType>
 
-export type AppDispatchType = typeof store.dispatch
+export type AppDispatch = typeof store.dispatch
 
-export type ActionsType = AppActionType
+
+export type ActionsType = AppActionType | AuthActionType
 
 export type AppThunkType = ThunkAction<void, AppStateType, unknown, ActionsType>
 

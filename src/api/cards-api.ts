@@ -8,26 +8,47 @@ export const instance = axios.create({
 })
 
 export const authAPI = {
-    login() {
-        return instance.post('auth/login', {
-            email: "nya-admin@nya.nya",
-            password: "1qazxcvBG",
-            rememberMe: false
-        })
+    login(email: string, password: string, rememberMe: boolean) {
+        return instance.post<UserType>('auth/login', {email, password, rememberMe})
+            .then(res => res.data)
     },
-    me() {
+    authMe() {
+        return instance.post<UserType>('/auth/me', {})
+            .then(res => res.data)
+    },
+    logout() {
         return ''
+    },
+    authMe() {
+        return instance.post<UserType>('/auth/me', {})
+            .then(res => res.data)
     },
     logout() {
         return instance.delete('auth/me', {})
     },
     registration(data: RegistrationDataType) {
-        return instance.post('auth/register', { ...data})
+        return instance.post('auth/register', {...data})
     },
     ping() {
         return instance.get('/ping')
     },
     sendPingData() {
-        return instance.post('/ping',{frontTime: Date.now()})
+        return instance.post('/ping', {frontTime: Date.now()})
     }
+}
+
+export type UserType = {
+    avatar: string
+    created: string
+    email: string
+    isAdmin: boolean
+    name: string
+    publicCardPacksCount: number
+    rememberMe: boolean
+    token: string
+    tokenDeathTime: number
+    updated: string
+    verified: boolean
+    __v: number
+    _id: string
 }
