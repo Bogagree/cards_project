@@ -4,7 +4,6 @@ import {RoutesPage} from "../common/RoutesPages/RoutesPages";
 import {Header} from "../Components/Header/Header";
 import {useAppDispatch} from "./store";
 import style from './App.module.css'
-import {Preloader} from "../common/Preloader/Preloader";
 
 function App() {
 
@@ -18,7 +17,6 @@ function App() {
         <div className={style.app}>
             <Header isLoggedIn={false}/>
             <h1>Cards project</h1>
-            {/*<Preloader/>*/}
             <RoutesPage/>
         </div>
     );
