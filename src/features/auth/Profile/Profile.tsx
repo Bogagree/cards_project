@@ -1,11 +1,11 @@
 import React from 'react';
 import style from './Profile.module.css'
 import avatar from '../../../assets/img/avatar.png';
-import {CommonButton} from '../../../common/c2-SuperButton/CommonButton';
 import {EditableSpan} from './EditableSpan';
 import {useAppDispatch, useAppSelector} from '../../../app/store';
 import {changeUserTC, logoutTC} from '../auth-reducer';
 import {useNavigate} from 'react-router-dom';
+import {CommonButton} from "../../../common/Button/CommonButton";
 
 export const Profile = () => {
 

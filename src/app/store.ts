@@ -3,8 +3,7 @@ import thunk, {ThunkAction, ThunkDispatch} from 'redux-thunk'
 import {AppActionType, appReducer} from './app-reducer'
 import {AuthActionType, authReducer} from "../features/auth/auth-reducer";
 import {forgotReducer} from "../features/forgot/forgot-reducer";
-import {useDispatch} from "react-redux";
-import {TypedUseSelectorHook, useSelector} from 'react-redux';
+import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 
 declare global {
   interface Window {
@@ -22,11 +21,17 @@ const reducers = combineReducers({
 export type AppStateType = ReturnType<typeof reducers>
 
 export const useAppDispatch = () => useDispatch<ThunkDispatch<AppStateType,unknown,AnyAction> & AppDispatchType>()
-export type AppDispatchType = typeof store.dispatch
+
 export const useAppSelector: TypedUseSelectorHook<AppStateType> = useSelector
+
+export type AppDispatchType = typeof store.dispatch
+
 
 export type ActionsType = AppActionType | AuthActionType
 
 export type AppThunkType = ThunkAction<void, AppStateType, unknown, ActionsType>
 
 export const store = createStore(reducers, composeEnhancers(applyMiddleware(thunk)))
+
+// @ts-ignore
+window.store = store;

@@ -1,7 +1,7 @@
 import React from 'react';
 import incubator from '../../assets/img/Incubator_logo.png'
 import style from '../Header/Header.module.css'
-import {CommonButton} from "../../common/c2-SuperButton/CommonButton";
+import {CommonButton} from "../../common/Button/CommonButton";
 
 
 type HeaderPropsType = {
@@ -16,7 +16,8 @@ export const Header: React.FC<HeaderPropsType> = (props) => {
             <div>
                 {props.isLoggedIn
                     ? ''
-                    : <CommonButton children={'Sign in'}/>              }
+                    : <CommonButton children={'Sign in'}/>
+                }
             </div>
 
         </div>
