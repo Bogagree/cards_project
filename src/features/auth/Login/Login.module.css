@@ -44,7 +44,7 @@ form input:focus-visible {
 .passwordIcon {
   position: absolute;
   right: 10px;
-  bottom: 27px;
+  top: 20px;
   cursor: pointer;
 }
 
