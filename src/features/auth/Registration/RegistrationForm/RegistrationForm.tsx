@@ -50,7 +50,7 @@ export const RegistrationForm = () => {
 
         onSubmit: values => {
             dispatch(registrationTC(values))
-            // formik.resetForm()
+            formik.resetForm()
         },
     })
 

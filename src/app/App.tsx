@@ -2,19 +2,31 @@ import React, {useEffect} from 'react';
 import './App.module.css';
 import {RoutesPage} from "../common/RoutesPages/RoutesPages";
 import {Header} from "../Components/Header/Header";
-import {useAppDispatch} from "./store";
+import {useAppDispatch, useAppSelector} from "./store";
 import style from './App.module.css'
-import {authMeTC} from "../features/auth/auth-reducer";
+import {Preloader} from "../common/Preloader/Preloader";
+import {initializedTC} from "./app-reducer";
 
 export const App = () => {
+
+    const isInitialized = useAppSelector(state => state.app.isInitialized);
+    const isLogged = useAppSelector(state => state.auth.isLogged);
 
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-         dispatch(authMeTC())
-    }, [])
+        if (!isLogged) {
+            dispatch(initializedTC());
+        }
+    }, [isLogged]);
 
-
+    if (!isInitialized) {
+        return (
+            <div>
+                <Preloader />
+            </div>
+        );
+    }
 
 
     return (

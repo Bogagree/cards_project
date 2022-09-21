@@ -20,7 +20,7 @@ export const authAPI = {
         return instance.put('/auth/me', {name: name})
     },
     logout() {
-        return instance.delete('auth/me', {})
+        return instance.delete('auth/me')
     },
     registration(data: RegistrationDataType) {
         return instance.post('auth/register', {...data})
