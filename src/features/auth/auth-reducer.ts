@@ -27,9 +27,9 @@ export const authReducer = (state = initialState, action: AuthActionType) => {
     case "LOGIN":
       return {...state, user: {...action.userData}, isLogged: true}
     case 'CHANGE-USER':
-      return {
-        ...state, user: {...state.user, name: action.name}
-      }
+      return {...state, user: {...state.user, name: action.name}}
+    case 'LOGOUT':
+      return {...state, isLogged: action.isLogged}
     default:
       return state
   }
@@ -40,6 +40,9 @@ const loginAC = (userData: UserType) => ({type: 'LOGIN', userData} as const)
 export const changeUserAC = (name: string) => ({
   type: 'CHANGE-USER', name
 } as const)
+
+const logoutAC = (isLogged: boolean) => ({type: 'LOGOUT', isLogged} as const)
+
 
 export const loginTC = (email: string, password: string, rememberMe: boolean): AppThunkType => async dispatch => {
   dispatch(setAppStatusAC('loading'))
@@ -91,7 +94,7 @@ export const sendPingDataTC = () => async (dispatch: Dispatch) => {
 export const logoutTC = () => async (dispatch: Dispatch<ActionsType>) => {
   try {
     const res = await authAPI.logout()
-    console.log(res)
+    dispatch(logoutAC(false))
   } catch (e: any) {
     const error = e.response
       ? e.response.data.error
@@ -111,7 +114,7 @@ export const changeUserTC = (name: string) => async (dispatch: Dispatch<ActionsT
   }
 }
 
-export type AuthActionType = ReturnType<typeof loginAC> | ReturnType<typeof changeUserAC>
+export type AuthActionType = ReturnType<typeof loginAC> | ReturnType<typeof changeUserAC> | ReturnType<typeof logoutAC>
 
 type initialStateType = {
   isLogged: boolean
