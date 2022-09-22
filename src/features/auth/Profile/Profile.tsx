@@ -7,6 +7,7 @@ import {changeUserTC, logoutTC} from '../auth-reducer';
 import {useNavigate} from 'react-router-dom';
 import {CommonButton} from "../../../common/Button/CommonButton";
 import {Path} from "../../../common/enum/path";
+import {initializedTC} from "../../../app/app-reducer";
 
 export const Profile = () => {
 
@@ -26,11 +27,13 @@ export const Profile = () => {
     }
 
     console.log(isLogged)
+
     useEffect(() => {
         if (!isLogged) {
             navigate(Path.LOGIN)
         }
     }, [isLogged])
+
 
     return (
         <div className={style.profileContainer}>

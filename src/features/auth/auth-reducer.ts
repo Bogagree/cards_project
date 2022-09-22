@@ -1,7 +1,8 @@
 import {Dispatch} from "redux";
 import {authAPI, UserType} from "../../api/cards-api";
-import {ActionsType, AppThunkType} from "../../app/store";
+import {ActionsType, AppDispatchType, AppStateType, AppThunkType} from "../../app/store";
 import {setAppStatusAC} from "../../app/app-reducer";
+import {ThunkDispatch} from "redux-thunk";
 
 const initialState: initialStateType = {
     isLogged: false,
@@ -62,15 +63,16 @@ export const loginTC = (email: string, password: string, rememberMe: boolean): A
 }
 
 
-export const registrationTC = (data: RegistrationDataType) => async (dispatch: Dispatch) => {
+export const registrationTC = (data: RegistrationDataType) => async (dispatch: ThunkDispatch<AppStateType, unknown, ActionsType>) => {
     dispatch(setAppStatusAC('loading'))
     try {
         const res = await authAPI.registration(data)
+        console.log('server response', res)
         dispatch(setIsRegistered(true))
-
+        dispatch(loginTC(data.email, data.password, false))
     } catch (e) {
         console.log(e)
-    }finally {
+    } finally {
         dispatch(setAppStatusAC('succeeded'))
     }
 }
@@ -90,6 +92,7 @@ export const logoutTC = () => async (dispatch: Dispatch<ActionsType>) => {
         const res = await authAPI.logout()
         console.log(res)
         dispatch(setIsLogged(false));
+        dispatch(setIsRegistered(false))
     } catch (e: any) {
         const error = e.response
             ? e.response.data.error

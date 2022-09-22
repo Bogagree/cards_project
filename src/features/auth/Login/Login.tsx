@@ -10,6 +10,7 @@ import iconEye from '../../../assets/icons/iconEye.png'
 import {CommonInputText} from "../../../common/InputText/CommonInputText";
 import {CommonCheckbox} from "../../../common/Checkbox/CommonCheckbox";
 import {Preloader} from "../../../common/Preloader/Preloader";
+import {initializedTC} from "../../../app/app-reducer";
 
 type RegistrationErrorType = {
   email?: string
@@ -31,8 +32,10 @@ export const Login = () => {
 
   const formik = useFormik({
     initialValues: {
-      email: 'nya-admin@nya.nya',
-      password: '1qazxcvBG',
+      // email: 'nya-admin@nya.nya',
+      // password: '1qazxcvBG',
+      email: '',
+      password: '',
       rememberMe: false,
     },
     validate: (values) => {
