@@ -45,12 +45,11 @@ export const CommonInputText: React.FC<CommonInputTextPropsType> = (
         <>
             <label className={style.input}>
                 <input
-                    type={'text'}
+                    type={type}
                     placeholder={" "}
                     onChange={onChangeCallback}
                     onKeyPress={onKeyPressCallback}
                     className={finalInputClassName}
-
                     {...restProps}
                 />
                 <span className={style.input__label}>{inputName}</span>
