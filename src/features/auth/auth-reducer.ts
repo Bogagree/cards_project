@@ -3,6 +3,8 @@ import {authAPI, UserType} from "../../api/cards-api";
 import {ActionsType, AppDispatchType, AppStateType, AppThunkType} from "../../app/store";
 import {setAppStatusAC} from "../../app/app-reducer";
 import {ThunkDispatch} from "redux-thunk";
+import {handleServerAppError, handleServerNetworkError} from "../../common/error-utils";
+import axios from "axios";
 
 const initialState: initialStateType = {
     isLogged: false,
@@ -72,6 +74,10 @@ export const registrationTC = (data: RegistrationDataType) => async (dispatch: T
         dispatch(loginTC(data.email, data.password, false))
     } catch (e) {
         console.log(e)
+        if (axios.isAxiosError(e)) {
+                let err = e.response
+                // handleServerNetworkError(e, dispatch)
+            }
     } finally {
         dispatch(setAppStatusAC('succeeded'))
     }
@@ -127,4 +133,9 @@ type initialStateType = {
 export type RegistrationDataType = {
     email: string
     password: string
+}
+
+export type LogoutResponseType = {
+    info: string
+    error: string;
 }
