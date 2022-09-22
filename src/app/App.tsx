@@ -6,6 +6,7 @@ import {useAppDispatch, useAppSelector} from "./store";
 import style from './App.module.css'
 import {Preloader} from "../common/Preloader/Preloader";
 import {initializedTC} from "./app-reducer";
+import {ErrorSnackbar} from "../common/ErrorSnackbar/ErrorSnackbar";
 
 export const App = () => {
 
@@ -28,11 +29,11 @@ export const App = () => {
         );
     }
 
-
     return (
         <div className={style.app}>
             <Header isLoggedIn={false}/>
             <h1>Cards project</h1>
+            <ErrorSnackbar/>
             <RoutesPage/>
         </div>
     );
