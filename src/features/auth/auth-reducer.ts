@@ -92,6 +92,7 @@ export const sendPingDataTC = () => async (dispatch: Dispatch) => {
 }
 
 export const logoutTC = () => async (dispatch: Dispatch<ActionsType>) => {
+  dispatch(setAppStatusAC('loading'))
   try {
     const res = await authAPI.logout()
     dispatch(logoutAC(false))
@@ -99,11 +100,14 @@ export const logoutTC = () => async (dispatch: Dispatch<ActionsType>) => {
     const error = e.response
       ? e.response.data.error
       : (e.message + ', more details in the console');
+  } finally {
+    dispatch(setAppStatusAC('succeeded'))
   }
 }
 
 
 export const changeUserTC = (name: string) => async (dispatch: Dispatch<ActionsType>) => {
+  dispatch(setAppStatusAC('loading'))
   try {
     const res = await authAPI.updateUser(name)
     dispatch(changeUserAC(res.data.updatedUser.name))
@@ -111,7 +115,9 @@ export const changeUserTC = (name: string) => async (dispatch: Dispatch<ActionsT
     const error = e.response
       ? e.response.data.error
       : (e.message + ', more details in the console');
-  }
+  } finally {
+  dispatch(setAppStatusAC('succeeded'))
+}
 }
 
 export type AuthActionType = ReturnType<typeof loginAC> | ReturnType<typeof changeUserAC> | ReturnType<typeof logoutAC>
