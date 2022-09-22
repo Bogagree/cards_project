@@ -14,7 +14,7 @@ export const authAPI = {
     },
     authMe() {
         return instance.post<UserType>('/auth/me', {})
-            .then(res => res.data)
+            // .then(res => res.data)
     },
     updateUser(name: string) {
         return instance.put('/auth/me', {name: name})

@@ -1,7 +1,9 @@
-import {ActionsType, AppThunkType} from "./store";
+import {ActionsType} from "./store";
 import {authAPI} from "../api/cards-api";
 import {loginAC, setIsLogged} from "../features/auth/auth-reducer";
 import {Dispatch} from "redux";
+import {handleServerAppError} from "../common/error-utils";
+import {AxiosError} from "axios";
 
 const initialState = {
     appStatus: 'idle' as RequestStatusType,
@@ -32,22 +34,25 @@ export const setAppError = (error: Nullable<string>) => ({type: 'APP/SET-ERROR',
 
 
 //thunk
-export const authMeTC = (): AppThunkType => async dispatch => {
-    try {
-        const res = await authAPI.authMe()
-        dispatch(loginAC(res))
-    } catch (error: any) {
-        alert('AUTH_ME : ' + error.response.data.error)
-    }
-}
+// export const authMeTC = (): AppThunkType => async dispatch => {
+//     try {
+//         const res = await authAPI.authMe()
+//         dispatch(loginAC(res))
+//     } catch (error: any) {
+//         alert('AUTH_ME : ' + error.response.data.error)
+//     }
+// }
 
 export const initializedTC = () => async (dispatch: Dispatch<ActionsType>) => {
     try {
         const res = await authAPI.authMe();
-        console.log(res)
-        dispatch(loginAC(res))
-        dispatch(setIsLogged(true));
-        dispatch(setAppInitialized(true));
+        if (res.data) {
+            dispatch(loginAC(res.data))
+            dispatch(setIsLogged(true));
+            dispatch(setAppInitialized(true));
+        }
+    } catch (e) {
+        handleServerAppError(e as AxiosError, dispatch)
     } finally {
         dispatch(setAppInitialized(true));
     }

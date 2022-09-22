@@ -1,10 +1,10 @@
 import {Dispatch} from "redux";
 import {authAPI, UserType} from "../../api/cards-api";
-import {ActionsType, AppDispatchType, AppStateType, AppThunkType} from "../../app/store";
+import {ActionsType, AppStateType, AppThunkType} from "../../app/store";
 import {setAppStatusAC} from "../../app/app-reducer";
 import {ThunkDispatch} from "redux-thunk";
-import {handleServerAppError, handleServerNetworkError} from "../../common/error-utils";
-import axios from "axios";
+import {handleServerAppError} from "../../common/error-utils";
+import {AxiosError} from "axios";
 
 const initialState: initialStateType = {
     isLogged: false,
@@ -57,8 +57,8 @@ export const loginTC = (email: string, password: string, rememberMe: boolean): A
     try {
         const res = await authAPI.login(email, password, rememberMe)
         dispatch(loginAC(res))
-    } catch (error: any) {
-        alert('LOGIN : ' + error.response.data.error)
+    } catch (e) {
+        handleServerAppError(e as AxiosError, dispatch)
     } finally {
         dispatch(setAppStatusAC('succeeded'))
     }
@@ -74,10 +74,7 @@ export const registrationTC = (data: RegistrationDataType) => async (dispatch: T
         dispatch(loginTC(data.email, data.password, false))
     } catch (e) {
         console.log(e)
-        if (axios.isAxiosError(e)) {
-                let err = e.response
-                // handleServerNetworkError(e, dispatch)
-            }
+        handleServerAppError(e as AxiosError, dispatch);
     } finally {
         dispatch(setAppStatusAC('succeeded'))
     }
@@ -99,23 +96,22 @@ export const logoutTC = () => async (dispatch: Dispatch<ActionsType>) => {
         console.log(res)
         dispatch(setIsLogged(false));
         dispatch(setIsRegistered(false))
-    } catch (e: any) {
-        const error = e.response
-            ? e.response.data.error
-            : (e.message + ', more details in the console');
+    } catch (e) {
+        handleServerAppError(e as AxiosError, dispatch);
     } finally {
         dispatch(setAppStatusAC('succeeded'));
     }
 }
 
 export const changeUserTC = (name: string) => async (dispatch: Dispatch<ActionsType>) => {
+    dispatch(setAppStatusAC('loading'))
     try {
         const res = await authAPI.updateUser(name)
         dispatch(changeUserAC(res.data.updatedUser.name))
-    } catch (e: any) {
-        const error = e.response
-            ? e.response.data.error
-            : (e.message + ', more details in the console');
+    } catch (e) {
+        handleServerAppError(e as AxiosError, dispatch);
+    } finally {
+        dispatch(setAppStatusAC('succeeded'))
     }
 }
 

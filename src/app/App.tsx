@@ -11,15 +11,12 @@ import {ErrorSnackbar} from "../common/ErrorSnackbar/ErrorSnackbar";
 export const App = () => {
 
     const isInitialized = useAppSelector(state => state.app.isInitialized);
-    const isLogged = useAppSelector(state => state.auth.isLogged);
 
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        if (!isLogged) {
             dispatch(initializedTC());
-        }
-    }, [isLogged]);
+    }, []);
 
     if (!isInitialized) {
         return (
