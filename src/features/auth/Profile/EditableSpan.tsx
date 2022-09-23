@@ -26,11 +26,11 @@ export const EditableSpan = React.memo(function (props: EditableSpanPropsType) {
     }
 
     return editMode
-        ? <label className={style.inputBox}>
-            <input value={name} onChange={changeName} autoFocus onBlur={activateViewMode}/>
+        ? <div className={style.inputBox}>
+            <input value={name} onChange={changeName} autoFocus/>
             <CommonButton onClick={activateViewMode} children={'SAVE'}/>
-        </label>
-        : <div className={style.profileNameBox} onDoubleClick={activateEditMode}>
+        </div>
+        : <div className={style.profileNameBox} onClick={activateEditMode}>
             <span className={style.profileName}>{props.value}</span>
             <img className={style.profilePencil} src={pencil} alt="pencil" />
         </div>
