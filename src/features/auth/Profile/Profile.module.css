@@ -2,7 +2,7 @@
     background-color: #F9F9FA;
     height: 100vh;
     display: flex;
-    align-items: center;
+    justify-content: center;
 }
 
 .profileBox {
@@ -33,6 +33,7 @@
     display: flex;
     align-items: end;
     justify-content: center;
+    cursor: pointer;
 }
 
 .profileName {
@@ -60,16 +61,14 @@
     letter-spacing: 0.5px;
     width: 127px;
     height: 36px;
-    box-shadow: 0px 2px 10px rgba(109, 109, 109, 0.25), inset 0px 1px 0px rgba(255, 255, 255, 0.3);
+    box-shadow: 0 2px 10px rgba(109, 109, 109, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.3);
     margin-top: 17px;
 }
 
-.profileBox input{
+.profileBox input {
     outline: none;
     margin-top: 17px;
     border: none;
-    width: 347px;
-    border-bottom: 1px solid #000000;
     font-family: 'Montserrat', sans-serif;
     font-weight: 500;
     font-size: 16px;
@@ -78,9 +77,10 @@
 
 .inputBox {
     display: flex;
-    justify-content: center;
+    width: 347px;
+    justify-content: space-between;
     align-items: center;
-    position: relative;
+    border-bottom: 1px solid #000000;
 }
 
 .inputBox button {
@@ -88,10 +88,6 @@
     width: 52px;
     height: 24px;
     border-radius: 2px;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 0;
     font-weight: 400;
     font-size: 12px;
     line-height: 24px;
