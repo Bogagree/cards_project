@@ -1,9 +1,6 @@
-import {ActionsType} from "./store";
+import {AppThunkType} from "./store";
 import {authAPI} from "../api/cards-api";
 import {loginAC, setIsLogged} from "../features/auth/auth-reducer";
-import {Dispatch} from "redux";
-import {handleServerAppError} from "../common/error-utils";
-import {AxiosError} from "axios";
 
 const initialState = {
     appStatus: 'idle' as RequestStatusType,
@@ -16,7 +13,7 @@ export const appReducer = (state: InitialStateType = initialState, action: AppAc
     switch (action.type) {
         case "APP/SET-STATUS":
             return {...state, appStatus: action.status}
-        case 'SET-APP-INITIALIZED':
+        case 'APP/SET-APP-INITIALIZED':
         case 'APP/SET-ERROR':
             return {...state, ...action.payload}
         default:
@@ -27,36 +24,31 @@ export const appReducer = (state: InitialStateType = initialState, action: AppAc
 //actions
 export const setAppStatusAC = (status: RequestStatusType) => ({type: 'APP/SET-STATUS', status} as const)
 export const setAppInitialized = (isInitialized: boolean) => ({
-    type: 'SET-APP-INITIALIZED',
+    type: 'APP/SET-APP-INITIALIZED',
     payload: {isInitialized}
 } as const);
 export const setAppError = (error: Nullable<string>) => ({type: 'APP/SET-ERROR', payload: {error}} as const);
 
 
 //thunk
-// export const authMeTC = (): AppThunkType => async dispatch => {
-//     try {
-//         const res = await authAPI.authMe()
-//         dispatch(loginAC(res))
-//     } catch (error: any) {
-//         alert('AUTH_ME : ' + error.response.data.error)
-//     }
-// }
 
-export const initializedTC = () => async (dispatch: Dispatch<ActionsType>) => {
+export const initializedTC = (): AppThunkType => async dispatch => {
     try {
         const res = await authAPI.authMe();
         if (res.data) {
             dispatch(loginAC(res.data))
             dispatch(setIsLogged(true));
             dispatch(setAppInitialized(true));
+        } else {
+            // handleAppError()
         }
-    } catch (e) {
-        handleServerAppError(e as AxiosError, dispatch)
     } finally {
         dispatch(setAppInitialized(true));
     }
 };
+
+
+//types
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 

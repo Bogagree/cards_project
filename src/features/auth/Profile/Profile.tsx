@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import style from './Profile.module.css'
 import avatar from '../../../assets/img/avatar.png';
 import {EditableSpan} from './EditableSpan';
@@ -27,13 +27,11 @@ export const Profile = () => {
         // navigate(Path.LOGIN)
     }
 
-    console.log(isLogged)
 
-    useEffect(() => {
         if (!isLogged) {
             navigate(Path.LOGIN)
         }
-    }, [isLogged])
+
 
 
     return (

@@ -33,6 +33,14 @@ export const authAPI = {
     }
 }
 
+export const packAPI = {
+
+}
+
+export const cardAPI = {
+
+}
+
 export type UserType = {
     avatar: string
     created: string

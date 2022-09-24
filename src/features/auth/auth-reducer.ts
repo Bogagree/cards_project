@@ -1,10 +1,7 @@
-import {Dispatch} from "redux";
 import {authAPI, UserType} from "../../api/cards-api";
-import {ActionsType, AppStateType, AppThunkType} from "../../app/store";
+import {AppThunkType} from "../../app/store";
 import {setAppStatusAC} from "../../app/app-reducer";
-import {ThunkDispatch} from "redux-thunk";
-import {handleServerAppError} from "../../common/error-utils";
-import {AxiosError} from "axios";
+import {handleServerNetworkError} from "../../common/Error-utils/error-utils";
 
 const initialState: initialStateType = {
     isLogged: false,
@@ -26,15 +23,15 @@ const initialState: initialStateType = {
     }
 }
 
-export const authReducer = (state = initialState, action: AuthActionType) => {
+export const authReducer = (state = initialState, action: AuthActionType): initialStateType => {
     switch (action.type) {
-        case "LOGIN":
+        case "AUTH/LOGIN":
             return {...state, user: {...action.userData}, isLogged: true}
-        case 'SET-IS-LOGGED-IN':
+        case 'AUTH/SET-IS-LOGGED-IN':
             return {...state, ...action.payload};
-        case 'CHANGE-USER':
+        case 'AUTH/CHANGE-USER':
             return {...state, user: {...state.user, name: action.name}}
-        case 'SET-IS-REGISTERED':
+        case 'AUTH/SET-IS-REGISTERED':
             return {...state, ...action.payload};
         default:
             return state
@@ -42,11 +39,11 @@ export const authReducer = (state = initialState, action: AuthActionType) => {
 };
 
 //Actions
-export const loginAC = (userData: UserType) => ({type: 'LOGIN', userData} as const)
-export const setIsLogged = (isLogged: boolean) => ({type: 'SET-IS-LOGGED-IN', payload: {isLogged}} as const);
-export const changeUserAC = (name: string) => ({type: 'CHANGE-USER', name} as const)
+export const loginAC = (userData: UserType) => ({type: 'AUTH/LOGIN', userData} as const)
+export const setIsLogged = (isLogged: boolean) => ({type: 'AUTH/SET-IS-LOGGED-IN', payload: {isLogged}} as const);
+export const changeUserAC = (name: string) => ({type: 'AUTH/CHANGE-USER', name} as const)
 export const setIsRegistered = (isRegistered: boolean) => ({
-    type: 'SET-IS-REGISTERED',
+    type: 'AUTH/SET-IS-REGISTERED',
     payload: {isRegistered}
 } as const);
 
@@ -58,14 +55,14 @@ export const loginTC = (email: string, password: string, rememberMe: boolean): A
         const res = await authAPI.login(email, password, rememberMe)
         dispatch(loginAC(res))
     } catch (e) {
-        handleServerAppError(e as AxiosError, dispatch)
+        handleServerNetworkError(e, dispatch)
     } finally {
         dispatch(setAppStatusAC('succeeded'))
     }
 }
 
 
-export const registrationTC = (data: RegistrationDataType) => async (dispatch: ThunkDispatch<AppStateType, unknown, ActionsType>) => {
+export const registrationTC = (data: RegistrationDataType): AppThunkType => async dispatch => {
     dispatch(setAppStatusAC('loading'))
     try {
         const res = await authAPI.registration(data)
@@ -74,13 +71,13 @@ export const registrationTC = (data: RegistrationDataType) => async (dispatch: T
         dispatch(loginTC(data.email, data.password, false))
     } catch (e) {
         console.log(e)
-        handleServerAppError(e as AxiosError, dispatch);
+        handleServerNetworkError(e, dispatch);
     } finally {
         dispatch(setAppStatusAC('succeeded'))
     }
 }
 
-export const sendPingDataTC = () => async (dispatch: Dispatch) => {
+export const sendPingDataTC = (): AppThunkType => async dispatch => {
     try {
         const res2 = await authAPI.sendPingData()
         console.log(res2.data)
@@ -89,7 +86,7 @@ export const sendPingDataTC = () => async (dispatch: Dispatch) => {
     }
 }
 
-export const logoutTC = () => async (dispatch: Dispatch<ActionsType>) => {
+export const logoutTC = (): AppThunkType => async dispatch => {
     dispatch(setAppStatusAC('loading'));
     try {
         const res = await authAPI.logout()
@@ -97,23 +94,25 @@ export const logoutTC = () => async (dispatch: Dispatch<ActionsType>) => {
         dispatch(setIsLogged(false));
         dispatch(setIsRegistered(false))
     } catch (e) {
-        handleServerAppError(e as AxiosError, dispatch);
+        handleServerNetworkError(e, dispatch);
     } finally {
         dispatch(setAppStatusAC('succeeded'));
     }
 }
 
-export const changeUserTC = (name: string) => async (dispatch: Dispatch<ActionsType>) => {
+export const changeUserTC = (name: string): AppThunkType => async dispatch => {
     dispatch(setAppStatusAC('loading'))
     try {
         const res = await authAPI.updateUser(name)
         dispatch(changeUserAC(res.data.updatedUser.name))
     } catch (e) {
-        handleServerAppError(e as AxiosError, dispatch);
+        handleServerNetworkError(e, dispatch);
     } finally {
         dispatch(setAppStatusAC('succeeded'))
     }
 }
+
+// Types
 
 export type AuthActionType = ReturnType<typeof loginAC>
     | ReturnType<typeof changeUserAC>
