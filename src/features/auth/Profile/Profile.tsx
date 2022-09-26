@@ -19,8 +19,7 @@ export const Profile = () => {
     const navigate = useNavigate();
 
     const changeUser = (name: string) => {
-        const thunk = changeUserTC(name)
-        dispatch(thunk)
+        dispatch(changeUserTC(name))
     }
 
     const logOutHandler = () => {
