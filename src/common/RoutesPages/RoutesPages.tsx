@@ -1,20 +1,20 @@
 import React, {useEffect} from 'react';
-import {Navigate, Route, Routes, useNavigate} from "react-router-dom";
-import {Path} from "../enum/path";
-import {Login} from "../../features/auth/Login/Login";
-import {Registration} from "../../features/auth/Registration/Registration";
-import {Profile} from "../../features/auth/Profile/Profile";
-import {ForgotPassword} from "../../features/forgot/ForgotPassword/ForgotPassword";
-import {NewPassword} from "../../features/forgot/NewPassword/NewPassword";
-import {CheckEmail} from "../../features/forgot/CheckEmail/CheckEmail";
-import {Error404} from "../Error404/Error404";
-import {useSelector} from "react-redux";
-import {AppStateType} from "../../app/store";
+import {Navigate, Route, Routes, useNavigate} from 'react-router-dom';
+import {Path} from '../enum/path';
+import {Login} from '../../features/auth/Login/Login';
+import {Registration} from '../../features/auth/Registration/Registration';
+import {Profile} from '../../features/auth/Profile/Profile';
+import {ForgotPassword} from '../../features/forgot/ForgotPassword/ForgotPassword';
+import {NewPassword} from '../../features/forgot/NewPassword/NewPassword';
+import {CheckEmail} from '../../features/forgot/CheckEmail/CheckEmail';
+import {Error404} from '../Error404/Error404';
+import {useSelector} from 'react-redux';
+import {AppStateType} from '../../app/store';
 
 export const RoutesPage = () => {
 
-  const navigate = useNavigate()
-  const isLogged = useSelector((state: AppStateType) => state.auth.isLogged)
+    const navigate = useNavigate()
+    const isLogged = useSelector((state: AppStateType) => state.auth.isLogged)
 
     const routes = [
         {path: Path.LOGIN, component: <Login/>},
@@ -26,11 +26,11 @@ export const RoutesPage = () => {
         {path: '*', component: <Error404/>},
     ]
 
-  useEffect(() => {
-    if(!isLogged){
-      navigate(Path.LOGIN)
-    }
-  },[])
+    useEffect(() => {
+        if (!isLogged) {
+            navigate(Path.LOGIN)
+        }
+    }, [])
 
     return (
         <div>

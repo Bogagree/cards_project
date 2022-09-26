@@ -11,7 +11,7 @@ export const Registration = () => {
 
     const dispatch = useAppDispatch()
     const isRegistered = useAppSelector(state => state.auth.isRegistered)
-
+console.log(isRegistered)
     const pingOrLogOut = () => {
         dispatch(sendPingDataTC())
     };

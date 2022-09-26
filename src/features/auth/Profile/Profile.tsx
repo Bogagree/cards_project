@@ -5,9 +5,9 @@ import {EditableSpan} from './EditableSpan';
 import {useAppDispatch, useAppSelector} from '../../../app/store';
 import {changeUserTC, logoutTC} from '../auth-reducer';
 import {useNavigate} from 'react-router-dom';
-import {CommonButton} from "../../../common/Button/CommonButton";
-import {Path} from "../../../common/enum/path";
-import {Preloader} from "../../../common/Preloader/Preloader";
+import {CommonButton} from '../../../common/Button/CommonButton';
+import {Path} from '../../../common/enum/path';
+import {Preloader} from '../../../common/Preloader/Preloader';
 import arrow from '../../../assets/icons/arrow.svg';
 
 export const Profile = () => {
@@ -26,16 +26,16 @@ export const Profile = () => {
         dispatch(logoutTC())
     }
 
-        if (!isLogged) {
-            navigate(Path.LOGIN)
-        }
+    if (!isLogged) {
+        navigate(Path.LOGIN)
+    }
 
     return (
         <>
             {appStatus === 'loading' ? <Preloader/> :
                 <div className={style.profileContainer}>
                     <div className={style.profileBackBox}>
-                        <img className={style.profileBackArrow} src={arrow} alt="arrow" />
+                        <img className={style.profileBackArrow} src={arrow} alt="arrow"/>
                         <div className={style.profileBackText}>Back to Packs List</div>
                     </div>
                     <div className={style.profileBox}>
