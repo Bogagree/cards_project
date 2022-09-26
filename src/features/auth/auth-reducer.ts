@@ -26,22 +26,21 @@ const initialState: initialStateType = {
 export const authReducer = (state = initialState, action: AuthActionType): initialStateType => {
     switch (action.type) {
         case "AUTH/LOGIN":
-            return {...state, user: {...action.userData}, isLogged: true}
+            return {...state, user: {...action.payload.userData}, isLogged: true}
         case 'AUTH/SET-IS-LOGGED-IN':
-            return {...state, ...action.payload};
-        case 'AUTH/CHANGE-USER':
-            return {...state, user: {...state.user, name: action.name}}
         case 'AUTH/SET-IS-REGISTERED':
             return {...state, ...action.payload};
+        case 'AUTH/CHANGE-USER':
+            return {...state, user: {...state.user, name: action.payload.name}}
         default:
             return state
     }
 };
 
 //Actions
-export const loginAC = (userData: UserType) => ({type: 'AUTH/LOGIN', userData} as const)
+export const loginAC = (userData: UserType) => ({type: 'AUTH/LOGIN', payload: {userData}} as const)
 export const setIsLogged = (isLogged: boolean) => ({type: 'AUTH/SET-IS-LOGGED-IN', payload: {isLogged}} as const);
-export const changeUserAC = (name: string) => ({type: 'AUTH/CHANGE-USER', name} as const)
+export const changeUserAC = (name: string) => ({type: 'AUTH/CHANGE-USER', payload: {name}} as const)
 export const setIsRegistered = (isRegistered: boolean) => ({
     type: 'AUTH/SET-IS-REGISTERED',
     payload: {isRegistered}
@@ -49,10 +48,10 @@ export const setIsRegistered = (isRegistered: boolean) => ({
 
 
 // Thunks
-export const loginTC = (email: string, password: string, rememberMe: boolean): AppThunkType => async dispatch => {
+export const loginTC = (loginData: LoginDataType): AppThunkType => async dispatch => {
     dispatch(setAppStatusAC('loading'))
     try {
-        const res = await authAPI.login(email, password, rememberMe)
+        const res = await authAPI.login(loginData)
         dispatch(loginAC(res))
     } catch (e) {
         handleServerNetworkError(e, dispatch)
@@ -68,7 +67,7 @@ export const registrationTC = (data: RegistrationDataType): AppThunkType => asyn
         const res = await authAPI.registration(data)
         console.log('server response', res)
         dispatch(setIsRegistered(true))
-        dispatch(loginTC(data.email, data.password, false))
+        dispatch(loginTC({...data, rememberMe: false}))
     } catch (e) {
         console.log(e)
         handleServerNetworkError(e, dispatch);
@@ -130,7 +129,8 @@ export type RegistrationDataType = {
     password: string
 }
 
-export type LogoutResponseType = {
-    info: string
-    error: string;
+export type LoginDataType = {
+  email: string
+  password: string
+  rememberMe: boolean
 }
