@@ -5,4 +5,6 @@ export enum Path {
     FORGOT_PASSWORD = '/forgot-password',
     NEW_PASSWORD = '/set-new-password',
     CHECK_EMAIL = '/check-email',
+    PACKS = '/packs',
+    CARDS = '/cards',
 }
