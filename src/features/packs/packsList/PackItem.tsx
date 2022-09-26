@@ -6,6 +6,7 @@ import iconDelete from '../../../assets/icons/iconDelete.png'
 import iconLearn from '../../../assets/icons/iconLearn.png'
 import {useNavigate} from "react-router-dom";
 import {Path} from "../../../common/enum/path";
+import {useAppSelector} from "../../../app/store";
 
 type PropsType = {
   packData: PackType
@@ -16,6 +17,7 @@ type PackType = any
 export const PackItem: React.FC<PropsType> = ({packData}) => {
 
   const navigate = useNavigate()
+  const userId = useAppSelector(state => state.auth.user._id)
 
   const getDate = (date: string) => {
     const day = new Date(date).getDate() < 10 ? `0${new Date(date).getDate()}` : new Date(date).getDate()
@@ -59,13 +61,13 @@ export const PackItem: React.FC<PropsType> = ({packData}) => {
                  className={styles.actionsIcon}
                  onClick={handleLearn}
             />
-          {packData.user_id === packData._id &&
+          {packData.user_id === userId &&
           <img src={iconEdit}
                   alt={'icon'}
                   className={styles.actionsIcon}
                   onClick={handleEdit}
           />}
-          {packData.user_id === packData._id &&
+          {packData.user_id === userId &&
           <img src={iconDelete}
                alt={'icon'}
                className={styles.actionsIcon}
