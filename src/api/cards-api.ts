@@ -14,13 +14,13 @@ export const authAPI = {
     },
     authMe() {
         return instance.post<UserType>('/auth/me', {})
-            .then(res => res.data)
+            // .then(res => res.data)
     },
     updateUser(name: string) {
         return instance.put('/auth/me', {name: name})
     },
     logout() {
-        return instance.delete('auth/me', {})
+        return instance.delete('auth/me')
     },
     registration(data: RegistrationDataType) {
         return instance.post('auth/register', {...data})
@@ -31,6 +31,14 @@ export const authAPI = {
     sendPingData() {
         return instance.post('/ping', {frontTime: Date.now()})
     }
+}
+
+export const packAPI = {
+
+}
+
+export const cardAPI = {
+
 }
 
 export type UserType = {
