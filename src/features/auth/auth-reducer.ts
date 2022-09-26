@@ -76,7 +76,7 @@ export const registrationTC = (data: RegistrationDataType): AppThunkType => asyn
     }
 }
 
-export const sendPingDataTC = (): AppThunkType => async dispatch => {
+export const sendPingDataTC = (): AppThunkType => async() => {
     try {
         const res2 = await authAPI.sendPingData()
         console.log(res2.data)

@@ -1,6 +1,5 @@
 import React, {FC} from 'react';
 import {useDispatch} from 'react-redux';
-
 import {Alert, Snackbar} from "@mui/material";
 import {useAppSelector} from "../../app/store";
 import {setAppError} from "../../app/app-reducer";

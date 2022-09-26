@@ -8,6 +8,7 @@ import {useNavigate} from 'react-router-dom';
 import {CommonButton} from "../../../common/Button/CommonButton";
 import {Path} from "../../../common/enum/path";
 import {Preloader} from "../../../common/Preloader/Preloader";
+import arrow from '../../../assets/icons/arrow.svg';
 
 export const Profile = () => {
 
@@ -34,6 +35,10 @@ export const Profile = () => {
         <>
             {appStatus === 'loading' ? <Preloader/> :
                 <div className={style.profileContainer}>
+                    <div className={style.profileBackBox}>
+                        <img className={style.profileBackArrow} src={arrow} alt="arrow" />
+                        <div className={style.profileBackText}>Back to Packs List</div>
+                    </div>
                     <div className={style.profileBox}>
                         <p className={style.profileTitle}>Personal Information</p>
                         <img className={style.profileAvatar} src={avatar} alt="avatar"/>

@@ -2,7 +2,25 @@
     background-color: #F9F9FA;
     height: 100vh;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+}
+
+.profileBackBox {
+    display: flex;
+    height: 60px;
+    align-items: end;
+    cursor: pointer;
+}
+
+.profileBackText {
+    margin-left: 8px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 24px;
+}
+
+.profileBackArrow {
+    margin-left: 142px;
 }
 
 .profileBox {
