@@ -5,11 +5,6 @@ import {PackItem} from "./PackItem";
 import {PackType} from "../../../api/cards-api";
 import {useAppSelector} from "../../../app/store";
 
-
-// type PropsType = {
-//   cardPacks: PackType[]
-// }
-
 export const PacksList: React.FC = () => {
 
   const cardPacks = useAppSelector(state => state.packs.cardPacks)

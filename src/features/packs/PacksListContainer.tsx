@@ -95,7 +95,7 @@ export const PacksListContainer = () => {
     return (
         <>
             {appStatus === 'loading' ? <Preloader/> :
-                <div>
+                <div className={style.wrapper}>
 
                     <div className={style.tools}>
                         <Search/>
@@ -104,9 +104,7 @@ export const PacksListContainer = () => {
                         <DisableFilter/>
                     </div>
 
-                    <div className={style.wrapper}>
                         <PacksList/>
-                    </div>
 
                     <Paginator
                         portionSize={10}

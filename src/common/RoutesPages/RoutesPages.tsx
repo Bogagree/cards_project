@@ -50,6 +50,7 @@ export const RoutesPage = () => {
                 {routes.map(({path, component}) => (
                     <Route key={path} path={path} element={component}/>
                 ))}
+              <Route path={`${Path.CARDS}/:packId`} element={<CardsContainer />} />
             </Routes>
 
         </div>

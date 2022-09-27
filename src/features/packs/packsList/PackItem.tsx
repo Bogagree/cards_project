@@ -28,7 +28,7 @@ export const PackItem: React.FC<PropsType> = ({packData}) => {
   }
 
   const handleGoToPack = () => {
-    navigate(Path.CARDS)
+    navigate(`${Path.CARDS}/${packData._id}`)
   }
   const handleLearn = () => {
     console.log(packData)
