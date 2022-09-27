@@ -1,0 +1,15 @@
+.container {
+    border: 1px solid #D9D9D9;
+    width: 40px;
+    height: 36px;
+}
+
+.icon:hover {
+    cursor: pointer;
+    box-shadow: 0 5px 10px 2px rgba(34, 60, 80, 0.2);
+}
+
+.icon:active {
+    opacity: 0.7;
+
+}

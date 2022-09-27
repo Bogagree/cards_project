@@ -1,0 +1,41 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: left;
+    width: 251px;
+    height: 62px;
+}
+
+.cardsNumber {
+    box-sizing: border-box;
+    padding: 7px;
+    border: 1px solid #D9D9D9;
+    border-radius: 2px;
+    background: #FFFFFF;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    width: 36px;
+    height: 36px;
+    text-align: center;
+}
+
+.toolTitle {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+}
+
+.rangeContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.doubleRange {
+    display: inline-block;
+    width: 155px;
+    margin: 0 10px
+}

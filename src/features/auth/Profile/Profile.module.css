@@ -5,24 +5,6 @@
     flex-direction: column;
 }
 
-.profileBackBox {
-    display: flex;
-    height: 60px;
-    align-items: end;
-    cursor: pointer;
-}
-
-.profileBackText {
-    margin-left: 8px;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 24px;
-}
-
-.profileBackArrow {
-    margin-left: 142px;
-}
-
 .profileBox {
     background-color: #FFFFFF;
     width: 413px;

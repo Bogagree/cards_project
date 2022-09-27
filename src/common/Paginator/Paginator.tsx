@@ -48,36 +48,29 @@ export const Paginator: React.FC<PaginatorPropsType> = (
                     <button onClick={() => {
                         setPortionNumber(1)
                     }}> {'<<'}</button>
-                    <button onClick={leftClickHandler}>prev</button>
+                    <button onClick={leftClickHandler}>{'<'}</button>
                 </>
             }
 
             {pages
                 .filter(p => p >= leftPortionPageNumber && p <= rightPortionPageNumber)
                 .map(p => {
+
                     return <span
                         key={p}
                         className={currentPage === p ? style.pageNumber + ' ' + style.selectedPage : style.pageNumber}
-                        onClick={() => {
-                            onPageChanged(p)
-                        }}
-                    >
-                            {p}</span>
+                        onClick={() => {onPageChanged(p)}}>{p}</span>
                 })}
 
             {portionNumber < portionCount &&
                 <>
-                    <button onClick={rightClickHandler}>next</button>
+                    <button onClick={rightClickHandler}> {'>'} </button>
                     <button onClick={() => {
                         setPortionNumber(portionCount)
                     }}>last
                     </button>
                 </>
             }
-
-            <div>
-                <strong> total users pages</strong>: {portionCount}
-            </div>
 
         </div>
     );

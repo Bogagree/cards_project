@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react';
-import {Navigate, Route, Routes, useNavigate} from "react-router-dom";
+import {Navigate, NavLink, Route, Routes, useNavigate} from "react-router-dom";
+import style from './RoutesPages.module.css'
 import {Path} from "../enum/path";
 import {Login} from "../../features/auth/Login/Login";
 import {Registration} from "../../features/auth/Registration/Registration";
@@ -38,9 +39,9 @@ export const RoutesPage = () => {
 
     return (
         <div>
-            {/*<ul className={style.header}>*/}
-            {/*    {routes.map( ({path}, index) => <li key={index}><NavLink to={path} children={path} className={style.link}></NavLink></li>) }*/}
-            {/*</ul>*/}
+            <ul className={style.header}>
+                {routes.map( ({path}, index) => <li key={index}><NavLink to={path} children={path} className={style.link}></NavLink></li>) }
+            </ul>
 
             <Routes>
                 {/*побаловаться и порадоваться ракете*/}
