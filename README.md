@@ -9,7 +9,7 @@
 - jest
 - IDE- WebStorm
 
-[app example](src/assets/img/app.jpg)
+![app example](src/assets/img/app.jpg)
 
 ## Project description
 
