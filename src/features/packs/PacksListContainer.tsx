@@ -90,7 +90,6 @@ export const PacksListContainer = () => {
                 <DisableFilter/>
             </div>
 
-
             <div className={style.wrapper}>
                 <PacksList packsList={testPacksListData} />
             </div>
