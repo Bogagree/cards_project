@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import './App.module.css';
 import {RoutesPage} from "../common/RoutesPages/RoutesPages";
-import {Header} from "../Components/Header/Header";
+import {Header} from "../components/Header/Header";
 import {useAppDispatch, useAppSelector} from "./store";
 import style from './App.module.css'
 import {Preloader} from "../common/Preloader/Preloader";

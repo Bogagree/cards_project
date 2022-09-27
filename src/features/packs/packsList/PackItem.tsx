@@ -7,11 +7,12 @@ import iconLearn from '../../../assets/icons/iconLearn.png'
 import {useNavigate} from "react-router-dom";
 import {Path} from "../../../common/enum/path";
 import {useAppSelector} from "../../../app/store";
+import {PackType} from "../../../api/cards-api";
 
 type PropsType = {
   packData: PackType
 }
-type PackType = any
+
 
 
 export const PackItem: React.FC<PropsType> = ({packData}) => {
@@ -30,7 +31,7 @@ export const PackItem: React.FC<PropsType> = ({packData}) => {
     navigate(Path.CARDS)
   }
   const handleLearn = () => {
-    console.log('learn pack')
+    console.log(packData)
   }
   const handleDelete = () => {
     console.log('delete pack')

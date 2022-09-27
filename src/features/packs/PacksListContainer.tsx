@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {CardsNumberSlider} from "../../common/DoubleRangeSlider/CardsNumberSlider";
 import {PacksFilter} from "../../common/PacksFilter/PacksFilter";
 import {Search} from "../../common/Search/Search";
@@ -6,6 +6,8 @@ import style from "./PacksListContainer.module.css"
 import {DisableFilter} from "../../common/DisableFilter/DisableFilter";
 import {Paginator} from "../../common/Paginator/Paginator";
 import {PacksList} from "./packsList/PacksList";
+import {useAppDispatch} from "../../app/store";
+import {getPacksTC} from "./packs-reducer";
 
 export const testPacksListData = [
     {
@@ -77,9 +79,16 @@ export const testPacksListData = [
         __v: 0,
         _id: "6331704b3c22f21db471fa5a",
     }
-]
+] // не удалять, потом перенесем в тесты
 
 export const PacksListContainer = () => {
+
+    const dispatch = useAppDispatch()
+
+    useEffect(() => {
+        dispatch(getPacksTC())
+    },[])
+
     return (
         <div>
 
@@ -91,7 +100,7 @@ export const PacksListContainer = () => {
             </div>
 
             <div className={style.wrapper}>
-                <PacksList packsList={testPacksListData} />
+                <PacksList/>
             </div>
 
             <Paginator

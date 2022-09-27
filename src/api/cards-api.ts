@@ -32,7 +32,7 @@ export const authAPI = {
 
 export const packAPI = {
     getPack() {
-        return instance.get<AxiosResponse<ResponcePacksType>>('cards/pack')
+        return instance.get<PacksResponseType>('cards/pack?pageCount=10')
     },
     createPack(createPackData: CreatePackType) {
         return instance.post<CreatePackType, AxiosResponse<NewCardsPackType>>('cards/pack', {createPackData})
@@ -99,7 +99,7 @@ export type RegistrationResponseType = {
 }
 
 //type packsAPI
-export type ResponcePacksType = {
+export type PacksResponseType = {
     cardPacks: PackType[]
     page: number
     pageCount: number
@@ -111,22 +111,22 @@ export type ResponcePacksType = {
 }
 
 export type PackType = {
-    _id: string
-    user_id: string,
+    created: string
+    grade: number
     user_name: string
     private: boolean
+    more_id: string
     name: string
     path: string
-    grade: number
+    rating: number
     shots: number
-    deckCover: string
+    deckCover?: string
     cardsCount: number
     type: string
-    rating: number
-    created: string
     updated: string
-    more_id: string
+    user_id: string,
     __v: number
+    _id: string
 }
 
 export type CreatePackType = {

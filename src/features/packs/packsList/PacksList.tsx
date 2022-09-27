@@ -1,16 +1,18 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styles from './PacksList.module.css'
 import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import {PackItem} from "./PackItem";
-import {testPacksListData} from "../PacksListContainer";
+import {PackType} from "../../../api/cards-api";
+import {useAppSelector} from "../../../app/store";
 
 
+// type PropsType = {
+//   cardPacks: PackType[]
+// }
 
-type PropsType = {
-  packsList: Array<typeof testPacksListData[0]>
-}
+export const PacksList: React.FC = () => {
 
-export const PacksList: React.FC<PropsType> = ({packsList}) => {
+  const cardPacks = useAppSelector(state => state.packs.cardPacks)
 
   return (
     <div>
@@ -29,7 +31,7 @@ export const PacksList: React.FC<PropsType> = ({packsList}) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {packsList.map((item) => (
+            {cardPacks.map((item) => (
               <PackItem
                 key={item._id}
                 packData={item} />
