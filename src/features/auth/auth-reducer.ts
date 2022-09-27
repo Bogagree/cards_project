@@ -118,7 +118,7 @@ export type AuthActionType = ReturnType<typeof loginAC>
     | ReturnType<typeof setIsLogged>
     | ReturnType<typeof setIsRegistered>
 
-type initialStateType = {
+export type initialStateType = {
     isLogged: boolean
     isRegistered: boolean
     user: UserType

@@ -19,17 +19,16 @@ export const Profile = () => {
     const navigate = useNavigate();
 
     const changeUser = (name: string) => {
-        const thunk = changeUserTC(name)
-        dispatch(thunk)
+        dispatch(changeUserTC(name))
     }
 
     const logOutHandler = () => {
         dispatch(logoutTC())
     }
 
-        if (!isLogged) {
-            navigate(Path.LOGIN)
-        }
+    if (!isLogged) {
+        navigate(Path.LOGIN)
+    }
 
     return (
         <>
