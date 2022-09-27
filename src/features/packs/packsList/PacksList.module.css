@@ -1,0 +1,12 @@
+.tableHead {
+  background: #EFEFEF;
+}
+.itemActions {
+  display: flex;
+  justify-content: space-around;
+}
+.actionsIcon {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
