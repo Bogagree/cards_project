@@ -6,8 +6,9 @@ import style from "./PacksListContainer.module.css"
 import {DisableFilter} from "../../common/DisableFilter/DisableFilter";
 import {Paginator} from "../../common/Paginator/Paginator";
 import {PacksList} from "./packsList/PacksList";
-import {useAppDispatch} from "../../app/store";
+import {useAppDispatch, useAppSelector} from "../../app/store";
 import {getPacksTC} from "./packs-reducer";
+import {Preloader} from "../../common/Preloader/Preloader";
 
 export const testPacksListData = [
     {
@@ -85,33 +86,40 @@ export const PacksListContainer = () => {
 
     const dispatch = useAppDispatch()
 
+    const appStatus = useAppSelector(state => state.app.appStatus)
+
     useEffect(() => {
         dispatch(getPacksTC())
-    },[])
+    }, [])
 
     return (
-        <div>
+        <>
+            {appStatus === 'loading' ? <Preloader/> :
+                <div>
 
-            <div className={style.tools}>
-                <Search/>
-                <PacksFilter/>
-                <CardsNumberSlider/>
-                <DisableFilter/>
-            </div>
+                    <div className={style.tools}>
+                        <Search/>
+                        <PacksFilter/>
+                        <CardsNumberSlider/>
+                        <DisableFilter/>
+                    </div>
 
-            <div className={style.wrapper}>
-                <PacksList/>
-            </div>
+                    <div className={style.wrapper}>
+                        <PacksList/>
+                    </div>
 
-            <Paginator
-                portionSize={10}
-                currentPage={2}
-                totalItemsCount={100}
-                pageSize={10}
-                onPageChanged={() => {}}
-            />
-
-        </div>
-    );
+                    <Paginator
+                        portionSize={10}
+                        currentPage={2}
+                        totalItemsCount={100}
+                        pageSize={10}
+                        onPageChanged={() => {
+                        }}
+                    />
+                </div>
+            }
+        </>
+    )
+        ;
 };
 

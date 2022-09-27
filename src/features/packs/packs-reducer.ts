@@ -29,7 +29,7 @@ export const getPacksTC = (): AppThunkType => async dispatch => {
         console.log(res)
         dispatch(setPacks(res.data.cardPacks))
     } finally {
-
+        dispatch(setAppStatusAC('succeeded'))
     }
 }
 
