@@ -5,6 +5,7 @@ import {AuthActionType, authReducer} from "../features/auth/auth-reducer";
 import {forgotReducer} from "../features/forgot/forgot-reducer";
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 import {PackActionType, packsReducer} from "../features/packs/packs-reducer";
+import {CardsActionType, cardsReducer} from "../features/cards/cards-reducer";
 
 declare global {
     interface Window {
@@ -17,7 +18,8 @@ const reducers = combineReducers({
     app: appReducer,
     auth: authReducer,
     forgot: forgotReducer,
-    packs: packsReducer
+    packs: packsReducer,
+    cards: cardsReducer
 })
 
 export type AppStateType = ReturnType<typeof reducers>
@@ -32,6 +34,7 @@ export type AppDispatchType = typeof store.dispatch
 export type ActionsType = AppActionType
     | AuthActionType
     | PackActionType
+    | CardsActionType
 
 export type AppThunkType = ThunkAction<void, AppStateType, unknown, ActionsType>
 

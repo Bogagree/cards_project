@@ -1,6 +1,14 @@
+.wrapper {
+  width: 90%;
+  margin: 0 auto;
+}
 .tools {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
     align-items: end;
+    margin-bottom: 24px;
+}
+.cardsList {
+  margin-bottom: 24px;
 }

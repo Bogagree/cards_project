@@ -47,7 +47,7 @@ export const packAPI = {
 
 export const cardAPI = {
     getCard(packID: string) {
-        return instance.get<AxiosResponse<ResponseCardsType>>(`cards/card?cardsPack_id=${packID}`)
+        return instance.get<ResponseCardsType>(`cards/card?cardsPack_id=${packID}`)
     },
     createCard(createCardData: CreateCardsType) {
         return instance.post('cards/card', {createCardData})

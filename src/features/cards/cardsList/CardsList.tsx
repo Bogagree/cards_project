@@ -4,6 +4,7 @@ import styles from './CardsList.module.css';
 import {Card} from "./Card";
 import {useAppSelector} from "../../../app/store";
 import {testCardData} from "../CardsContainer";
+import {Preloader} from "../../../common/Preloader/Preloader";
 
 type PropsType = {
   cardsList: Array<typeof testCardData[0]>
@@ -12,11 +13,13 @@ type PropsType = {
 export const CardsList: React.FC<PropsType> = ({cardsList}) => {
 
   const userId = useAppSelector(state => state.auth.user._id)
+  const appStatus = useAppSelector(state => state.app.appStatus)
   const cardsPackUserId = '001'
 
   return (
     <div>
-      <TableContainer component={Paper}>
+      {appStatus === 'loading' ? <Preloader/> :
+        <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead className={styles.tableHead}>
             <TableRow>
@@ -39,7 +42,7 @@ export const CardsList: React.FC<PropsType> = ({cardsList}) => {
             ))}
           </TableBody>
         </Table>
-      </TableContainer>
+      </TableContainer>}
     </div>
   );
 };
