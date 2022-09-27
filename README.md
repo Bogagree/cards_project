@@ -27,7 +27,7 @@ For example, one side of the card may say:
 and the other side: 
 *“A JavaScript library for building user interfaces”*. Usually there are several flashcards that, as a group, represent a category of information you’re trying to remember, learn, and master.
 
-## GitHub commits guideline —
+## GitHub commits guideline
 
 **type**: description
 
