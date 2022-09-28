@@ -7,6 +7,11 @@ export const instance = axios.create({
     withCredentials: true,
 })
 
+export const instanceForgot = axios.create({
+    baseURL: 'https://neko-back.herokuapp.com/2.0/',
+    withCredentials: true,
+})
+
 export const authAPI = {
     login(loginData: LoginDataType) {
         return instance.post<LoginDataType, AxiosResponse<UserType>>('auth/login', loginData)
@@ -27,6 +32,12 @@ export const authAPI = {
     },
     sendPingData() {
         return instance.post<PingResponseType>('/ping', {frontTime: Date.now()})
+    },
+    forgot(forgotData: ForgotDataType) {
+        return instanceForgot.post<ForgotDataType, AxiosResponse<ForgotDataResponseType>>('/auth/forgot', forgotData)
+    },
+    newPassword(passwordData: PasswordDataType) {
+        return instanceForgot.post<PasswordDataType, AxiosResponse<PasswordDataResponseType>>('/auth/set-new-password', passwordData)
     }
 }
 
@@ -97,6 +108,26 @@ export type RegistrationResponseType = {
         __v: number
         _id: string
     }
+}
+
+export type ForgotDataType = {
+    email: string
+    message: string
+}
+
+export type ForgotDataResponseType = {
+    info: string
+    error: string
+}
+
+export type PasswordDataType = {
+    password: string
+    resetPasswordToken?: string
+}
+
+export type PasswordDataResponseType = {
+    info: string
+    error: string
 }
 
 //type packsAPI

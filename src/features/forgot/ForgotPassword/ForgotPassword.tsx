@@ -5,29 +5,28 @@ import {CommonInputText} from '../../../common/InputText/CommonInputText';
 import {Link, useNavigate} from 'react-router-dom';
 import {Path} from '../../../common/enum/path';
 import {useFormik} from 'formik';
-import {loginTC} from '../../auth/auth-reducer';
+import {forgotTC} from '../../auth/auth-reducer';
 import {AppStateType, useAppDispatch, useAppSelector} from '../../../app/store';
 import {useSelector} from 'react-redux';
 
 type RegistrationErrorType = {
     email?: string
-    password?: string
-    rememberMe?: boolean
 }
 
 export const ForgotPassword = () => {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
-    const isLogged = useSelector((state: AppStateType) => state.auth.isLogged)
+    const forgotPasswordSuccess = useSelector((state: AppStateType) => state.auth.forgotPasswordSuccess)
     const appStatus = useAppSelector(state => state.app.appStatus)
 
     const formik = useFormik({
         initialValues: {
-            // email: 'nya-admin@nya.nya',
-            // password: '1qazxcvBG',
             email: '',
-            password: '',
-            rememberMe: false,
+            message: `<div style="background-color: lime; padding: 15px">
+password recovery link: 
+<a href='http://localhost:3000/#/set-new-password/$token$'>
+link</a>
+</div>`
         },
         validate: (values) => {
 
@@ -38,19 +37,17 @@ export const ForgotPassword = () => {
             } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
                 errors.email = 'Invalid email address'
             }
-
-            if (!values.password) {
-                errors.password = 'Password is required'
-            } else if (values.password.length <= 7) {
-                errors.password = 'Password should be more then 7 symbols'
-            }
             return errors
         },
         onSubmit: values => {
-            dispatch(loginTC(values))
+            dispatch(forgotTC(values))
             formik.resetForm()
         },
     });
+
+    if(forgotPasswordSuccess) {
+        navigate(Path.CHECK_EMAIL)
+    }
 
     return (
         <>
@@ -60,13 +57,13 @@ export const ForgotPassword = () => {
                         <h2 className={styles.title}>Forgot your password?</h2>
                         <div className={styles.inputWrapper}>
                             <CommonInputText
-                                id={"email"}
+                                id={'email'}
                                 inputName={'Email'}
-                                type={"email"}
+                                type={'email'}
                                 {...formik.getFieldProps('email')}
                             />
                             {formik.touched.email && formik.errors.email &&
-                                <div style={{color: "red"}}>{formik.errors.email}</div>}
+                                <div style={{color: 'red'}}>{formik.errors.email}</div>}
                         </div>
                         <span className={styles.textP}>Enter your email address and we will send you further instructions </span>
                         <button type="submit">Send Instructions</button>

@@ -5,21 +5,20 @@ import {CommonInputText} from '../../../common/InputText/CommonInputText';
 import {Link, useNavigate} from 'react-router-dom';
 import {Path} from '../../../common/enum/path';
 import {useFormik} from 'formik';
-import {loginTC} from '../../auth/auth-reducer';
+import {loginTC, newPasswordTC} from '../../auth/auth-reducer';
 import {AppStateType, useAppDispatch, useAppSelector} from '../../../app/store';
 import {useSelector} from 'react-redux';
 import iconEye from '../../../assets/icons/iconEye.png';
+import { useParams } from 'react-router-dom';
 
 type RegistrationErrorType = {
-    email?: string
     password?: string
-    rememberMe?: boolean
 }
 
 export const NewPassword = () => {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
-    const isLogged = useSelector((state: AppStateType) => state.auth.isLogged)
+    const newPasswordSuccess = useSelector((state: AppStateType) => state.auth.newPasswordSuccess)
     const appStatus = useAppSelector(state => state.app.appStatus)
     const [showPassword, setShowPassword] = useState(false)
 
@@ -27,9 +26,12 @@ export const NewPassword = () => {
         setShowPassword(!showPassword)
     }
 
+    let {token} = useParams()
+console.log(token)
     const formik = useFormik({
         initialValues: {
-            password: ''
+            password: '',
+            resetPasswordToken: token
         },
         validate: (values) => {
 
@@ -43,10 +45,14 @@ export const NewPassword = () => {
             return errors
         },
         onSubmit: values => {
-            // dispatch(loginTC(values))
+            dispatch(newPasswordTC(values))
             formik.resetForm()
         },
     });
+
+    if(newPasswordSuccess) {
+        navigate(Path.LOGIN)
+    }
 
     return (
         <>
