@@ -89,6 +89,7 @@ export const PacksListContainer = () => {
     const dispatch = useAppDispatch()
 
     const appStatus = useAppSelector(state => state.app.appStatus)
+    const pageCount = useAppSelector(state => state.packs.pageCount)
 
     useEffect(() => {
         dispatch(getPacksTC())
@@ -109,10 +110,10 @@ export const PacksListContainer = () => {
                         <PacksList/>
 
                     <Paginator
-                        portionSize={10}
+                        portionSize={pageCount}
                         currentPage={2}
                         totalItemsCount={100}
-                        pageSize={10}
+                        pageSize={pageCount}
                         onPageChanged={() => {
                         }}
                     />

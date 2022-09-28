@@ -5,11 +5,12 @@ import {PackType} from "../../api/cards-api";
 let state: PacksStateType
 let pack: PackType
 
+
 beforeEach(() => {
     state = {
-        cardPacks: testPacksListData
+        cardPacks: testPacksListData,
+        pageCount: 10
     }
-
     pack = {
         cardsCount: 100500,
         created: "2022-09-26T09:26:35.044Z",
