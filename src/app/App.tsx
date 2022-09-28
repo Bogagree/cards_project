@@ -31,7 +31,11 @@ export const App = () => {
             <Header/>
             <h1>Cards project</h1>
             <ErrorSnackbar/>
-            <RoutesPage/>
+            <div className={style.wrapper}>
+                <RoutesPage/>
+            </div>
+
+
         </div>
     );
 };

@@ -39,7 +39,7 @@ export const RoutesPage = () => {
 
     return (
         <div>
-            <ul className={style.header}>
+            <ul className={style.nav}>
                 {routes.map( ({path}, index) => <li key={index}><NavLink to={path} children={path} className={style.link}></NavLink></li>) }
             </ul>
 
