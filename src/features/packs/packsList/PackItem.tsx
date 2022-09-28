@@ -28,10 +28,10 @@ export const PackItem: React.FC<PropsType> = ({packData}) => {
   }
 
   const handleGoToPack = () => {
-    // navigate(`${Path.CARDS}/${packData._id}`)
+    navigate(`${Path.CARDS}/${packData._id}`)
   }
   const handleLearn = () => {
-    navigate(`${Path.CARDS}/${packData._id}`)
+    // navigate(`${Path.CARDS}/${packData._id}`)
   }
   const handleDelete = () => {
     console.log('delete pack')
@@ -46,6 +46,7 @@ export const PackItem: React.FC<PropsType> = ({packData}) => {
       sx={{'&:last-child td, &:last-child th': {border: 0}}}
     >
       <TableCell
+        className={styles.tablePackName}
         onClick={handleGoToPack}
       >
         {packData.name}

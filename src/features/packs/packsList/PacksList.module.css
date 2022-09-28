@@ -1,6 +1,9 @@
 .tableHead {
   background: #EFEFEF;
 }
+.tablePackName {
+  cursor: pointer;
+}
 .itemActions {
   display: flex;
   justify-content: space-around;

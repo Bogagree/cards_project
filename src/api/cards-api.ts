@@ -50,10 +50,10 @@ export const cardAPI = {
         return instance.get<ResponseCardsType>(`cards/card?cardsPack_id=${packID}`)
     },
     createCard(createCardData: CreateCardsType) {
-        return instance.post('cards/card', {createCardData})
+        return instance.post('cards/card', {card: createCardData})
     },
     updateCard(updateCardData: UpdateCardsType) {
-        return instance.put('cards/card', {updateCardData})
+        return instance.put('cards/card', {card: updateCardData})
     },
     deleteCards(cardID: string) {
         return instance.delete(`cards/card?id=${cardID}`)
@@ -210,4 +210,5 @@ export type UpdateCardsType = {
     _id: string
     question?: string
     comments?: string
+    answer?: string
 }

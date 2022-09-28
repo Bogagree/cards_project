@@ -12,3 +12,8 @@
 .cardsList {
   margin-bottom: 24px;
 }
+.cardsListHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

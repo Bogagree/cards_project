@@ -1,4 +1,4 @@
-import {cardAPI, CardsType} from "../../api/cards-api";
+import {cardAPI, CardsType, CreateCardsType, UpdateCardsType} from "../../api/cards-api";
 import {AppThunkType} from "../../app/store";
 import {setAppStatusAC} from "../../app/app-reducer";
 
@@ -25,7 +25,43 @@ export const getCardsTC = (packId: string): AppThunkType => async dispatch => {
   }finally {
     dispatch(setAppStatusAC('succeeded'))
   }
+}
 
+export const createCardTC = (createCardData: CreateCardsType): AppThunkType => async dispatch => {
+  dispatch(setAppStatusAC('loading'))
+  try {
+    await cardAPI.createCard(createCardData)
+    const cards = await cardAPI.getCard(createCardData.cardsPack_id)
+    dispatch(setCardsAC(cards.data.cards))
+  }catch (e) {
+
+  }finally {
+    dispatch(setAppStatusAC('succeeded'))
+  }
+}
+export const updateCardTC = (updateCardData: UpdateCardsType, packId: string): AppThunkType => async dispatch => {
+  dispatch(setAppStatusAC('loading'))
+  try {
+    await cardAPI.updateCard(updateCardData)
+    const cards = await cardAPI.getCard(packId)
+    dispatch(setCardsAC(cards.data.cards))
+  }catch (e) {
+
+  }finally {
+    dispatch(setAppStatusAC('succeeded'))
+  }
+}
+export const deleteCardTC = (cardID: string, packId: string): AppThunkType => async dispatch => {
+  dispatch(setAppStatusAC('loading'))
+  try {
+    await cardAPI.deleteCards(cardID)
+    const cards = await cardAPI.getCard(packId)
+    dispatch(setCardsAC(cards.data.cards))
+  }catch (e) {
+
+  }finally {
+    dispatch(setAppStatusAC('succeeded'))
+  }
 }
 
 export type CardsStateType = typeof cardsInitialState

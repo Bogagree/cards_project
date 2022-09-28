@@ -7,7 +7,11 @@ import {Path} from "../../common/enum/path";
 import {CardsList} from "./cardsList/CardsList";
 import {useParams} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../app/store";
-import {getCardsTC} from "./cards-reducer";
+import {createCardTC, getCardsTC} from "./cards-reducer";
+import {Preloader} from "../../common/Preloader/Preloader";
+import {CommonButton} from "../../common/Button/CommonButton";
+import {AxiosResponse} from "axios";
+import {CreatePackType, instance, NewCardsPackType} from "../../api/cards-api";
 
 
 
@@ -54,24 +58,41 @@ export const CardsContainer = () => {
 
   const dispatch = useAppDispatch()
   const cards = useAppSelector(state => state.cards.cards)
+  const appStatus = useAppSelector(state => state.app.appStatus)
   const {packId} = useParams<'packId'>()
+
+  const handleAddCard = () => {
+    packId && dispatch(createCardTC({
+      cardsPack_id: packId, question: 'new question', answer: 'new answer'
+    }))
+    console.log({
+      cardsPack_id: packId, question: 'new question', answer: 'new answer'
+    })
+  }
 
   useEffect(() => {
     packId && dispatch(getCardsTC(packId))
+
+    // instance.post<CreatePackType, AxiosResponse<NewCardsPackType>>('cards/pack', {cardsPack: {name: "My New Pack"}})
+    //   .then(res => console.log(res))
   },[])
 
     return (
-        <div>
+        <div className={style.wrapper}>
+          <BackArrowButton path={Path.PACKS} title={'Back to Packs list'}/>
+          <div className={style.cardsListHeader}>
+          <h2>PackName</h2>
+          <CommonButton onClick={handleAddCard}>Add Card</CommonButton>
+        </div>
 
-            <BackArrowButton path={Path.PACKS} title={'Back to Packs list'}/>
-
-          <div className={style.wrapper}>
+          {appStatus === 'loading' ? <Preloader /> :
+            <div>
             <div className={style.tools}>
-                <Search/>
+              <Search/>
             </div>
 
             <div className={style.cardsList}>
-                <CardsList cardsList={cards} />
+              <CardsList cardsList={cards}/>
             </div>
 
             <Paginator
@@ -79,9 +100,10 @@ export const CardsContainer = () => {
               currentPage={2}
               totalItemsCount={100}
               pageSize={10}
-              onPageChanged={() => {}}
+              onPageChanged={() => {
+              }}
             />
-        </div>
+          </div>}
         </div>
     );
 };

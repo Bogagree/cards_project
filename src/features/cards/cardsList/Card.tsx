@@ -4,16 +4,18 @@ import star from '../../../assets/icons/star.png'
 import editIcon from '../../../assets/icons/pencil.svg'
 import deleteIcon from '../../../assets/icons/iconDelete.png'
 import styles from './CardsList.module.css'
-import {testCardData} from "../CardsContainer";
+import {useAppDispatch} from "../../../app/store";
+import {deleteCardTC, updateCardTC} from "../cards-reducer";
+import {CardsType} from "../../../api/cards-api";
 
 type PropsType = {
-  cardData: CardType
+  cardData: CardsType
   userId: string
 }
-type CardType = typeof testCardData[0]
 
 export const Card: React.FC<PropsType> = ({cardData, userId}) => {
 
+  const dispatch = useAppDispatch()
   const getDate = (date: string) => {
     const day = new Date(date).getDate() < 10 ? `0${new Date(date).getDate()}` : new Date(date).getDate()
     const month = new Date(date).getMonth() + 1 < 10 ? `0${new Date(date).getMonth() + 1}` : new Date(date).getMonth() + 1
@@ -22,10 +24,14 @@ export const Card: React.FC<PropsType> = ({cardData, userId}) => {
   }
 
   const handleChangeCard = () => {
-    console.log('change card - ' + cardData._id)
+    dispatch(updateCardTC({
+      _id: cardData._id,
+      question: 'New question. 001',
+      answer: 'New answer. 001'
+    }, cardData.cardsPack_id))
   }
   const handleRemoveCard = () => {
-    console.log('remove card - ' + cardData._id)
+    dispatch(deleteCardTC(cardData._id, cardData.cardsPack_id))
   }
 
 
@@ -49,7 +55,7 @@ export const Card: React.FC<PropsType> = ({cardData, userId}) => {
         <img src={star} alt={'star'}/>
         <img src={star} alt={'star'}/>
       </TableCell>
-      {cardData.user_id !== userId &&
+      {cardData.user_id === userId &&
         <TableCell align="center">
           <div className={styles.itemActions}>
             <img src={editIcon}

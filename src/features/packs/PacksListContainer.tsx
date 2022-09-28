@@ -9,6 +9,8 @@ import {PacksList} from "./packsList/PacksList";
 import {useAppDispatch, useAppSelector} from "../../app/store";
 import {getPacksTC} from "./packs-reducer";
 import {Preloader} from "../../common/Preloader/Preloader";
+import {CreatePackType, instance, NewCardsPackType} from "../../api/cards-api";
+import {AxiosResponse} from "axios";
 
 export const testPacksListData = [
     {
