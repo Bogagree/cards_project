@@ -28,7 +28,7 @@ export const App = () => {
 
     return (
         <div className={style.app}>
-            <Header isLoggedIn={false}/>
+            <Header/>
             <h1>Cards project</h1>
             <ErrorSnackbar/>
             <RoutesPage/>
