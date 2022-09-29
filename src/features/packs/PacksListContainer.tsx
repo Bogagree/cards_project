@@ -88,7 +88,7 @@ export const PacksListContainer = () => {
 
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
-    const {filter} = useParams<'filter'>()
+    const {filter, currentPage} = useParams<'filter' | 'currentPage'>()
 
     const appStatus = useAppSelector(state => state.app.appStatus)
     const userId = useAppSelector(state => state.auth.user._id)
@@ -96,17 +96,23 @@ export const PacksListContainer = () => {
     const changeFilterCallback = (value: FilterType) => {
       if(value === 'my'){
         setPacksFilter(userId)
-        navigate(`${Path.PACKS}/${userId}`)
+        navigate(`${Path.PACKS}/${userId}/${currentPage}`)
       }else{
         setPacksFilter('')
         navigate(`${Path.PACKS}`)
       }
     }
+    const changePage = (p: number) => {
+        navigate(`${Path.PACKS}/${filter}/${p}`)
+    }
     const pageCount = useAppSelector(state => state.packs.pageCount)
 
     useEffect(() => {
-        dispatch(getPacksTC(packsFilter))
-    }, [packsFilter])
+        dispatch(getPacksTC(
+          packsFilter && packsFilter !== 'undefined' ? packsFilter : '',
+          currentPage ? Number(currentPage) : 1)
+        )
+    }, [packsFilter, currentPage])
 
     return (
         <>
@@ -115,7 +121,11 @@ export const PacksListContainer = () => {
 
                     <div className={style.tools}>
                         <Search/>
-                        <PacksFilter filterValue={filter ? 'my' : 'all'} changeFilter={changeFilterCallback} />
+                        <PacksFilter
+                          filterValue={
+                          filter && filter !=='undefined' ? 'my' : 'all'
+                        }
+                          changeFilter={changeFilterCallback} />
                         <CardsNumberSlider/>
                         <DisableFilter/>
                     </div>
@@ -124,12 +134,10 @@ export const PacksListContainer = () => {
 
                     <Paginator
                         portionSize={pageCount}
-                        currentPage={2}
+                        currentPage={Number(currentPage)}
                         totalItemsCount={100}
                         pageSize={pageCount}
-                        onPageChanged={() => {
-                        }}
-                    />
+                        onPageChanged={changePage}/>
                 </div>
             }
         </>

@@ -31,10 +31,11 @@ export const authAPI = {
 }
 
 export const packAPI = {
-    getPack(userId: string) {
+    getPack(userId: string, currentPage: number) {
         return instance.get<PacksResponseType>('cards/pack', {params: {
           user_id: userId,
-            pageCount: 10
+            pageCount: 10,
+            page: currentPage
         }})
     },
     createPack(createPackData: CreatePackType) {

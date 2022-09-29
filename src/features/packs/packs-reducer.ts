@@ -24,10 +24,10 @@ export const setPacks = (cardPacks: PackType[]) => ({type: 'PACKS/SET-PACKS', pa
 export const setPageCount = (selectedPageCount: number) => ({type: 'PACKS/SET-PAGE-COUNT', payload: {selectedPageCount}} as const)
 
 //thunks
-export const getPacksTC = (userId: string): AppThunkType => async dispatch => {
+export const getPacksTC = (userId: string, currentPage: number): AppThunkType => async dispatch => {
     dispatch(setAppStatusAC('loading'))
     try {
-        const res = await packAPI.getPack(userId);
+        const res = await packAPI.getPack(userId, currentPage);
         console.log(res)
         dispatch(setPacks(res.data.cardPacks))
     } finally {
