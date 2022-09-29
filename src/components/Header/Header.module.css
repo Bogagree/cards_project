@@ -8,3 +8,20 @@
     background: #FCFCFC;
     box-shadow: 0 2px 10px rgba(109, 109, 109, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
+
+.headerUser {
+    display: flex;
+}
+
+.headerName {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    align-self:center;
+}
+
+.headerAvatar {
+    width: 36px;
+    height: 36px;
+    margin-left: 12px;
+}

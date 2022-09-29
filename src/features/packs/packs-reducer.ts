@@ -3,15 +3,16 @@ import {packAPI, PackType} from "../../api/cards-api";
 import {setAppStatusAC} from "../../app/app-reducer";
 
 
-const PacksinitialState = {
-    cardPacks: [] as PackType[]
+const PacksInitialState = {
+    cardPacks: [] as PackType[],
+    pageCount: 10
 }
 
 
-export const packsReducer = (state: PacksStateType = PacksinitialState, action: PackActionType): PacksStateType => {
+export const packsReducer = (state: PacksStateType = PacksInitialState, action: PackActionType): PacksStateType => {
     switch (action.type) {
         case "PACKS/SET-PACKS":
-        return {...state,  cardPacks: [...action.payload.cardPacks]}
+        return {...state, cardPacks: [...action.payload.cardPacks]}
         default:
             return state
     }
@@ -20,6 +21,7 @@ export const packsReducer = (state: PacksStateType = PacksinitialState, action: 
 
 //actions
 export const setPacks = (cardPacks: PackType[]) => ({type: 'PACKS/SET-PACKS', payload: {cardPacks}} as const)
+export const setPageCount = (selectedPageCount: number) => ({type: 'PACKS/SET-PAGE-COUNT', payload: {selectedPageCount}} as const)
 
 //thunks
 export const getPacksTC = (userId: string): AppThunkType => async dispatch => {
@@ -35,4 +37,6 @@ export const getPacksTC = (userId: string): AppThunkType => async dispatch => {
 
 // types
 export type PackActionType = ReturnType<typeof setPacks>
-export type PacksStateType = typeof PacksinitialState;
+    | ReturnType<typeof setPageCount>
+
+export type PacksStateType = typeof PacksInitialState;

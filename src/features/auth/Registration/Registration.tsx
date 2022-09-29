@@ -22,7 +22,7 @@ console.log(isRegistered)
 
     return (
         <>
-            <div className={style.container}>
+            <div className={style.registration}>
                 <h2>Sign up</h2>
                 <button onClick={pingOrLogOut}>ping</button>
                 <RegistrationForm/>

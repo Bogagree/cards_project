@@ -1,13 +1,13 @@
 .wrapper {
-  width: 100%;
+  max-width: 1280px;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 0 auto;
 }
 .form {
   width: 413px;
-  /*height: 552px;*/
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -15,6 +15,7 @@
   box-sizing: border-box;
   box-shadow: 0 1px 4px 1px rgb(0 0 0 / 25%);
 }
+
 .title {
 
   margin: 0 0 41px 0;

@@ -1,5 +1,7 @@
-import React, {useState} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import style from "./Paginator.module.css";
+import {useAppDispatch, useAppSelector} from "../../app/store";
+import {getPacksTC, setPageCount} from "../../features/packs/packs-reducer";
 
 export type PaginatorPropsType = {
     totalItemsCount: number
@@ -15,8 +17,10 @@ export const Paginator: React.FC<PaginatorPropsType> = (
         currentPage,
         pageSize,
         onPageChanged,
-        portionSize = 10
+        portionSize
     }) => {
+
+    const dispatch = useAppDispatch()
 
     const [portionNumber, setPortionNumber] = useState(1)
 
@@ -40,6 +44,10 @@ export const Paginator: React.FC<PaginatorPropsType> = (
         setPortionNumber(portionNumber + 1)
     }
 
+    const onChangeCallback = (e: ChangeEvent<HTMLSelectElement>) => {
+        console.log(e)
+        // dispatch(getPacksTC())
+    }
 
     return (
         <div className={style.paginator}>
@@ -71,6 +79,15 @@ export const Paginator: React.FC<PaginatorPropsType> = (
                     </button>
                 </>
             }
+
+            <select onChange={onChangeCallback} className={style.select}>
+                <option value='5'>5</option>
+                <option value='10'>10</option>
+                <option value='15'>15</option>
+                <option value='20'>20</option>
+                <option value='25'>25</option>
+            </select>
+
 
         </div>
     );

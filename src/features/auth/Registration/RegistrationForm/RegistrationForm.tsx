@@ -1,5 +1,5 @@
 import React from 'react';
-import style from "../Registration.module.css";
+import style from "./RegistrationForm.module.css";
 import {CommonInputText} from "../../../../common/InputText/CommonInputText";
 import {CommonButton} from "../../../../common/Button/CommonButton";
 import {NavLink} from "react-router-dom";
@@ -55,7 +55,7 @@ export const RegistrationForm = () => {
     })
 
     return (
-        <div>
+        <div className={style.registrationContainer}>
             <form
                 className={style.formContainer}
                 onSubmit={formik.handleSubmit}
