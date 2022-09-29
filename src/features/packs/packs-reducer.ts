@@ -22,17 +22,26 @@ export const packsReducer = (state: PacksStateType = PacksInitialState, action: 
 //actions
 export const setPacks = (cardPacks: PackType[]) => ({type: 'PACKS/SET-PACKS', payload: {cardPacks}} as const)
 export const setPageCount = (selectedPageCount: number) => ({type: 'PACKS/SET-PAGE-COUNT', payload: {selectedPageCount}} as const)
+export const createPackCardsAC = () => ({type: 'PACKS/CREATE-PACK-CARDS'})
 
 //thunks
 export const getPacksTC = (userId: string, currentPage: number): AppThunkType => async dispatch => {
     dispatch(setAppStatusAC('loading'))
     try {
         const res = await packAPI.getPack(userId, currentPage);
-        console.log(res)
         dispatch(setPacks(res.data.cardPacks))
     } finally {
         dispatch(setAppStatusAC('succeeded'))
     }
+}
+
+export const createPackCardsTC = (): AppThunkType => async dispatch => {
+  try {
+    await packAPI.createPack({name: 'new Pack'})
+    dispatch(getPacksTC('', 1))
+  }catch (e) {
+    console.log(e)
+  }
 }
 
 // types

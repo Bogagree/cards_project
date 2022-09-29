@@ -39,7 +39,7 @@ export const packAPI = {
         }})
     },
     createPack(createPackData: CreatePackType) {
-        return instance.post<CreatePackType, AxiosResponse<NewCardsPackType>>('cards/pack', {createPackData})
+        return instance.post<CreatePackType, AxiosResponse<NewCardsPackType>>('cards/pack', {cardsPack: createPackData})
     },
     updatePack(updatePackData: UpdatePackType) {
         return instance.put<UpdatePackType, AxiosResponse<UpdateCardsPackType>>('cards/pack', {updatePackData})
