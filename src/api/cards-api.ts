@@ -32,7 +32,10 @@ export const authAPI = {
 
 export const packAPI = {
     getPack(userId: string) {
-        return instance.get<PacksResponseType>('cards/pack', {params: {user_id: userId}})
+        return instance.get<PacksResponseType>('cards/pack', {params: {
+          user_id: userId,
+            pageCount: 10
+        }})
     },
     createPack(createPackData: CreatePackType) {
         return instance.post<CreatePackType, AxiosResponse<NewCardsPackType>>('cards/pack', {createPackData})
