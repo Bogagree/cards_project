@@ -17,3 +17,7 @@
   align-items: center;
   justify-content: space-between;
 }
+.packMenu {
+  display: flex;
+  align-items: center;
+}

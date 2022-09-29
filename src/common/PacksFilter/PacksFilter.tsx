@@ -4,11 +4,12 @@ import style from './PacksFilter.module.css'
 export type FilterType = 'all' | 'my'
 type PropsType = {
   changeFilter: (value: FilterType) => void
+  filterValue: FilterType
 }
 
-export const PacksFilter: React.FC<PropsType> = ({changeFilter}) => {
+export const PacksFilter: React.FC<PropsType> = ({changeFilter, filterValue}) => {
 
-    const [filter, setFilter] = useState<FilterType>('all')
+    const [filter, setFilter] = useState<FilterType>(filterValue)
 
     const myFilterHandler = () => {
         setFilter('my')

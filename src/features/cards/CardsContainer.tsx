@@ -10,6 +10,7 @@ import {useAppDispatch, useAppSelector} from "../../app/store";
 import {createCardTC, getCardsTC} from "./cards-reducer";
 import {Preloader} from "../../common/Preloader/Preloader";
 import {CommonButton} from "../../common/Button/CommonButton";
+import {PackMenu} from "./PackMenu";
 
 export const CardsContainer = () => {
 
@@ -17,9 +18,10 @@ export const CardsContainer = () => {
   const cards = useAppSelector(state => state.cards.cards)
   const appStatus = useAppSelector(state => state.app.appStatus)
   const userId = useAppSelector(state => state.auth.user._id)
+  const packUserId = useAppSelector(state => state.cards.packUserId)
+  const packName = useAppSelector(state => state.cards.packName)
   const {packId} = useParams<'packId'>()
-  const currentPack = useAppSelector(state => state.packs.cardPacks.find(p => p._id === packId))
-  const myPack = userId === currentPack?.user_id
+  const myPack = userId === packUserId
 
   const handleAddCard = () => {
     packId && dispatch(createCardTC({
@@ -29,45 +31,45 @@ export const CardsContainer = () => {
 
   useEffect(() => {
     packId && dispatch(getCardsTC(packId))
+  }, [])
 
-    // instance.post<CreatePackType, AxiosResponse<NewCardsPackType>>('cards/pack', {cardsPack: {name: "My New Pack"}})
-    //   .then(res => console.log(res))
-  },[])
-
-    return (
-        <div className={style.wrapper}>
-          <BackArrowButton path={Path.PACKS} title={'Back to Packs list'}/>
-          <div className={style.cardsListHeader}>
-          <h2>{currentPack?.name}</h2>
-            {myPack &&
-              <CommonButton
-                onClick={handleAddCard}
-                disabled={appStatus === 'loading'}
-              >
-                Add Card
-              </CommonButton>}
+  return (
+    <div className={style.wrapper}>
+      <BackArrowButton path={Path.PACKS} title={'Back to Packs list'}/>
+      <div className={style.cardsListHeader}>
+        <div className={style.packMenu}>
+          <h2>{packName}</h2>
+          {myPack && <PackMenu/>}
         </div>
+        {myPack &&
+          <CommonButton
+            onClick={handleAddCard}
+            disabled={appStatus === 'loading'}
+          >
+            Add Card
+          </CommonButton>}
+      </div>
 
-          {appStatus === 'loading' ? <Preloader /> :
-            <div>
-            <div className={style.tools}>
-              <Search/>
-            </div>
+      {appStatus === 'loading' ? <Preloader/> :
+        <div>
+          <div className={style.tools}>
+            <Search/>
+          </div>
 
-            <div className={style.cardsList}>
-              <CardsList cardsList={cards}/>
-            </div>
+          <div className={style.cardsList}>
+            <CardsList cardsList={cards}/>
+          </div>
 
-            <Paginator
-              portionSize={10}
-              currentPage={2}
-              totalItemsCount={100}
-              pageSize={10}
-              onPageChanged={() => {
-              }}
-            />
-          </div>}
-        </div>
-    );
+          <Paginator
+            portionSize={10}
+            currentPage={2}
+            totalItemsCount={100}
+            pageSize={10}
+            onPageChanged={() => {
+            }}
+          />
+        </div>}
+    </div>
+  );
 };
 

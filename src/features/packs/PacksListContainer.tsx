@@ -114,7 +114,7 @@ export const PacksListContainer = () => {
 
                     <div className={style.tools}>
                         <Search/>
-                        <PacksFilter changeFilter={changeFilterCallback} />
+                        <PacksFilter filterValue={filter ? 'my' : 'all'} changeFilter={changeFilterCallback} />
                         <CardsNumberSlider/>
                         <DisableFilter/>
                     </div>

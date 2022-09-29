@@ -53,17 +53,23 @@ beforeEach(() => {
       updated: '02.03.01',
       __v: 0,
     },
-    ]
+    ],
+    packUserId: '',
+    packName: ''
   }
 })
 
 test('set cards', () => {
-  const state = {cards: []}
-  const newState = cardsReducer(state, setCardsAC(initialState.cards))
+  const state = {cards: [], packUserId: '', packName: ''}
+  const newState = cardsReducer(state, setCardsAC(initialState))
   expect(newState.cards.length).toBe(3)
 })
 test('update cards data', () => {
-  const newCardsData = [initialState.cards[0], initialState.cards[1]]
+  const newCardsData = {
+    cards: [initialState.cards[0], initialState.cards[1]],
+    packUserId: '',
+    packName: ''
+  }
   const newState = cardsReducer(initialState, setCardsAC(newCardsData))
   expect(newState.cards.length).toBe(2)
 })

@@ -51,7 +51,8 @@ export const packAPI = {
 export const cardAPI = {
     getCard(packID: string) {
         return instance.get<ResponseCardsType>(`cards/card`, {params: {
-            cardsPack_id: packID
+            cardsPack_id: packID,
+            pageCount: 10
           }})
     },
     createCard(createCardData: CreateCardsType) {
