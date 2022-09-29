@@ -30,7 +30,7 @@ export const PackItem: React.FC<PropsType> = ({packData}) => {
     navigate(`${Path.CARDS}/${packData._id}`)
   }
   const handleLearn = () => {
-    navigate(`${Path.CARDS}/${packData._id}`)
+    console.log('learn pack')
   }
   const handleDelete = () => {
     console.log('delete pack')

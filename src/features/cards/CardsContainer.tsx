@@ -16,7 +16,10 @@ export const CardsContainer = () => {
   const dispatch = useAppDispatch()
   const cards = useAppSelector(state => state.cards.cards)
   const appStatus = useAppSelector(state => state.app.appStatus)
+  const userId = useAppSelector(state => state.auth.user._id)
   const {packId} = useParams<'packId'>()
+  const currentPack = useAppSelector(state => state.packs.cardPacks.find(p => p._id === packId))
+  const myPack = userId === currentPack?.user_id
 
   const handleAddCard = () => {
     packId && dispatch(createCardTC({
@@ -35,8 +38,14 @@ export const CardsContainer = () => {
         <div className={style.wrapper}>
           <BackArrowButton path={Path.PACKS} title={'Back to Packs list'}/>
           <div className={style.cardsListHeader}>
-          <h2>PackName</h2>
-          <CommonButton onClick={handleAddCard}>Add Card</CommonButton>
+          <h2>{currentPack?.name}</h2>
+            {myPack &&
+              <CommonButton
+                onClick={handleAddCard}
+                disabled={appStatus === 'loading'}
+              >
+                Add Card
+              </CommonButton>}
         </div>
 
           {appStatus === 'loading' ? <Preloader /> :
