@@ -11,7 +11,7 @@ const PacksinitialState = {
 export const packsReducer = (state: PacksStateType = PacksinitialState, action: PackActionType): PacksStateType => {
     switch (action.type) {
         case "PACKS/SET-PACKS":
-        return {...state,  cardPacks: [ ...state.cardPacks, ...action.payload.cardPacks]}
+        return {...state,  cardPacks: [...action.payload.cardPacks]}
         default:
             return state
     }
@@ -22,10 +22,10 @@ export const packsReducer = (state: PacksStateType = PacksinitialState, action: 
 export const setPacks = (cardPacks: PackType[]) => ({type: 'PACKS/SET-PACKS', payload: {cardPacks}} as const)
 
 //thunks
-export const getPacksTC = (): AppThunkType => async dispatch => {
+export const getPacksTC = (userId: string): AppThunkType => async dispatch => {
     dispatch(setAppStatusAC('loading'))
     try {
-        const res = await packAPI.getPack();
+        const res = await packAPI.getPack(userId);
         console.log(res)
         dispatch(setPacks(res.data.cardPacks))
     } finally {

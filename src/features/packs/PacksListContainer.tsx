@@ -1,6 +1,6 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {CardsNumberSlider} from "../../common/DoubleRangeSlider/CardsNumberSlider";
-import {PacksFilter} from "../../common/PacksFilter/PacksFilter";
+import {FilterType, PacksFilter} from "../../common/PacksFilter/PacksFilter";
 import {Search} from "../../common/Search/Search";
 import style from "./PacksListContainer.module.css"
 import {DisableFilter} from "../../common/DisableFilter/DisableFilter";
@@ -9,8 +9,8 @@ import {PacksList} from "./packsList/PacksList";
 import {useAppDispatch, useAppSelector} from "../../app/store";
 import {getPacksTC} from "./packs-reducer";
 import {Preloader} from "../../common/Preloader/Preloader";
-import {CreatePackType, instance, NewCardsPackType} from "../../api/cards-api";
-import {AxiosResponse} from "axios";
+import {useNavigate, useParams} from "react-router-dom";
+import {Path} from "../../common/enum/path";
 
 export const testPacksListData = [
     {
@@ -87,12 +87,25 @@ export const testPacksListData = [
 export const PacksListContainer = () => {
 
     const dispatch = useAppDispatch()
+    const navigate = useNavigate()
+    const {filter} = useParams<'filter'>()
 
     const appStatus = useAppSelector(state => state.app.appStatus)
+    const userId = useAppSelector(state => state.auth.user._id)
+    const [packsFilter, setPacksFilter] = useState(filter || '')
+    const changeFilterCallback = (value: FilterType) => {
+      if(value === 'my'){
+        setPacksFilter(userId)
+        navigate(`${Path.PACKS}/${userId}`)
+      }else{
+        setPacksFilter('')
+        navigate(`${Path.PACKS}`)
+      }
+    }
 
     useEffect(() => {
-        dispatch(getPacksTC())
-    }, [])
+        dispatch(getPacksTC(packsFilter))
+    }, [packsFilter])
 
     return (
         <>
@@ -101,7 +114,7 @@ export const PacksListContainer = () => {
 
                     <div className={style.tools}>
                         <Search/>
-                        <PacksFilter/>
+                        <PacksFilter changeFilter={changeFilterCallback} />
                         <CardsNumberSlider/>
                         <DisableFilter/>
                     </div>
