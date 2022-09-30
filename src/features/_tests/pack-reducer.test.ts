@@ -9,7 +9,12 @@ let pack: PackType
 beforeEach(() => {
     state = {
         cardPacks: testPacksListData,
-        pageCount: 10
+        pageCount: 10,
+        queryParams: {},
+        page: 1,
+        cardPacksTotalCount: 10,
+        maxCardsCount: 0,
+        minCardsCount: 0,
     }
     pack = {
         cardsCount: 100500,
@@ -29,6 +34,7 @@ beforeEach(() => {
         __v: 0,
         _id: "6331704b3c22f21db471fa5a",
     }
+
 })
 
 test('set cards packs', () => {

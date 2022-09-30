@@ -4,15 +4,13 @@ import {FilterType, PacksFilter} from "../../common/PacksFilter/PacksFilter";
 import {Search} from "../../common/Search/Search";
 import style from "./PacksListContainer.module.css"
 import {DisableFilter} from "../../common/DisableFilter/DisableFilter";
-import {Paginator} from "../../common/Paginator/Paginator";
-import {PacksList} from "./packsList/PacksList";
 import {useAppDispatch, useAppSelector} from "../../app/store";
-import {getPacksTC} from "./packs-reducer";
+import {createPackCardsTC, getPacksTC} from "./packs-reducer";
 import {Preloader} from "../../common/Preloader/Preloader";
-import Pagination from "@mui/material/Pagination";
-import {Box, FormControl, MenuItem, Select, SelectChangeEvent} from "@mui/material";
-import {RequestStatus} from "../../common/enum/requestStatus";
-import {RequestStatusType} from "../../app/app-reducer";
+import {Path} from "../../common/enum/path";
+import {useNavigate, useParams} from "react-router-dom";
+import {PacksList} from "./packsList/PacksList";
+import {PacksFooter} from "./PacksFooter/PacksFooter";
 
 export const testPacksListData = [
     {
@@ -88,38 +86,43 @@ export const testPacksListData = [
 
 export const PacksListContainer = () => {
 
-  const dispatch = useAppDispatch()
-  const navigate = useNavigate()
-  const {filter, currentPage} = useParams<'filter' | 'currentPage'>()
+    const dispatch = useAppDispatch()
+    const navigate = useNavigate()
 
-  const appStatus = useAppSelector(state => state.app.appStatus)
-  const userId = useAppSelector(state => state.auth.user._id)
-  const cardPacks = useAppSelector(state => state.packs.cardPacks)
-  const [packsFilter, setPacksFilter] = useState(filter || '')
-  const changeFilterCallback = (value: FilterType) => {
-    if (value === 'my') {
-      setPacksFilter(userId)
-      navigate(`${Path.PACKS}/${userId}/${currentPage}`)
-    } else {
-      setPacksFilter('')
-      navigate(`${Path.PACKS}`)
-    }
-  }
-  const changePage = (p: number) => {
-    navigate(`${Path.PACKS}/${filter}/${p}`)
-  }
-  const pageCount = useAppSelector(state => state.packs.pageCount)
-  const handleAddPackList = () => {
-    dispatch(createPackCardsTC())
-  }
+    const {filter, currentPage} = useParams<'filter' | 'currentPage'>()
 
-  useEffect(() => {
-    console.log('rerender')
-    dispatch(getPacksTC(
-      packsFilter && packsFilter !== 'undefined' ? packsFilter : '',
-      currentPage && currentPage !== 'undefined' ? Number(currentPage) : 1)
+    const userId = useAppSelector(state => state.auth.user._id)
+    const packQueryParams = useAppSelector(state => state.packs.queryParams)
+    const appStatus = useAppSelector(state => state.app.appStatus)
+
+    const [packsFilter, setPacksFilter] = useState(filter || '')
+
+    useEffect(() => {
+            console.log('rerender')
+            dispatch(getPacksTC(packQueryParams))
+        },
+        [packQueryParams]
     )
-  }, [packsFilter, filter, currentPage])
+
+    const changeFilterCallback = (value: FilterType) => {
+        if (value === 'my') {
+            setPacksFilter(userId)
+            navigate(`${Path.PACKS}/${userId}/${currentPage}`)
+        } else {
+            setPacksFilter('')
+            navigate(`${Path.PACKS}`)
+        }
+    }
+    const changePage = (p: number) => {
+        navigate(`${Path.PACKS}/${filter}/${p}`)
+    }
+
+
+    const handleAddPackList = () => {
+        dispatch(createPackCardsTC())
+    }
+
+
 
     return (
         <>
@@ -128,52 +131,19 @@ export const PacksListContainer = () => {
 
                     <div className={style.tools}>
                         <Search/>
-                        <PacksFilter/>
+                        <PacksFilter
+                            changeFilter={changeFilterCallback}
+                            filterValue={'all'}
+                        />
                         <CardsNumberSlider/>
                         <DisableFilter/>
                     </div>
 
-                        <PacksList/>
+                    <PacksList/>
 
-                    <div className={style.pagination}>
+                    <PacksFooter/>
 
-                        <Pagination
-                            count={+pageCount}
-                            showFirstButton
-                            showLastButton
-                            onChange={paginationCallback}
-                        />
 
-                        <Box sx={{minWidth: 120}}>
-                            <FormControl
-                                sx={{mt: '35px'}}
-                                size="small"
-                                variant="outlined"
-                                disabled={appStatus === 'loading' as RequestStatusType}
-                            >
-                                <Select
-                                    labelId="demo-simple-select-label"
-                                    id="demo-simple-select"
-                                    value={pageCount.toString()}
-                                    onChange={changePagesCount}
-                                >
-                                    <MenuItem value={5}>5</MenuItem>
-                                    <MenuItem value={10}>10</MenuItem>
-                                    <MenuItem value={20}>25</MenuItem>
-                                    <MenuItem value={50}>50</MenuItem>
-                                </Select>
-                            </FormControl>
-                        </Box>
-                    </div>
-
-                    {/*<Paginator*/}
-                    {/*    portionSize={pageCount}*/}
-                    {/*    currentPage={2}*/}
-                    {/*    totalItemsCount={100}*/}
-                    {/*    pageSize={pageCount}*/}
-                    {/*    onPageChanged={() => {*/}
-                    {/*    }}*/}
-                    {/*/>*/}
                 </div>
             }
         </>

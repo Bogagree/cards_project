@@ -6,7 +6,7 @@ import {
     setIsLogged,
     setIsRegistered,
     setNewPasswordSuccessAC,
-} from './auth-reducer';
+} from '../auth/auth-reducer';
 import {UserType} from '../../api/cards-api';
 
 let state: initialStateType

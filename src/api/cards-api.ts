@@ -1,5 +1,6 @@
 import axios, {AxiosResponse} from 'axios'
 import {LoginDataType, RegistrationDataType} from '../features/auth/auth-reducer';
+import {PacksParamsType} from "../features/packs/packs-reducer";
 
 export const instance = axios.create({
     // baseURL: process.env.REACT_APP_BACK_URL || 'http://localhost:7542/2.0/' ,
@@ -42,12 +43,12 @@ export const authAPI = {
 }
 
 export const packAPI = {
-    getPack(userId: string, currentPage: number) {
-        return instance.get<PacksResponseType>('cards/pack', {params: {
-          user_id: userId,
-            pageCount: 10,
-            page: currentPage
-        }})
+    getPack(packParam: PacksParamsType) {
+        return instance.get<PacksResponseType>(`cards/pack`,
+            {
+                params: packParam
+                }
+            )
     },
     createPack(createPackData: CreatePackType) {
         return instance.post<CreatePackType, AxiosResponse<NewCardsPackType>>('cards/pack', {cardsPack: createPackData})
@@ -62,10 +63,12 @@ export const packAPI = {
 
 export const cardAPI = {
     getCard(packID: string) {
-        return instance.get<ResponseCardsType>(`cards/card`, {params: {
-            cardsPack_id: packID,
-            pageCount: 10
-          }})
+        return instance.get<ResponseCardsType>(`cards/card`, {
+            params: {
+                cardsPack_id: packID,
+                pageCount: 10
+            }
+        })
     },
     createCard(createCardData: CreateCardsType) {
         return instance.post('cards/card', {card: createCardData})
@@ -139,12 +142,12 @@ export type PasswordDataResponseType = {
 
 //type packsAPI
 export type PacksRequestType = {
-  min?: string
-  max?: string
-  sortPacks?: string
-  page?: number
-  pageCount?: number
-  user_id?: string
+    min?: string
+    max?: string
+    sortPacks?: string
+    page?: number
+    pageCount?: number
+    user_id?: string
 }
 export type PacksResponseType = {
     cardPacks: PackType[]

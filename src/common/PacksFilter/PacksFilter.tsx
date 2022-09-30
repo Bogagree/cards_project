@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import style from './PacksFilter.module.css'
 
 export type FilterType = 'all' | 'my'
+
 type PropsType = {
   changeFilter: (value: FilterType) => void
   filterValue: FilterType
