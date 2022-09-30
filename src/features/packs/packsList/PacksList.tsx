@@ -8,6 +8,7 @@ import {useAppSelector} from "../../../app/store";
 export const PacksList: React.FC = () => {
 
   const cardPacks = useAppSelector(state => state.packs.cardPacks)
+  console.log('cardPacks come', cardPacks)
 
   return (
     <div>

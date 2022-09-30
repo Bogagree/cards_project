@@ -31,15 +31,16 @@ export const PacksFooter = () => {
 
             <Pagination
                 sx={{ mt: '40px' }}
-                color="primary"
-                count={pageNumbers || 0}
-                page={page}
+                variant="outlined"
                 shape="rounded"
+                color="primary"
                 size="medium"
+                page={page}
+                count={cardPacksTotalCount}
                 onChange={onPageChange}
                 showFirstButton
                 showLastButton
-
+                disabled={appStatus === 'loading' as RequestStatusType}
             />
 
             <Box sx={{minWidth: 120}}>

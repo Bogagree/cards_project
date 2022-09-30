@@ -1,5 +1,5 @@
 import {AppThunkType} from "../../app/store";
-import {packAPI, PackType} from "../../api/cards-api";
+import {packAPI, PacksResponseType, PackType} from "../../api/cards-api";
 import {setAppStatusAC} from "../../app/app-reducer";
 import {handleServerNetworkError} from "../../common/Error-utils/error-utils";
 
@@ -18,9 +18,9 @@ const PacksInitialState = {
 export const packsReducer = (state: PacksStateType = PacksInitialState, action: PackActionType): PacksStateType => {
     switch (action.type) {
         case "PACKS/SET-PACKS":
-            return {...state, cardPacks: [...action.payload.cardPacks]}
+            return { ...state, ...action.payload.packs}
         case "PACKS/SET-PAGE-COUNT":
-            return {...state, ...action.payload}
+            return {...state, pageCount: action.payload.pageCount}
         case "PACKS/SET-PACKS-PARAMS":
             return {...state, queryParams: {...action.payload.queryParams}}
         default:
@@ -30,10 +30,10 @@ export const packsReducer = (state: PacksStateType = PacksInitialState, action: 
 
 
 //actions
-export const setPacks = (cardPacks: PackType[]) => ({type: 'PACKS/SET-PACKS', payload: {cardPacks}} as const)
-export const setPageCount = (selectedPageCount: number) => ({
+export const setPacks = (packs: PacksResponseType) => ({type: 'PACKS/SET-PACKS', payload: {packs}} as const)
+export const setPageCount = (pageCount: number) => ({
     type: 'PACKS/SET-PAGE-COUNT',
-    payload: {selectedPageCount}
+    payload: {pageCount: pageCount}
 } as const)
 export const setPacksParams = (queryParams: PacksParamsType) =>
     ({type: 'PACKS/SET-PACKS-PARAMS', payload: {queryParams}} as const);
@@ -44,7 +44,8 @@ export const getPacksTC = (queryParams: PacksParamsType): AppThunkType => async 
     try {
         const res = await packAPI.getPack(queryParams);
         console.log(res)
-        dispatch(setPacks(res.data.cardPacks))
+        dispatch(setPacks(res.data))
+        dispatch(setPageCount(res.data.pageCount))
     } catch (e) {
         handleServerNetworkError(e, dispatch)
     } finally {
