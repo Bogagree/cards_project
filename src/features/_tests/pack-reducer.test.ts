@@ -9,7 +9,7 @@ let pack: PackType
 beforeEach(() => {
     state = {
         cardPacks: testPacksListData,
-        pageCount: '10'
+        pageCount: 10
     }
     pack = {
         cardsCount: 100500,

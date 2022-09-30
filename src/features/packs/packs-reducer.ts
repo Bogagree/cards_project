@@ -5,7 +5,7 @@ import {setAppStatusAC} from "../../app/app-reducer";
 
 const PacksInitialState = {
     cardPacks: [] as PackType[],
-    pageCount: '10'
+    pageCount: 0
 }
 
 
@@ -14,7 +14,7 @@ export const packsReducer = (state: PacksStateType = PacksInitialState, action: 
         case "PACKS/SET-PACKS":
             return {...state, cardPacks: [...state.cardPacks, ...action.payload.cardPacks]}
         case "PACKS/SET-PAGE-COUNT":
-            return {...state, ...action.payload}
+            return {...state, pageCount: action.payload.selectedPageCount}
         default:
             return state
     }
@@ -23,14 +23,13 @@ export const packsReducer = (state: PacksStateType = PacksInitialState, action: 
 
 //actions
 export const setPacks = (cardPacks: PackType[]) => ({type: 'PACKS/SET-PACKS', payload: {cardPacks}} as const)
-export const setPageCount = (selectedPageCount: number) => ({type: 'PACKS/SET-PAGE-COUNT', payload: {selectedPageCount}} as const)
+export const setPageCount = (selectedPageCount: number) => ({type: 'PACKS/SET-PAGE-COUNT', payload: {selectedPageCount} } as const)
 
 //thunks
 export const getPacksTC = (): AppThunkType => async dispatch => {
     dispatch(setAppStatusAC('loading'))
     try {
         const res = await packAPI.getPack();
-        console.log(res)
         dispatch(setPacks(res.data.cardPacks))
     } finally {
         dispatch(setAppStatusAC('succeeded'))

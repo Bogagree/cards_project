@@ -87,15 +87,14 @@ export const testPacksListData = [
 
 export const PacksListContainer = () => {
 
-    useEffect(() => {
-        dispatch(getPacksTC())
-    }, [])
-
     const dispatch = useAppDispatch()
 
     const appStatus = useAppSelector(state => state.app.appStatus)
     const pageCount = useAppSelector(state => state.packs.pageCount)
 
+    useEffect(() => {
+        dispatch(getPacksTC())
+    }, [])
 
 
     const paginationCallback = () => {
@@ -105,6 +104,8 @@ export const PacksListContainer = () => {
     const changePagesCount = (event: SelectChangeEvent): void => {
         dispatch(setPageCount(+event.target.value))
     };
+
+    console.log(pageCount)
 
     return (
         <>
@@ -118,19 +119,20 @@ export const PacksListContainer = () => {
                         <DisableFilter/>
                     </div>
 
-                        <PacksList/>
+                    <PacksList/>
 
                     <div className={style.pagination}>
+
                         <Pagination
-                            count={10}
+                            count={+pageCount}
                             showFirstButton
                             showLastButton
                             onChange={paginationCallback}
                         />
 
-                        <Box sx={{ minWidth: 120 }}>
+                        <Box sx={{minWidth: 120}}>
                             <FormControl
-                                sx={{ mt: '35px' }}
+                                sx={{mt: '35px'}}
                                 size="small"
                                 variant="outlined"
                                 disabled={appStatus === 'loading' as RequestStatusType}
@@ -138,7 +140,7 @@ export const PacksListContainer = () => {
                                 <Select
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"
-                                    value={pageCount }
+                                    value={pageCount.toString()}
                                     onChange={changePagesCount}
                                 >
                                     <MenuItem value={5}>5</MenuItem>
