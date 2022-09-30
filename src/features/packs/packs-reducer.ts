@@ -5,7 +5,7 @@ import {setAppStatusAC} from "../../app/app-reducer";
 
 const PacksInitialState = {
     cardPacks: [] as PackType[],
-    pageCount: 10
+    pageCount: '10'
 }
 
 
@@ -13,7 +13,7 @@ export const packsReducer = (state: PacksStateType = PacksInitialState, action: 
     switch (action.type) {
         case "PACKS/SET-PACKS":
             return {...state, cardPacks: [...state.cardPacks, ...action.payload.cardPacks]}
-        case "PACKS/SET-PACKS":
+        case "PACKS/SET-PAGE-COUNT":
             return {...state, ...action.payload}
         default:
             return state

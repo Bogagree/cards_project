@@ -9,7 +9,7 @@ let pack: PackType
 beforeEach(() => {
     state = {
         cardPacks: testPacksListData,
-        pageCount: 10
+        pageCount: '10'
     }
     pack = {
         cardsCount: 100500,
@@ -36,4 +36,4 @@ test('set cards packs', () => {
 
     expect(newState.cardPacks.length).toBe(5)
     expect(newState.cardPacks[4].user_name).toBe('Bogagree')
-})
+});

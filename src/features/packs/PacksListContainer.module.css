@@ -1,6 +1,6 @@
 .wrapper {
-  width: 90%;
-  margin: 0 auto;
+    width: 90%;
+    margin: 0 auto;
 }
 
 .tools {
@@ -8,5 +8,10 @@
     justify-content: space-between;
     flex-wrap: wrap;
     align-items: end;
-  margin-bottom: 24px;
+    margin-bottom: 24px;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
 }

@@ -4,13 +4,14 @@ import {PacksFilter} from "../../common/PacksFilter/PacksFilter";
 import {Search} from "../../common/Search/Search";
 import style from "./PacksListContainer.module.css"
 import {DisableFilter} from "../../common/DisableFilter/DisableFilter";
-import {Paginator} from "../../common/Paginator/Paginator";
 import {PacksList} from "./packsList/PacksList";
 import {useAppDispatch, useAppSelector} from "../../app/store";
-import {getPacksTC} from "./packs-reducer";
+import {getPacksTC, setPageCount} from "./packs-reducer";
 import {Preloader} from "../../common/Preloader/Preloader";
-import {CreatePackType, instance, NewCardsPackType} from "../../api/cards-api";
-import {AxiosResponse} from "axios";
+import Pagination from "@mui/material/Pagination";
+import {Box, FormControl, MenuItem, Select, SelectChangeEvent} from "@mui/material";
+import {RequestStatus} from "../../common/enum/requestStatus";
+import {RequestStatusType} from "../../app/app-reducer";
 
 export const testPacksListData = [
     {
@@ -86,18 +87,28 @@ export const testPacksListData = [
 
 export const PacksListContainer = () => {
 
+    useEffect(() => {
+        dispatch(getPacksTC())
+    }, [])
+
     const dispatch = useAppDispatch()
 
     const appStatus = useAppSelector(state => state.app.appStatus)
     const pageCount = useAppSelector(state => state.packs.pageCount)
 
-    useEffect(() => {
-        dispatch(getPacksTC())
-    }, [])
+
+
+    const paginationCallback = () => {
+
+    };
+
+    const changePagesCount = (event: SelectChangeEvent): void => {
+        dispatch(setPageCount(+event.target.value))
+    };
 
     return (
         <>
-            {appStatus === 'loading' ? <Preloader/> :
+            {appStatus === RequestStatus.LOADING ? <Preloader/> :
                 <div className={style.wrapper}>
 
                     <div className={style.tools}>
@@ -109,14 +120,44 @@ export const PacksListContainer = () => {
 
                         <PacksList/>
 
-                    <Paginator
-                        portionSize={pageCount}
-                        currentPage={2}
-                        totalItemsCount={100}
-                        pageSize={pageCount}
-                        onPageChanged={() => {
-                        }}
-                    />
+                    <div className={style.pagination}>
+                        <Pagination
+                            count={10}
+                            showFirstButton
+                            showLastButton
+                            onChange={paginationCallback}
+                        />
+
+                        <Box sx={{ minWidth: 120 }}>
+                            <FormControl
+                                sx={{ mt: '35px' }}
+                                size="small"
+                                variant="outlined"
+                                disabled={appStatus === 'loading' as RequestStatusType}
+                            >
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    value={pageCount }
+                                    onChange={changePagesCount}
+                                >
+                                    <MenuItem value={5}>5</MenuItem>
+                                    <MenuItem value={10}>10</MenuItem>
+                                    <MenuItem value={20}>25</MenuItem>
+                                    <MenuItem value={50}>50</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Box>
+                    </div>
+
+                    {/*<Paginator*/}
+                    {/*    portionSize={pageCount}*/}
+                    {/*    currentPage={2}*/}
+                    {/*    totalItemsCount={100}*/}
+                    {/*    pageSize={pageCount}*/}
+                    {/*    onPageChanged={() => {*/}
+                    {/*    }}*/}
+                    {/*/>*/}
                 </div>
             }
         </>
