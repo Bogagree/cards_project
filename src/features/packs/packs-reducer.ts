@@ -10,7 +10,7 @@ const PacksInitialState = {
     maxCardsCount: 0,
     minCardsCount: 0,
     page: 1,
-    pageCount: 0,
+    pageCount: 5,
     queryParams: {pageCount: 5} as PacksParamsType
 }
 
