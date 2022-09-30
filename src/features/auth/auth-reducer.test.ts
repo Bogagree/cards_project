@@ -1,5 +1,11 @@
 import {
-    authReducer, initialStateType, loginAC, setIsLogged, setIsRegistered,
+    authReducer,
+    initialStateType,
+    loginAC,
+    setForgotPasswordSuccessAC,
+    setIsLogged,
+    setIsRegistered,
+    setNewPasswordSuccessAC,
 } from './auth-reducer';
 import {UserType} from '../../api/cards-api';
 
@@ -10,6 +16,8 @@ beforeEach(() => {
     state = {
         isLogged: false,
         isRegistered: false,
+        forgotPasswordSuccess: false,
+        newPasswordSuccess: false,
         user: {
             avatar: '',
             created: '',
@@ -62,17 +70,12 @@ test('set user info', () => {
     }
 })
 
-// test('forgot password success', () => {
-//     const forgotPass = authReducer(state, forgotPasswordSuccess(true))
-//     expect(forgotPass.forgotPasswordSuccess).toBe(true)
-// })
-//
-// test('set data email', () => {
-//     const setDataEmail = authReducer(state, setDataForgetPassword('hello@gmail.com'))
-//     expect(setDataEmail.forgetEmail).toBe('hello@gmail.com')
-// })
-//
-// test('set new password', () => {
-//     const newPass = authReducer(state, newPasswordSuccess(true))
-//     expect(newPass.newPasswordSuccess).toBe(true)
-// })
+test('forgot password success', () => {
+    const forgotPass = authReducer(state, setForgotPasswordSuccessAC(true))
+    expect(forgotPass.forgotPasswordSuccess).toBe(true)
+})
+
+test('set new password', () => {
+    const newPass = authReducer(state, setNewPasswordSuccessAC(true))
+    expect(newPass.newPasswordSuccess).toBe(true)
+})
