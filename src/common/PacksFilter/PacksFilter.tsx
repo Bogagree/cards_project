@@ -1,18 +1,24 @@
 import React, {useState} from 'react';
 import style from './PacksFilter.module.css'
 
-type FilterType = 'all' | 'my'
+export type FilterType = 'all' | 'my'
+type PropsType = {
+  changeFilter: (value: FilterType) => void
+  filterValue: FilterType
+}
 
-export const PacksFilter: React.FC = (props) => {
+export const PacksFilter: React.FC<PropsType> = ({changeFilter, filterValue}) => {
 
-    const [filter, setFilter] = useState<FilterType>('all')
+    const [filter, setFilter] = useState<FilterType>(filterValue)
 
     const myFilterHandler = () => {
         setFilter('my')
+      changeFilter('my')
     };
 
     const allFilterHandler = () => {
         setFilter('all')
+      changeFilter('all')
     };
 
     const allFilterCell = filter === 'all' ? `${style.filterCell} ${style.active}` : style.filterCell

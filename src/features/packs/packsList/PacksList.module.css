@@ -8,6 +8,15 @@
   display: flex;
   justify-content: space-around;
 }
+.itemActions button {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+}
+.itemActions button[disabled]>.actionsIcon {
+  cursor: not-allowed;
+}
 .actionsIcon {
   width: 16px;
   height: 16px;

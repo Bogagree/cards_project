@@ -42,11 +42,15 @@ export const authAPI = {
 }
 
 export const packAPI = {
-    getPack() {
-        return instance.get<PacksResponseType>('cards/pack?pageCount=10')
+    getPack(userId: string, currentPage: number) {
+        return instance.get<PacksResponseType>('cards/pack', {params: {
+          user_id: userId,
+            pageCount: 10,
+            page: currentPage
+        }})
     },
     createPack(createPackData: CreatePackType) {
-        return instance.post<CreatePackType, AxiosResponse<NewCardsPackType>>('cards/pack', {createPackData})
+        return instance.post<CreatePackType, AxiosResponse<NewCardsPackType>>('cards/pack', {cardsPack: createPackData})
     },
     updatePack(updatePackData: UpdatePackType) {
         return instance.put<UpdatePackType, AxiosResponse<UpdateCardsPackType>>('cards/pack', {updatePackData})
@@ -58,7 +62,10 @@ export const packAPI = {
 
 export const cardAPI = {
     getCard(packID: string) {
-        return instance.get<ResponseCardsType>(`cards/card?cardsPack_id=${packID}`)
+        return instance.get<ResponseCardsType>(`cards/card`, {params: {
+            cardsPack_id: packID,
+            pageCount: 10
+          }})
     },
     createCard(createCardData: CreateCardsType) {
         return instance.post('cards/card', {card: createCardData})
@@ -131,6 +138,14 @@ export type PasswordDataResponseType = {
 }
 
 //type packsAPI
+export type PacksRequestType = {
+  min?: string
+  max?: string
+  sortPacks?: string
+  page?: number
+  pageCount?: number
+  user_id?: string
+}
 export type PacksResponseType = {
     cardPacks: PackType[]
     page: number

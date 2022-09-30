@@ -14,7 +14,6 @@ type PropsType = {
 }
 
 
-
 export const PackItem: React.FC<PropsType> = ({packData}) => {
 
   const navigate = useNavigate()
@@ -31,7 +30,7 @@ export const PackItem: React.FC<PropsType> = ({packData}) => {
     navigate(`${Path.CARDS}/${packData._id}`)
   }
   const handleLearn = () => {
-    // navigate(`${Path.CARDS}/${packData._id}`)
+    console.log('learn pack')
   }
   const handleDelete = () => {
     console.log('delete pack')
@@ -56,23 +55,29 @@ export const PackItem: React.FC<PropsType> = ({packData}) => {
       <TableCell align="center">{getDate(packData.created)}</TableCell>
       <TableCell align="center">
         <div className={styles.itemActions}>
+          <button
+            onClick={handleLearn}
+            disabled={packData.cardsCount === 0}
+          >
             <img src={iconLearn}
                  alt={'icon'}
                  className={styles.actionsIcon}
-                 onClick={handleLearn}
             />
+          </button>
           {packData.user_id === userId &&
-          <img src={iconEdit}
-                  alt={'icon'}
-                  className={styles.actionsIcon}
-                  onClick={handleEdit}
-          />}
+            <button onClick={handleEdit}>
+              <img src={iconEdit}
+                   alt={'icon'}
+                   className={styles.actionsIcon}
+              />
+            </button>}
           {packData.user_id === userId &&
-          <img src={iconDelete}
-               alt={'icon'}
-               className={styles.actionsIcon}
-               onClick={handleDelete}
-          />}
+            <button onClick={handleDelete}>
+              <img src={iconDelete}
+                   alt={'icon'}
+                   className={styles.actionsIcon}
+              />
+            </button>}
         </div>
       </TableCell>
     </TableRow>

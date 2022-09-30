@@ -3,23 +3,29 @@ import {AppThunkType} from "../../app/store";
 import {setAppStatusAC} from "../../app/app-reducer";
 
 const cardsInitialState = {
-  cards: [] as Array<CardsType>
+  cards: [] as Array<CardsType>,
+  packUserId: '',
+  packName: ''
 }
 
 export const cardsReducer = (state: CardsStateType = cardsInitialState, action: CardsActionType) => {
   switch (action.type) {
-    case "CARDS/SET-CARDS": return {...state, cards: action.payload.cards}
+    case "CARDS/SET-CARDS": return {...state,
+      cards: action.payload.cards.cards,
+      packUserId: action.payload.cards.packUserId,
+      packName: action.payload.cards.packName
+    }
     default: return state
   }
 }
 
-export const setCardsAC = (cards: Array<CardsType>) => ({type: 'CARDS/SET-CARDS', payload: {cards}}as const)
+export const setCardsAC = (cards: CardsStateType) => ({type: 'CARDS/SET-CARDS', payload: {cards}}as const)
 
 export const getCardsTC = (packId: string): AppThunkType => async dispatch => {
   dispatch(setAppStatusAC('loading'))
   try {
     const cards = await cardAPI.getCard(packId)
-    dispatch(setCardsAC(cards.data.cards))
+    dispatch(setCardsAC(cards.data))
   }catch (e) {
     console.log(e)
   }finally {
@@ -32,7 +38,7 @@ export const createCardTC = (createCardData: CreateCardsType): AppThunkType => a
   try {
     await cardAPI.createCard(createCardData)
     const cards = await cardAPI.getCard(createCardData.cardsPack_id)
-    dispatch(setCardsAC(cards.data.cards))
+    dispatch(setCardsAC(cards.data))
   }catch (e) {
 
   }finally {
@@ -44,7 +50,7 @@ export const updateCardTC = (updateCardData: UpdateCardsType, packId: string): A
   try {
     await cardAPI.updateCard(updateCardData)
     const cards = await cardAPI.getCard(packId)
-    dispatch(setCardsAC(cards.data.cards))
+    dispatch(setCardsAC(cards.data))
   }catch (e) {
 
   }finally {
@@ -56,7 +62,7 @@ export const deleteCardTC = (cardID: string, packId: string): AppThunkType => as
   try {
     await cardAPI.deleteCards(cardID)
     const cards = await cardAPI.getCard(packId)
-    dispatch(setCardsAC(cards.data.cards))
+    dispatch(setCardsAC(cards.data))
   }catch (e) {
 
   }finally {
