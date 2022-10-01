@@ -11,10 +11,13 @@ export const Registration = () => {
 
     const dispatch = useAppDispatch()
     const isRegistered = useAppSelector(state => state.auth.isRegistered)
-console.log(isRegistered)
+
+
     const pingOrLogOut = () => {
         dispatch(sendPingDataTC())
     };
+
+    console.log(isRegistered)
 
     if (isRegistered) {
         return <Navigate to={Path.PROFILE}/>;

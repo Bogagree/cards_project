@@ -29,7 +29,7 @@ export const authAPI = {
         return instance.delete<{ info: string }>('auth/me')
     },
     registration(data: RegistrationDataType) {
-        return instance.post<RegistrationDataType, AxiosResponse<RegistrationResponseType>>('auth/register', {data})
+        return instance.post<RegistrationDataType, AxiosResponse<RegistrationResponseType>>('auth/register', data)
     },
     sendPingData() {
         return instance.post<PingResponseType>('/ping', {frontTime: Date.now()})
@@ -47,7 +47,7 @@ export const packAPI = {
         return instance.get<PacksResponseType>(`cards/pack/`, {params})
     },
     createPack(cardsPack: CreatePackType) {
-        return instance.post<CreatePackType, AxiosResponse<NewCardsPackType>>('cards/pack', {cardsPack})
+        return instance.post<CreatePackType, AxiosResponse<NewCardsPackType>>('cards/pack', cardsPack)
     },
     updatePack(updatePackData: UpdatePackType) {
         return instance.put<UpdatePackType, AxiosResponse<UpdateCardsPackType>>('cards/pack', {cardsPack: updatePackData})

@@ -1,11 +1,11 @@
 import React from 'react';
 import style from "./RegistrationForm.module.css";
-import {CommonInputText} from "../../../../common/Components/InputText/CommonInputText";
 import {CommonButton} from "../../../../common/Components/UI/Buttons/Button/CommonButton";
 import {NavLink} from "react-router-dom";
 import {useFormik} from "formik";
 import {registrationTC} from "../../auth-reducer";
 import {useAppDispatch} from "../../../../app/store";
+import {CommonInputText} from "../../../../common/Components/UI/InputText/CommonInputText";
 
 type RegistrationErrorType = {
     email?: string
@@ -49,7 +49,9 @@ export const RegistrationForm = () => {
         },
 
         onSubmit: values => {
-            dispatch(registrationTC(values))
+            console.log('values: ', values)
+            const data = {email:values.email, password:values.password}
+            dispatch(registrationTC(data))
             formik.resetForm()
         },
     })

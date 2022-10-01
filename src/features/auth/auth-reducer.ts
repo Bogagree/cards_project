@@ -73,6 +73,8 @@ export const loginTC = (loginData: LoginDataType): AppThunkType => async dispatc
 
 
 export const registrationTC = (data: RegistrationDataType): AppThunkType => async dispatch => {
+    debugger
+    console.log(data)
     dispatch(setAppStatusAC('loading'))
     try {
         const res = await authAPI.registration(data)
