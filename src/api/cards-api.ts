@@ -50,11 +50,11 @@ export const packAPI = {
                 }
             )
     },
-    createPack(createPackData: CreatePackType) {
-        return instance.post<CreatePackType, AxiosResponse<NewCardsPackType>>('cards/pack', {cardsPack: createPackData})
+    createPack(cardsPack: CreatePackType) {
+        return instance.post<CreatePackType, AxiosResponse<NewCardsPackType>>('cards/pack', {cardsPack})
     },
     updatePack(updatePackData: UpdatePackType) {
-        return instance.put<UpdatePackType, AxiosResponse<UpdateCardsPackType>>('cards/pack', {updatePackData})
+        return instance.put<UpdatePackType, AxiosResponse<UpdateCardsPackType>>('cards/pack', {cardsPack: updatePackData})
     },
     deletePack(packID: string) {
         return instance.delete<AxiosResponse<DeletePackType>>(`cards/pack?id=${packID}`)
@@ -199,7 +199,7 @@ export type DeletePackType = {
 
 export type UpdatePackType = {
     _id: string
-    name?: string
+    name: string
 }
 
 export type UpdateCardsPackType = {

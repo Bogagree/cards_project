@@ -6,8 +6,10 @@ import iconDelete from '../../../assets/icons/iconDelete.png'
 import iconLearn from '../../../assets/icons/iconLearn.png'
 import {useNavigate} from "react-router-dom";
 import {Path} from "../../../common/enum/path";
-import {useAppSelector} from "../../../app/store";
+import {useAppDispatch, useAppSelector} from "../../../app/store";
 import {PackType} from "../../../api/cards-api";
+import {deletePackCardsTC, updatePackCardsTC} from "../packs-reducer";
+import {setPackIdAC} from "../../cards/cards-reducer";
 
 type PropsType = {
   packData: PackType
@@ -17,6 +19,7 @@ type PropsType = {
 export const PackItem: React.FC<PropsType> = ({packData}) => {
 
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
   const userId = useAppSelector(state => state.auth.user._id)
 
   const getDate = (date: string) => {
@@ -27,6 +30,7 @@ export const PackItem: React.FC<PropsType> = ({packData}) => {
   }
 
   const handleGoToPack = () => {
+    dispatch(setPackIdAC(packData._id))
     navigate(`${Path.CARDS}/${packData._id}`)
   }
   const handleLearn = () => {
@@ -34,9 +38,15 @@ export const PackItem: React.FC<PropsType> = ({packData}) => {
   }
   const handleDelete = () => {
     console.log('delete pack')
+    if(userId === packData.user_id){
+      dispatch(deletePackCardsTC(packData._id))
+    }
   }
   const handleEdit = () => {
     console.log('edit pack')
+    if(userId === packData.user_id){
+      dispatch(updatePackCardsTC({_id: packData._id, name: 'new name pack'}))
+    }
   }
 
   return (
