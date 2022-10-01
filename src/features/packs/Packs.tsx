@@ -6,7 +6,6 @@ import style from "./PacksListContainer.module.css"
 import {DisableFilter} from "../../common/DisableFilter/DisableFilter";
 import {useAppDispatch, useAppSelector} from "../../app/store";
 import {createPackCardsTC, getPacksTC} from "./packs-reducer";
-import {Preloader} from "../../common/Preloader/Preloader";
 import {Path} from "../../common/enum/path";
 import {useNavigate, useParams} from "react-router-dom";
 import {PacksList} from "./packsList/PacksList";
@@ -84,7 +83,7 @@ export const testPacksListData = [
     }
 ] // не удалять, потом перенесем в тесты
 
-export const PacksListContainer = () => {
+export const Packs = () => {
 
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
@@ -93,7 +92,6 @@ export const PacksListContainer = () => {
 
     const userId = useAppSelector(state => state.auth.user._id)
     const packQueryParams = useAppSelector(state => state.packs.queryParams)
-    const appStatus = useAppSelector(state => state.app.appStatus)
 
     const [packsFilter, setPacksFilter] = useState(filter || '')
 
@@ -101,18 +99,19 @@ export const PacksListContainer = () => {
             console.log('rerender')
             dispatch(getPacksTC(packQueryParams))
         },
-        [packQueryParams]
+        [packQueryParams, packsFilter]
     )
 
     const changeFilterCallback = (value: FilterType) => {
         if (value === 'my') {
             setPacksFilter(userId)
-            navigate(`${Path.PACKS}/${userId}/${currentPage}`)
+            navigate(`${Path.PACKS}/${userId}`)
         } else {
             setPacksFilter('')
             navigate(`${Path.PACKS}`)
         }
     }
+
     const changePage = (p: number) => {
         navigate(`${Path.PACKS}/${filter}/${p}`)
     }
@@ -123,17 +122,16 @@ export const PacksListContainer = () => {
     }
 
 
-
     return (
         <>
-            {appStatus === 'loading' ? <Preloader/> :
+
                 <div className={style.wrapper}>
 
                     <div className={style.tools}>
                         <Search/>
                         <PacksFilter
                             changeFilter={changeFilterCallback}
-                            filterValue={'all'}
+                            filterValue={"all"}
                         />
                         <CardsNumberSlider/>
                         <DisableFilter/>
@@ -143,9 +141,7 @@ export const PacksListContainer = () => {
 
                     <PacksFooter/>
 
-
                 </div>
-            }
         </>
     )
         ;

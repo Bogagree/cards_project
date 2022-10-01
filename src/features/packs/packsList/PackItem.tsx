@@ -13,7 +13,6 @@ type PropsType = {
   packData: PackType
 }
 
-
 export const PackItem: React.FC<PropsType> = ({packData}) => {
 
   const navigate = useNavigate()

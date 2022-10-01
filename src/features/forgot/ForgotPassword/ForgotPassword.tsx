@@ -23,10 +23,10 @@ export const ForgotPassword = () => {
         initialValues: {
             email: '',
             message: `<div style="background-color: lime; padding: 15px">
-password recovery link: 
-<a href='http://localhost:3000/#/set-new-password/$token$'>
-link</a>
-</div>`
+                        password recovery link: 
+                       <a href='http://localhost:3000/#/set-new-password/$token$'>
+                        link</a>
+                        </div>`
         },
         validate: (values) => {
 
@@ -45,13 +45,13 @@ link</a>
         },
     });
 
-    if(forgotPasswordSuccess) {
+    if (forgotPasswordSuccess) {
         navigate(Path.CHECK_EMAIL)
     }
 
     return (
         <>
-            {appStatus === 'loading' ? <Preloader/> :
+            {appStatus === 'loading' ? <Preloader/> : ''}
                 <div className={styles.wrapper}>
                     <form className={styles.form} onSubmit={formik.handleSubmit}>
                         <h2 className={styles.title}>Forgot your password?</h2>
@@ -70,7 +70,7 @@ link</a>
                         <span className={styles.text}>Did you remember your password?</span>
                         <Link to={Path.LOGIN} className={styles.linkSignIn}>Try logging in</Link>
                     </form>
-                </div>}
+                </div>
         </>
     );
 };

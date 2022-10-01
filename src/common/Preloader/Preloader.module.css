@@ -6,6 +6,6 @@
 }
 
 @keyframes loader {
-    from { top: 150px; left: 0; }
-    to   { top: 150px; left: 100%; }
+    from { top: 50%; left: 0; }
+    to   { top: 50%; left: 100%; }
 }

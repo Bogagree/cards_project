@@ -1,5 +1,5 @@
-import {testPacksListData} from "../packs/PacksListContainer";
-import {packsReducer, PacksStateType, setPacks} from "../packs/packs-reducer";
+import {testPacksListData} from "../packs/Packs";
+import {PacksStateType} from "../packs/packs-reducer";
 import {PackType} from "../../api/cards-api";
 
 let state: PacksStateType

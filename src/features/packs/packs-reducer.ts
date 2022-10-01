@@ -45,7 +45,6 @@ export const getPacksTC = (queryParams: PacksParamsType): AppThunkType => async 
         const res = await packAPI.getPack(queryParams);
         console.log(res)
         dispatch(setPacks(res.data))
-        dispatch(setPageCount(res.data.pageCount))
     } catch (e) {
         handleServerNetworkError(e, dispatch)
     } finally {

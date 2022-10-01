@@ -23,13 +23,13 @@ export const authAPI = {
         // .then(res => res.data)
     },
     updateUser(name: string) {
-        return instance.put<{ name: string }, AxiosResponse<{ updatedUser: UserType }>>('/auth/me', {name: name})
+        return instance.put<{ name: string }, AxiosResponse<{ updatedUser: UserType }>>('/auth/me', {name})
     },
     logout() {
         return instance.delete<{ info: string }>('auth/me')
     },
     registration(data: RegistrationDataType) {
-        return instance.post<RegistrationDataType, AxiosResponse<RegistrationResponseType>>('auth/register', {...data})
+        return instance.post<RegistrationDataType, AxiosResponse<RegistrationResponseType>>('auth/register', {data})
     },
     sendPingData() {
         return instance.post<PingResponseType>('/ping', {frontTime: Date.now()})
@@ -43,15 +43,11 @@ export const authAPI = {
 }
 
 export const packAPI = {
-    getPack(packParam: PacksParamsType) {
-        return instance.get<PacksResponseType>(`cards/pack`,
-            {
-                params: packParam
-                }
-            )
+    getPack(params: PacksParamsType) {
+        return instance.get<PacksResponseType>(`cards/pack/`, {params})
     },
-    createPack(createPackData: CreatePackType) {
-        return instance.post<CreatePackType, AxiosResponse<NewCardsPackType>>('cards/pack', {cardsPack: createPackData})
+    createPack(cardsPack: CreatePackType) {
+        return instance.post<CreatePackType, AxiosResponse<NewCardsPackType>>('cards/pack', {cardsPack})
     },
     updatePack(updatePackData: UpdatePackType) {
         return instance.put<UpdatePackType, AxiosResponse<UpdateCardsPackType>>('cards/pack', {updatePackData})

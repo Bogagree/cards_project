@@ -1,14 +1,15 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import styles from './PacksList.module.css'
 import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import {PackItem} from "./PackItem";
-import {PackType} from "../../../api/cards-api";
 import {useAppSelector} from "../../../app/store";
+import {Preloader} from "../../../common/Preloader/Preloader";
 
 export const PacksList: React.FC = () => {
 
   const cardPacks = useAppSelector(state => state.packs.cardPacks)
-  console.log('cardPacks come', cardPacks)
+  const appStatus = useAppSelector(state => state.app.appStatus)
+
 
   return (
     <div>
@@ -26,8 +27,10 @@ export const PacksList: React.FC = () => {
               <TableCell align="center">Actions</TableCell>
             </TableRow>
           </TableHead>
+
+          {appStatus === 'loading' ? <Preloader/> : ''}
           <TableBody>
-            {cardPacks.map((item) => (
+            { cardPacks.map((item) => (
               <PackItem
                 key={item._id}
                 packData={item} />

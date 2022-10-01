@@ -31,12 +31,11 @@ export const PacksFooter = () => {
 
             <Pagination
                 sx={{ mt: '40px' }}
-                variant="outlined"
+                // variant="outlined"
                 shape="rounded"
-                color="primary"
                 size="medium"
                 page={page}
-                count={cardPacksTotalCount}
+                count={pageNumbers}
                 onChange={onPageChange}
                 showFirstButton
                 showLastButton
