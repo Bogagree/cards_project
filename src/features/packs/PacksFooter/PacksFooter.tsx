@@ -10,7 +10,7 @@ export const PacksFooter = () => {
     const dispatch = useAppDispatch();
 
     const pageCount = useAppSelector(state => state.packs.pageCount)
-    const page = useAppSelector(state => state.packs.page)
+    const page = useAppSelector(state => state.packs.queryParams.page)
     const cardPacksTotalCount = useAppSelector(state => state.packs.cardPacksTotalCount)
     const packQueryParams = useAppSelector(state => state.packs.queryParams)
     const appStatus = useAppSelector(state => state.app.appStatus)
@@ -18,12 +18,12 @@ export const PacksFooter = () => {
     const pageNumbers = Math.ceil(cardPacksTotalCount / pageCount);
 
     const onPageChange = (e: ChangeEvent<unknown>, page: number) => {
-        dispatch(setPacksParams({ ...packQueryParams, page }));
+        dispatch(setPacksParams({  page }));
     };
 
     const changePageCountSelectHandler = (event: SelectChangeEvent): void => {
         const pageCount = +event.target.value;
-        dispatch(setPacksParams({ ...packQueryParams, pageCount }));
+        dispatch(setPacksParams({ pageCount }));
     };
 
     return (

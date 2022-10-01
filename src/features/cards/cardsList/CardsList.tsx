@@ -12,7 +12,7 @@ type PropsType = {
 export const CardsList: React.FC<PropsType> = ({cardsList}) => {
 
   const userId = useAppSelector(state => state.auth.user._id)
-  const cardsPackUserId = '001'
+  const packUserId = useAppSelector(state => state.cards.packUserId)
 
   return (
     <div>
@@ -28,7 +28,7 @@ export const CardsList: React.FC<PropsType> = ({cardsList}) => {
                       Last Update
                     </TableCell>
                     <TableCell align="center">Grade</TableCell>
-                    {cardsPackUserId !== userId && <TableCell align="center"></TableCell>}
+                    {packUserId === userId && <TableCell align="center"></TableCell>}
                   </TableRow>
                 </TableHead>
                 <TableBody>

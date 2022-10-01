@@ -1,7 +1,8 @@
 import React, {ChangeEvent, useState} from 'react';
 import style from "./Paginator.module.css";
 import {useAppDispatch, useAppSelector} from "../../app/store";
-import {getPacksTC, setPageCount} from "../../features/packs/packs-reducer";
+import {getPacksTC, setPacksParams, setPageCount} from "../../features/packs/packs-reducer";
+import {useNavigate, useParams} from "react-router-dom";
 
 export type PaginatorPropsType = {
     totalItemsCount: number
@@ -46,7 +47,7 @@ export const Paginator: React.FC<PaginatorPropsType> = (
 
     const onChangeCallback = (e: ChangeEvent<HTMLSelectElement>) => {
         console.log(e)
-        // dispatch(getPacksTC())
+      dispatch(setPacksParams({pageCount: Number(e.currentTarget.value)}))
     }
 
     return (

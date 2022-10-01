@@ -39,7 +39,7 @@ export const CardsContainer = () => {
       <div className={style.cardsListHeader}>
         <div className={style.packMenu}>
           <h2>{packName}</h2>
-          {myPack && <PackMenu/>}
+          {myPack && <PackMenu packId={packId ? packId : ''}/>}
         </div>
         {myPack &&
           <CommonButton

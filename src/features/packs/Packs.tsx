@@ -1,15 +1,17 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {CardsNumberSlider} from "../../common/DoubleRangeSlider/CardsNumberSlider";
-import {FilterType, PacksFilter} from "../../common/PacksFilter/PacksFilter";
+import {PacksFilter} from "../../common/PacksFilter/PacksFilter";
 import {Search} from "../../common/Search/Search";
 import style from "./PacksListContainer.module.css"
 import {DisableFilter} from "../../common/DisableFilter/DisableFilter";
 import {useAppDispatch, useAppSelector} from "../../app/store";
 import {createPackCardsTC, getPacksTC} from "./packs-reducer";
+import {Preloader} from "../../common/Preloader/Preloader";
 import {Path} from "../../common/enum/path";
 import {useNavigate, useParams} from "react-router-dom";
 import {PacksList} from "./packsList/PacksList";
 import {PacksFooter} from "./PacksFooter/PacksFooter";
+import {CommonButton} from "../../common/Button/CommonButton";
 
 export const testPacksListData = [
     {
@@ -83,55 +85,40 @@ export const testPacksListData = [
     }
 ] // не удалять, потом перенесем в тесты
 
-export const Packs = () => {
+export const PacksListContainer = () => {
 
-    const dispatch = useAppDispatch()
-    const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+  const {packsUserId} = useParams<'packsUserId'>()
 
-    const {filter, currentPage} = useParams<'filter' | 'currentPage'>()
+  const userId = useAppSelector(state => state.auth.user._id)
+  const queryParams = useAppSelector(state => state.packs.queryParams)
+  const appStatus = useAppSelector(state => state.app.appStatus)
 
-    const userId = useAppSelector(state => state.auth.user._id)
-    const packQueryParams = useAppSelector(state => state.packs.queryParams)
+  useEffect(() => {
+    dispatch(setPacksParams({user_id: packsUserId}))
+  }, [packsUserId])
 
-    const [packsFilter, setPacksFilter] = useState(filter || '')
+  useEffect(() => {
+    console.log('get packs')
+    dispatch(getPacksTC(queryParams))
+  }, [queryParams])
 
-    useEffect(() => {
-            console.log('rerender')
-            dispatch(getPacksTC(packQueryParams))
-        },
-        [packQueryParams, packsFilter]
-    )
+  const handleAddPackList = () => {
+    dispatch(createPackCardsTC())
+  }
 
-    const changeFilterCallback = (value: FilterType) => {
-        if (value === 'my') {
-            setPacksFilter(userId)
-            navigate(`${Path.PACKS}/${userId}`)
-        } else {
-            setPacksFilter('')
-            navigate(`${Path.PACKS}`)
-        }
-    }
-
-    const changePage = (p: number) => {
-        navigate(`${Path.PACKS}/${filter}/${p}`)
-    }
-
-
-    const handleAddPackList = () => {
-        dispatch(createPackCardsTC())
-    }
 
 
     return (
         <>
-
+            {appStatus === 'loading' ? <Preloader/> :
                 <div className={style.wrapper}>
 
                     <div className={style.tools}>
                         <Search/>
                         <PacksFilter
-                            changeFilter={changeFilterCallback}
-                            filterValue={"all"}
+                            userId={userId}
+                            packsUserId={packsUserId || ''}
                         />
                         <CardsNumberSlider/>
                         <DisableFilter/>
@@ -141,7 +128,9 @@ export const Packs = () => {
 
                     <PacksFooter/>
 
+
                 </div>
+            }
         </>
     )
         ;

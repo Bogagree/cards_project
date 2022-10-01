@@ -1,29 +1,33 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import style from './PacksFilter.module.css'
+import {useNavigate} from "react-router-dom";
+import {Path} from "../enum/path";
 
 export type FilterType = 'all' | 'my'
 
 type PropsType = {
-    changeFilter: (value: FilterType) => void
-    filterValue: FilterType
+  packsUserId: string
+  userId: string
 }
 
-export const PacksFilter: React.FC<PropsType> = ({changeFilter, filterValue}) => {
+export const PacksFilter: React.FC<PropsType> = ({packsUserId, userId}) => {
 
-    const [filter, setFilter] = useState<FilterType>(filterValue)
-
-    useEffect(() => {
-
-    }, [filter])
+  const navigate = useNavigate()
+    const [filter, setFilter] = useState<FilterType>(packsUserId === '' ? 'all' : 'my')
 
     const myFilterHandler = () => {
         setFilter('my')
-        changeFilter('my')
+      if(packsUserId){
+        navigate(`${Path.PACKS}/${packsUserId}`)
+      }else{
+        navigate(`${Path.PACKS}/${userId}`)
+      }
+
     };
 
     const allFilterHandler = () => {
         setFilter('all')
-        changeFilter('all')
+      navigate(Path.PACKS)
     };
 
     const allFilterCell = filter === 'all' ? `${style.filterCell} ${style.active}` : style.filterCell

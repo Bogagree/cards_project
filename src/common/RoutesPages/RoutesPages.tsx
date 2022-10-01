@@ -11,7 +11,7 @@ import {CheckEmail} from "../../features/forgot/CheckEmail/CheckEmail";
 import {Error404} from "../Error404/Error404";
 import {useSelector} from "react-redux";
 import {AppStateType} from "../../app/store";
-import {Packs} from "../../features/packs/Packs";
+import {PacksListContainer} from "../../features/packs/PacksListContainer";
 import {CardsContainer} from "../../features/cards/CardsContainer";
 
 export const RoutesPage = () => {
@@ -27,7 +27,7 @@ export const RoutesPage = () => {
         {path: Path.NEW_PASSWORD, component: <NewPassword/>},
         {path: Path.CHECK_EMAIL, component: <CheckEmail/>},
         {path: Path.CARDS, component: <CardsContainer/>},
-        {path: Path.PACKS, component: <Packs/>},
+        {path: Path.PACKS, component: <PacksListContainer/>},
         {path: '*', component: <Error404/>},
     ]
 
@@ -50,7 +50,7 @@ export const RoutesPage = () => {
                 {routes.map(({path, component}) => (
                     <Route key={path} path={path} element={component}/>
                 ))}
-              <Route path={`${Path.PACKS}/:filter/:currentPage`} element={<Packs />} />
+              <Route path={`${Path.PACKS}/:packsUserId`} element={<PacksListContainer />} />
               <Route path={`${Path.CARDS}/:packId`} element={<CardsContainer />} />
             </Routes>
 
