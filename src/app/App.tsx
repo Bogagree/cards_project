@@ -1,12 +1,12 @@
 import React, {useEffect} from 'react';
 import './App.module.css';
-import {RoutesPage} from "../common/RoutesPages/RoutesPages";
-import {Header} from "../components/Header/Header";
+import {RoutesPage} from "../common/RoutesPage/RoutesPages";
+import {Header} from "../common/Components/UI/Header/Header";
 import {useAppDispatch, useAppSelector} from "./store";
 import style from './App.module.css'
-import {Preloader} from "../common/Preloader/Preloader";
 import {initializedTC} from "./app-reducer";
-import {ErrorSnackbar} from "../common/ErrorSnackbar/ErrorSnackbar";
+import {ErrorSnackbar} from "../common/Components/ErrorComponents/ErrorSnackbar/ErrorSnackbar";
+import {Preloader} from "../common/Components/UI/Preloader/Preloader";
 
 export const App = () => {
 

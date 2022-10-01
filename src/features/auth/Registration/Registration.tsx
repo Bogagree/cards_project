@@ -3,7 +3,7 @@ import style from "./Registration.module.css"
 import {sendPingDataTC} from "../auth-reducer";
 import {useAppDispatch, useAppSelector} from "../../../app/store";
 import {RegistrationForm} from "./RegistrationForm/RegistrationForm";
-import {Path} from "../../../common/enum/path";
+import {Path} from "../../../common/Enum/path";
 import {Navigate} from "react-router-dom";
 
 

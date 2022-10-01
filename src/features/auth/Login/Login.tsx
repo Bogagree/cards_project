@@ -5,11 +5,11 @@ import {useSelector} from "react-redux";
 import {AppStateType, useAppDispatch, useAppSelector} from "../../../app/store";
 import {Link, useNavigate} from "react-router-dom";
 import {loginTC} from "../auth-reducer";
-import {Path} from "../../../common/enum/path";
+import {Path} from "../../../common/Enum/path";
 import iconEye from '../../../assets/icons/iconEye.png'
-import {CommonInputText} from "../../../common/InputText/CommonInputText";
-import {CommonCheckbox} from "../../../common/Checkbox/CommonCheckbox";
-import {Preloader} from "../../../common/Preloader/Preloader";
+import {Preloader} from "../../../common/Components/UI/Preloader/Preloader";
+import {CommonInputText} from "../../../common/Components/UI/InputText/CommonInputText";
+import {CommonCheckbox} from "../../../common/Components/UI/Checkbox/CommonCheckbox";
 
 type RegistrationErrorType = {
     email?: string

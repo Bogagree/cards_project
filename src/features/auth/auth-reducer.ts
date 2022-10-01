@@ -1,7 +1,7 @@
 import {authAPI, ForgotDataType, PasswordDataType, UserType} from '../../api/cards-api';
 import {AppThunkType} from '../../app/store';
 import {setAppStatusAC} from '../../app/app-reducer';
-import {handleServerNetworkError} from '../../common/Error-utils/error-utils';
+import {handleServerNetworkError} from '../../common/Components/ErrorComponents/Error-utils/error-utils';
 
 const initialState: initialStateType = {
     isLogged: false,

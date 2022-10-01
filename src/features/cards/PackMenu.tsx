@@ -3,10 +3,6 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import iconMenu from './../../assets/icons/iconMenu.png'
-import {useAppDispatch} from "../../app/store";
-import {deletePackCardsTC} from "../packs/packs-reducer";
-import {useNavigate} from "react-router-dom";
-import {Path} from "../../common/enum/path";
 
 type PropsType = {
   packId: string
@@ -14,8 +10,6 @@ type PropsType = {
 
 export const PackMenu: React.FC<PropsType> = ({packId}) => {
 
-  const dispatch = useAppDispatch()
-  const navigate = useNavigate()
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {

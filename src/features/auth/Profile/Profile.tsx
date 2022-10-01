@@ -5,10 +5,10 @@ import {EditableSpan} from './EditableSpan';
 import {useAppDispatch, useAppSelector} from '../../../app/store';
 import {changeUserTC, logoutTC} from '../auth-reducer';
 import {useNavigate} from 'react-router-dom';
-import {CommonButton} from "../../../common/Button/CommonButton";
-import {Path} from "../../../common/enum/path";
-import {Preloader} from "../../../common/Preloader/Preloader";
-import {BackArrowButton} from "../../../common/BackArrowButton/BackArrowButton";
+import {CommonButton} from "../../../common/Components/UI/Buttons/Button/CommonButton";
+import {Path} from "../../../common/Enum/path";
+import {BackArrowButton} from "../../../common/Components/UI/Buttons/BackArrowButton/BackArrowButton";
+import {Preloader} from "../../../common/Components/UI/Preloader/Preloader";
 
 export const Profile = () => {
 

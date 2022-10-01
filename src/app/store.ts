@@ -2,7 +2,7 @@ import {AnyAction, applyMiddleware, combineReducers, compose, legacy_createStore
 import thunk, {ThunkAction, ThunkDispatch} from 'redux-thunk'
 import {AppActionType, appReducer} from './app-reducer'
 import {AuthActionType, authReducer} from "../features/auth/auth-reducer";
-import {forgotReducer} from "../features/forgot/forgot-reducer";
+import {forgotReducer} from "../features/auth/ForgotPasswod/forgot-reducer";
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 import {PackActionType, packsReducer} from "../features/packs/packs-reducer";
 import {CardsActionType, cardsReducer} from "../features/cards/cards-reducer";

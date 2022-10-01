@@ -1,17 +1,16 @@
 import React, {useEffect} from 'react';
-import {CardsNumberSlider} from "../../common/DoubleRangeSlider/CardsNumberSlider";
-import {PacksFilter} from "../../common/PacksFilter/PacksFilter";
-import {Search} from "../../common/Search/Search";
+import {PacksFilter} from "../../common/Components/Tools/PacksFilter/PacksFilter";
+import {Search} from "../../common/Components/Tools/Search/Search";
 import style from "./PacksListContainer.module.css"
-import {DisableFilter} from "../../common/DisableFilter/DisableFilter";
+import {DisableFilter} from "../../common/Components/Tools/DisableFilter/DisableFilter";
 import {useAppDispatch, useAppSelector} from "../../app/store";
-import {createPackCardsTC, getPacksTC} from "./packs-reducer";
-import {Preloader} from "../../common/Preloader/Preloader";
-import {Path} from "../../common/enum/path";
-import {useNavigate, useParams} from "react-router-dom";
-import {PacksList} from "./packsList/PacksList";
-import {PacksFooter} from "./PacksFooter/PacksFooter";
-import {CommonButton} from "../../common/Button/CommonButton";
+import {createPackCardsTC, getPacksTC, setPacksParams} from "./packs-reducer";
+import {useParams} from "react-router-dom";
+import {PacksList} from "./PacksList/PacksList";
+import {Paginator} from "../../common/Components/Tools/Paginator/Paginator";
+import {CommonButton} from "../../common/Components/UI/Buttons/Button/CommonButton";
+import {Preloader} from "../../common/Components/UI/Preloader/Preloader";
+import {CardsNumberSlider} from "../../common/Components/UI/DoubleRangeSlider/CardsNumberSlider";
 
 export const testPacksListData = [
     {
@@ -88,6 +87,7 @@ export const testPacksListData = [
 export const PacksListContainer = () => {
 
   const dispatch = useAppDispatch()
+
   const {packsUserId} = useParams<'packsUserId'>()
 
   const userId = useAppSelector(state => state.auth.user._id)
@@ -95,6 +95,7 @@ export const PacksListContainer = () => {
   const appStatus = useAppSelector(state => state.app.appStatus)
 
   useEffect(() => {
+      console.log('get user_id')
     dispatch(setPacksParams({user_id: packsUserId}))
   }, [packsUserId])
 
@@ -107,12 +108,18 @@ export const PacksListContainer = () => {
     dispatch(createPackCardsTC())
   }
 
-
-
     return (
         <>
             {appStatus === 'loading' ? <Preloader/> :
                 <div className={style.wrapper}>
+                    <div className={style.packListHeader}>
+                        <h2>Packs List</h2>
+                        <CommonButton
+                            onClick={handleAddPackList}
+                        >
+                            Add new pack
+                        </CommonButton>
+                    </div>
 
                     <div className={style.tools}>
                         <Search/>
@@ -126,7 +133,7 @@ export const PacksListContainer = () => {
 
                     <PacksList/>
 
-                    <PacksFooter/>
+                    <Paginator />
 
 
                 </div>
