@@ -1,4 +1,4 @@
-import {cardAPI, CardsType, CreateCardsType, UpdateCardsType} from "../../api/cards-api";
+import {cardAPI, CardsParamsType, CardsType, CreateCardsType, UpdateCardsType} from "../../api/cards-api";
 import {AppThunkType} from "../../app/store";
 import {setAppStatusAC} from "../../app/app-reducer";
 
@@ -17,14 +17,16 @@ export const cardsReducer = (state: CardsStateType = cardsInitialState, action: 
   }
 }
 
-export const setCardsAC = (cards: CardsStateType) => ({type: 'CARDS/SET-CARDS', payload: {cards}}as const)
+export const setCardsAC = (cards: CardsType[]) => ({type: 'CARDS/SET-CARDS', payload: {cards}}as const)
 export const setPackIdAC = (packId: string) => ({type: 'CARDS/SET-PACK-ID', payload: {packId}}as const)
 
-export const getCardsTC = (packId: string): AppThunkType => async dispatch => {
+export const getCardsTC = (cardsParams: CardsParamsType): AppThunkType => async dispatch => {
   dispatch(setAppStatusAC('loading'))
+  console.log(cardsParams)
   try {
-    const cards = await cardAPI.getCard(packId)
-    dispatch(setCardsAC({...cards.data, packId}))
+    const cards = await cardAPI.getCard(cardsParams)
+    console.log(cards)
+    dispatch(setCardsAC(cards.data.cards))
   }catch (e) {
     alert(e)
   }finally {
@@ -36,7 +38,7 @@ export const createCardTC = (createCardData: CreateCardsType): AppThunkType => a
   dispatch(setAppStatusAC('loading'))
   try {
     const res =  await cardAPI.createCard(createCardData)
-    dispatch(getCardsTC(createCardData.cardsPack_id))
+    // dispatch(getCardsTC(createCardData.cardsPack_id))
   }catch (e) {
     alert(e)
   }finally {
@@ -47,7 +49,7 @@ export const updateCardTC = (updateCardData: UpdateCardsType, packId: string): A
   dispatch(setAppStatusAC('loading'))
   try {
     await cardAPI.updateCard(updateCardData)
-    dispatch(getCardsTC(packId))
+    // dispatch(getCardsTC(packId))
   }catch (e) {
     alert(e)
   }finally {
@@ -58,7 +60,7 @@ export const deleteCardTC = (cardID: string, packId: string): AppThunkType => as
   dispatch(setAppStatusAC('loading'))
   try {
     await cardAPI.deleteCards(cardID)
-    dispatch(getCardsTC(packId))
+    // dispatch(getCardsTC(packId))
   }catch (e) {
     alert(e)
   }finally {

@@ -40,4 +40,4 @@ export const PacksList: React.FC = () => {
       </TableContainer>
     </div>
   );
-};
+}

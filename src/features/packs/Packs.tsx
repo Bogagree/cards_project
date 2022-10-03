@@ -86,27 +86,27 @@ export const testPacksListData = [
 
 export const PacksListContainer = () => {
 
-  const dispatch = useAppDispatch()
+    const dispatch = useAppDispatch()
 
-  const {packsUserId} = useParams<'packsUserId'>()
+    const {packsUserId} = useParams<'packsUserId'>()
 
-  const userId = useAppSelector(state => state.auth.user._id)
-  const queryParams = useAppSelector(state => state.packs.queryParams)
-  const appStatus = useAppSelector(state => state.app.appStatus)
+    const userId = useAppSelector(state => state.auth.user._id)
+    const queryParams = useAppSelector(state => state.packs.queryParams)
+    const appStatus = useAppSelector(state => state.app.appStatus)
 
-  useEffect(() => {
-      console.log('get user_id')
-    dispatch(setPacksParams({user_id: packsUserId}))
-  }, [packsUserId])
+    useEffect(() => {
+        console.log('get user_id')
+        dispatch(setPacksParams({user_id: packsUserId}))
+    }, [packsUserId])
 
-  useEffect(() => {
-    console.log('get packs')
-    dispatch(getPacksTC(queryParams))
-  }, [queryParams])
+    useEffect(() => {
+        console.log('get packs')
+        dispatch(getPacksTC(queryParams))
+    }, [queryParams])
 
-  const handleAddPackList = () => {
-    dispatch(createPackCardsTC())
-  }
+    const handleAddPackList = () => {
+        dispatch(createPackCardsTC())
+    }
 
     return (
         <>
@@ -122,7 +122,12 @@ export const PacksListContainer = () => {
                     </div>
 
                     <div className={style.tools}>
-                        <Search/>
+
+                        <Search
+                            queryParams={queryParams}
+                            searchProperty={'packName'}
+                        />
+
                         <PacksFilter
                             userId={userId}
                             packsUserId={packsUserId || ''}
@@ -133,7 +138,7 @@ export const PacksListContainer = () => {
 
                     <PacksList/>
 
-                    <Paginator />
+                    <Paginator/>
 
 
                 </div>

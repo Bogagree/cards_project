@@ -13,54 +13,60 @@ import {Preloader} from "../../common/Components/UI/Preloader/Preloader";
 
 export const Cards = () => {
 
-  const dispatch = useAppDispatch()
-  const cards = useAppSelector(state => state.cards.cards)
-  const appStatus = useAppSelector(state => state.app.appStatus)
-  const userId = useAppSelector(state => state.auth.user._id)
-  const packUserId = useAppSelector(state => state.cards.packUserId)
-  const packName = useAppSelector(state => state.cards.packName)
-  const {packId} = useParams<'packId'>()
-  const myPack = userId === packUserId
+    const dispatch = useAppDispatch()
+    const userId = useAppSelector(state => state.auth.user._id)
+    const appStatus = useAppSelector(state => state.app.appStatus)
 
-  const handleAddCard = () => {
-    packId && dispatch(createCardTC({
-      cardsPack_id: packId, question: 'new question', answer: 'new answer'
-    }))
-  }
+    const cards = useAppSelector(state => state.cards.cards)
+    const packUserId = useAppSelector(state => state.cards.packUserId)
+    const packName = useAppSelector(state => state.cards.packName)
+    const packId = useAppSelector(state => state.cards.packId)
 
-  useEffect(() => {
-    packId && dispatch(getCardsTC(packId))
-  }, [])
+    // const {packId} = useParams<'packId'>()
+    const myPack = userId === packUserId
 
-  return (
-    <div className={style.wrapper}>
-      <BackArrowButton path={Path.PACKS} title={'Back to Packs list'}/>
-      <div className={style.cardsListHeader}>
-        <div className={style.packMenu}>
-          <h2>{packName}</h2>
-          {myPack && <PackMenu packId={packId ? packId : ''}/>}
+    const handleAddCard = () => {
+        packId && dispatch(createCardTC({
+            cardsPack_id: packId, question: 'new question', answer: 'new answer'
+        }))
+    }
+
+    useEffect(() => {
+        packId && dispatch(getCardsTC({cardsPack_id: packId}))
+    }, [])
+
+    return (
+        <div className={style.wrapper}>
+            <BackArrowButton path={Path.PACKS} title={'Back to Packs list'}/>
+            <div className={style.cardsListHeader}>
+                <div className={style.packMenu}>
+                    <h2>{packName}</h2>
+                    {myPack && <PackMenu packId={packId ? packId : ''}/>}
+                </div>
+                {myPack &&
+                    <CommonButton
+                        onClick={handleAddCard}
+                        disabled={appStatus === 'loading'}
+                    >
+                        Add Card
+                    </CommonButton>}
+            </div>
+
+            {appStatus === 'loading' ? <Preloader/> :
+                <div>
+                    <div className={style.tools}>
+                        <Search
+                            queryParams={{cardsPack_id: packId}}
+                            searchProperty={'cardQuestion'}
+                        />
+                    </div>
+
+                    <div className={style.cardsList}>
+                        <CardsList cardsList={cards}/>
+                    </div>
+
+                </div>}
         </div>
-        {myPack &&
-          <CommonButton
-            onClick={handleAddCard}
-            disabled={appStatus === 'loading'}
-          >
-            Add Card
-          </CommonButton>}
-      </div>
-
-      {appStatus === 'loading' ? <Preloader/> :
-        <div>
-          <div className={style.tools}>
-            <Search/>
-          </div>
-
-          <div className={style.cardsList}>
-            <CardsList cardsList={cards}/>
-          </div>
-
-        </div>}
-    </div>
-  );
+    );
 };
 
