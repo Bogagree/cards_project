@@ -57,8 +57,14 @@ export const getPacksTC = (queryParams: PacksParamsType): AppThunkType => async 
 
 export const createPackCardsTC = (): AppThunkType => async (dispatch, getState) => {
     try {
+        debugger
         await packAPI.createPack({name: 'new Pack'})
-      dispatch(getPacksTC(getState().packs.queryParams))
+      // dispatch(getPacksTC(getState().packs.queryParams))
+      dispatch(getPacksTC( {
+            pageCount: 5,
+                page: 1,
+                user_id: ''
+        }))
     } catch (e) {
         console.log(e)
     }

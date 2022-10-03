@@ -19,11 +19,11 @@ export const authAPI = {
             .then(res => res.data)
     },
     authMe() {
-        return instance.post<UserType>('/auth/me', {})
+        return instance.post<UserType>('auth/me', {})
         // .then(res => res.data)
     },
     updateUser(name: string) {
-        return instance.put<{ name: string }, AxiosResponse<{ updatedUser: UserType }>>('/auth/me', {name})
+        return instance.put<{ name: string }, AxiosResponse<{ updatedUser: UserType }>>('auth/me', {name})
     },
     logout() {
         return instance.delete<{ info: string }>('auth/me')
@@ -35,19 +35,19 @@ export const authAPI = {
         return instance.post<PingResponseType>('/ping', {frontTime: Date.now()})
     },
     forgot(forgotData: ForgotDataType) {
-        return instanceForgot.post<ForgotDataType, AxiosResponse<ForgotDataResponseType>>('/auth/forgot', forgotData)
+        return instanceForgot.post<ForgotDataType, AxiosResponse<ForgotDataResponseType>>('auth/forgot', forgotData)
     },
     newPassword(passwordData: PasswordDataType) {
-        return instanceForgot.post<PasswordDataType, AxiosResponse<PasswordDataResponseType>>('/auth/set-new-password', passwordData)
+        return instanceForgot.post<PasswordDataType, AxiosResponse<PasswordDataResponseType>>('auth/set-new-password', passwordData)
     }
 }
 
 export const packAPI = {
     getPack(params: PacksParamsType) {
-        return instance.get<PacksResponseType>(`cards/pack/`, {params})
+        return instance.get<PacksResponseType>(`cards/pack`, {params})
     },
     createPack(cardsPack: CreatePackType) {
-        return instance.post<CreatePackType, AxiosResponse<NewCardsPackType>>('cards/pack', cardsPack)
+        return instance.post<CreatePackType, AxiosResponse<NewCardsPackType>>('cards/pack', {cardsPack})
     },
     updatePack(updatePackData: UpdatePackType) {
         return instance.put<UpdatePackType, AxiosResponse<UpdateCardsPackType>>('cards/pack', {cardsPack: updatePackData})
