@@ -47,7 +47,7 @@ export const packAPI = {
         return instance.get<PacksResponseType>(`cards/pack/`, {params})
     },
     createPack(cardsPack: CreatePackType) {
-        return instance.post<CreatePackType, AxiosResponse<NewCardsPackType>>('cards/pack', cardsPack)
+        return instance.post<CreatePackType, AxiosResponse<NewCardsPackType>>('cards/pack', {cardsPack})
     },
     updatePack(updatePackData: UpdatePackType) {
         return instance.put<UpdatePackType, AxiosResponse<UpdateCardsPackType>>('cards/pack', {cardsPack: updatePackData})

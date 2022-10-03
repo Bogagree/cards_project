@@ -1,5 +1,5 @@
 import {AppThunkType} from "../../app/store";
-import {packAPI, PacksResponseType, PackType, UpdatePackType} from "../../api/cards-api";
+import {CreatePackType, packAPI, PacksResponseType, PackType, UpdatePackType} from '../../api/cards-api';
 import {setAppStatusAC} from "../../app/app-reducer";
 import {handleServerNetworkError} from "../../common/Components/ErrorComponents/Error-utils/error-utils";
 
@@ -55,9 +55,9 @@ export const getPacksTC = (queryParams: PacksParamsType): AppThunkType => async 
     }
 }
 
-export const createPackCardsTC = (): AppThunkType => async (dispatch, getState) => {
+export const createPackCardsTC = (values: CreatePackType): AppThunkType => async (dispatch, getState) => {
     try {
-        await packAPI.createPack({name: 'new Pack'})
+        await packAPI.createPack(values)
       dispatch(getPacksTC(getState().packs.queryParams))
     } catch (e) {
         console.log(e)
