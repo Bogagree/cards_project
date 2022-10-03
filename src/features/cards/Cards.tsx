@@ -31,9 +31,9 @@ export const Cards = () => {
         }))
     }
 
-    useEffect(() => {
-        packId && dispatch(getCardsTC({cardsPack_id: packId}))
-    }, [])
+    // useEffect(() => {
+    //     packId && dispatch(getCardsTC({cardsPack_id: packId}))
+    // }, [])
 
     return (
         <div className={style.wrapper}>

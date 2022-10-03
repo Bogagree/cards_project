@@ -15,13 +15,13 @@ export const App = () => {
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-            dispatch(initializedTC());
+        dispatch(initializedTC());
     }, []);
 
     if (!isInitialized) {
         return (
             <div>
-                <Preloader />
+                <Preloader/>
             </div>
         );
     }

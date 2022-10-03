@@ -11,6 +11,7 @@ import {Paginator} from "../../common/Components/Tools/Paginator/Paginator";
 import {CommonButton} from "../../common/Components/UI/Buttons/Button/CommonButton";
 import {Preloader} from "../../common/Components/UI/Preloader/Preloader";
 import {CardsNumberSlider} from "../../common/Components/UI/DoubleRangeSlider/CardsNumberSlider";
+import {log} from "util";
 
 export const testPacksListData = [
     {
@@ -95,12 +96,12 @@ export const PacksListContainer = () => {
     const appStatus = useAppSelector(state => state.app.appStatus)
 
     useEffect(() => {
-        console.log('get user_id')
+        console.log("packsUserId: ", packsUserId)
         dispatch(setPacksParams({user_id: packsUserId}))
     }, [packsUserId])
 
     useEffect(() => {
-        console.log('get packs')
+        console.log('queryParams: ', queryParams)
         dispatch(getPacksTC(queryParams))
     }, [queryParams])
 
