@@ -26,18 +26,17 @@ export const Packs = () => {
     console.log('packs render')
 
     const onChangePage = (page: number) => {
-        debugger
         dispatch(getPacksTC({...queryParams, page}))
         dispatch(setPacksParams({...queryParams, page}))
     }
     const onChangePageCount = (pageCount: number) => {
-        debugger
         dispatch(getPacksTC({...queryParams, pageCount}))
         dispatch(setPacksParams({...queryParams, pageCount}))
     }
 
     useEffect(() => {
         dispatch(setPacksParams({...queryParams}))
+        // dispatch(getPacksTC({...queryParams, pageCount}))
     }, [])
 
     return (
@@ -61,8 +60,9 @@ export const Packs = () => {
                     <CardsNumberSlider/>
                     <DisableFilter/>
                 </div>
-                {appStatus === 'loading' ? <Preloader/> :
-                    <PacksList/>
+                {appStatus === 'loading'
+                    ? <Preloader/>
+                    : <PacksList/>
                 }
                 <Paginator
                     page={page}

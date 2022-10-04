@@ -9,13 +9,13 @@ import {Path} from "../../../common/Enum/path";
 import {useAppDispatch, useAppSelector} from "../../../app/store";
 import {PackType} from "../../../api/cards-api";
 import {deletePackCardsTC, updatePackCardsTC} from "../packs-reducer";
-import {getCardsTC} from "../../cards/cards-reducer";
+import {setCardsParams, setPackIdAC} from "../../cards/cards-reducer";
 
 type PropsType = {
     packData: PackType
 }
 
-export const PackItem: React.FC<PropsType> = ({packData}) => {
+export const PackItem: React.FC<PropsType> = React.memo(({packData}) => {
 
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
@@ -29,10 +29,16 @@ export const PackItem: React.FC<PropsType> = ({packData}) => {
     }
 
     const handleGoToPack = () => {
-        // dispatch(setPackIdAC(packData._id))
-        dispatch(getCardsTC({cardsPack_id: packData._id}))
+        console.log('go to Pack')
+        console.log('user cardsPack_id: ', userId)
+        dispatch(setPackIdAC(packData._id))
+        dispatch(setCardsParams({
+            cardsPack_id: packData._id,
+            pageCount: 15,
+        }))
         navigate(`${Path.CARDS}/${packData._id}`)
     }
+
     const handleLearn = () => {
         console.log('learn pack')
     }
@@ -93,4 +99,4 @@ export const PackItem: React.FC<PropsType> = ({packData}) => {
             </TableCell>
         </TableRow>
     );
-};
+});

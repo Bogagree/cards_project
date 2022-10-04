@@ -3,9 +3,10 @@ import style from "./Search.module.css";
 import {InputAdornment, OutlinedInput} from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 import {CardsParamsType} from "../../../../api/cards-api";
-import {useAppDispatch} from "../../../../app/store";
-import {getPacksTC, PacksParamsType} from "../../../../features/packs/packs-reducer";
+import {useAppDispatch, useAppSelector} from "../../../../app/store";
+import {getPacksTC, PacksParamsType, setPacksParams} from "../../../../features/packs/packs-reducer";
 import {useDebounce} from "../../../Hooks/useDebounce";
+import {getCardsTC, setCardsParams} from '../../../../features/cards/cards-reducer';
 
 export type SearchPropsType = {
     queryParams: PacksParamsType | CardsParamsType
@@ -14,6 +15,8 @@ export type SearchPropsType = {
 
 export const Search: React.FC<SearchPropsType> = React.memo(({queryParams, searchProperty}) => {
     const dispatch = useAppDispatch()
+
+    const cardsPack_id = useAppSelector(state => state.cards.queryParams.cardsPack_id)
 
     const [searchText, setSearchText] = useState('');
     const debouncedSearchTerm = useDebounce(searchText, 500);
@@ -28,7 +31,17 @@ export const Search: React.FC<SearchPropsType> = React.memo(({queryParams, searc
         } else {
             dispatch(getPacksTC({...queryParams, [searchProperty]: ''}))
         }
+        // if (searchProperty === 'packName') {
+        //     if (debouncedSearchTerm) {
+        //         dispatch(setPacksParams({...queryParams, [searchProperty]: debouncedSearchTerm}))
+        //     } else {
+        //         dispatch(setPacksParams({...queryParams, [searchProperty]: ''}))
+        //     }
+        // } else {
+        //     dispatch(setCardsParams({...queryParams, cardsPack_id, [searchProperty]: debouncedSearchTerm}))
+        // }
     }, [debouncedSearchTerm])
+
 
     return (
         <div className={style.container}>

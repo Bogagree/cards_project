@@ -7,32 +7,46 @@ const cardsInitialState = {
     packUserId: '',
     packName: '',
     packId: '',
-    queryParams: {} as CardsParamsType
+    queryParams: {
+        cardsPack_id: '',
+        pageCount: 10,
+        cardQuestion: '',
+        page: 1
+    } as CardsParamsType
 }
 
 export const cardsReducer = (state: CardsStateType = cardsInitialState, action: CardsActionType): CardsStateType => {
     switch (action.type) {
         case "CARDS/SET-CARDS":
-            return {...state, cards: [...action.payload.cards]}
+            console.log("CARDS/SET-CARDS", action.payload)
+            return {...state,  cards: [...action.payload]}
+        case "CARDS/SET-CARDS-PARAMS":
+            return {...state, ...action.payload}
         case "CARDS/SET-PACK-ID":
-            return {...state, packId: action.payload.packId}
+            console.log('reducer packID', action.packId)
+            return {...state, packId: action.packId}
         default:
             return state
     }
 }
 
-export const setCardsAC = (cards: CardsType[]) => ({type: 'CARDS/SET-CARDS', payload: {cards}} as const)
-export const setPackIdAC = (packId: string) => ({type: 'CARDS/SET-PACK-ID', payload: {packId}} as const)
+export const setCardsAC = (cards: CardsType[]) => ({type: 'CARDS/SET-CARDS', payload: cards} as const)
+export const setPackIdAC = (packId: string) => ({type: 'CARDS/SET-PACK-ID', packId} as const)
+export const setCardsParams = (queryParams: CardsParamsType) => ({
+    type: 'CARDS/SET-CARDS-PARAMS',
+    payload: queryParams
+} as const)
 
-export const getCardsTC = (cardsParams: CardsParamsType): AppThunkType => async dispatch => {
+export const getCardsTC = (queryParams: CardsParamsType): AppThunkType => async dispatch => {
+
     dispatch(setAppStatusAC('loading'))
-    console.log(cardsParams)
+    console.log('getCardsTC(queryParams) ', queryParams)
     try {
-        const cards = await cardAPI.getCard(cardsParams)
-        console.log(cards)
+        const cards = await cardAPI.getCard(queryParams)
+        console.log('cards', cards.data.cards)
         dispatch(setCardsAC(cards.data.cards))
     } catch (e) {
-        alert(e)
+        // alert(e)
     } finally {
         dispatch(setAppStatusAC('succeeded'))
     }
@@ -73,4 +87,6 @@ export const deleteCardTC = (cardID: string, packId: string): AppThunkType => as
 }
 
 export type CardsStateType = typeof cardsInitialState
-export type CardsActionType = ReturnType<typeof setCardsAC> | ReturnType<typeof setPackIdAC>
+export type CardsActionType = ReturnType<typeof setCardsAC>
+    | ReturnType<typeof setPackIdAC>
+    | ReturnType<typeof setCardsParams>

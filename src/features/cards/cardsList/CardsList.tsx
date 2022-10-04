@@ -14,6 +14,8 @@ export const CardsList: React.FC<PropsType> = ({cardsList}) => {
   const userId = useAppSelector(state => state.auth.user._id)
   const packUserId = useAppSelector(state => state.cards.packUserId)
 
+  console.log('cardsList:', cardsList)
+
   return (
     <div>
           {!cardsList.length ? <>add card</> :
