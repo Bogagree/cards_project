@@ -1,33 +1,28 @@
 import React, {useState} from 'react';
 import style from './PacksFilter.module.css'
-import {useNavigate} from "react-router-dom";
-import {Path} from "../../../Enum/path";
+import {useAppDispatch, useAppSelector} from "../../../../app/store";
+import {setPacksParams} from "../../../../features/packs/packs-reducer";
 
 export type FilterType = 'all' | 'my'
 
 type PropsType = {
-  packsUserId: string
   userId: string
 }
 
-export const PacksFilter: React.FC<PropsType> = ({packsUserId, userId}) => {
+export const PacksFilter: React.FC<PropsType> = ({userId}) => {
 
-  const navigate = useNavigate()
-    const [filter, setFilter] = useState<FilterType>(packsUserId === '' ? 'all' : 'my')
+  const dispatch = useAppDispatch()
+  const queryParams = useAppSelector(state => state.packs.queryParams)
+    const [filter, setFilter] = useState<FilterType>(queryParams.user_id ? 'my' : 'all')
 
     const myFilterHandler = () => {
         setFilter('my')
-      if(packsUserId){
-        navigate(`${Path.PACKS}/${packsUserId}`)
-      }else{
-        navigate(`${Path.PACKS}/${userId}`)
-      }
-
+      dispatch(setPacksParams({user_id: userId}))
     };
 
     const allFilterHandler = () => {
         setFilter('all')
-      navigate(Path.PACKS)
+      dispatch(setPacksParams({user_id: ''}))
     };
 
     const allFilterCell = filter === 'all' ? `${style.filterCell} ${style.active}` : style.filterCell

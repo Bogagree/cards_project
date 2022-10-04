@@ -4,8 +4,7 @@ import {Search} from "../../common/Components/Tools/Search/Search";
 import style from "./PacksListContainer.module.css"
 import {DisableFilter} from "../../common/Components/Tools/DisableFilter/DisableFilter";
 import {useAppDispatch, useAppSelector} from "../../app/store";
-import {createPackCardsTC, getPacksTC, setPacksParams} from "./packs-reducer";
-import {useParams} from "react-router-dom";
+import {createPackCardsTC, getPacksTC} from "./packs-reducer";
 import {PacksList} from "./PacksList/PacksList";
 import {Paginator} from "../../common/Components/Tools/Paginator/Paginator";
 import {CommonButton} from "../../common/Components/UI/Buttons/Button/CommonButton";
@@ -88,20 +87,12 @@ export const PacksListContainer = () => {
 
   const dispatch = useAppDispatch()
 
-  const {packsUserId} = useParams<'packsUserId'>()
-
   const userId = useAppSelector(state => state.auth.user._id)
   const queryParams = useAppSelector(state => state.packs.queryParams)
   const appStatus = useAppSelector(state => state.app.appStatus)
 
   useEffect(() => {
-      console.log('get user_id')
-    dispatch(setPacksParams({user_id: packsUserId}))
-  }, [packsUserId])
-
-  useEffect(() => {
-    console.log('get packs')
-    dispatch(getPacksTC(queryParams))
+    dispatch(getPacksTC())
   }, [queryParams])
 
   const handleAddPackList = () => {
@@ -110,7 +101,7 @@ export const PacksListContainer = () => {
 
     return (
         <>
-            {appStatus === 'loading' ? <Preloader/> :
+
                 <div className={style.wrapper}>
                     <div className={style.packListHeader}>
                         <h2>Packs List</h2>
@@ -125,19 +116,18 @@ export const PacksListContainer = () => {
                         <Search/>
                         <PacksFilter
                             userId={userId}
-                            packsUserId={packsUserId || ''}
                         />
                         <CardsNumberSlider/>
                         <DisableFilter/>
                     </div>
-
+                  {appStatus === 'loading' ? <Preloader/> :
                     <PacksList/>
-
+                  }
                     <Paginator />
 
 
                 </div>
-            }
+
         </>
     )
         ;
