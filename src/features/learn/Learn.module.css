@@ -1,0 +1,22 @@
+.wrapper {
+  width: 90%;
+  margin: 0 auto;
+}
+.wrapper h4, .wrapper p {
+  margin: 5px 0;
+}
+.inner {
+  width: 450px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 0 15px;
+  box-sizing: border-box;
+
+  background: #FFFFFF;
+  box-shadow: 0 0 10px 4px #00000010;
+}
+.inner button {
+  align-self: center;
+}
