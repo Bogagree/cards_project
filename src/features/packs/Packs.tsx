@@ -1,110 +1,99 @@
-import React, {useEffect, useState} from 'react';
-import {PacksFilter} from '../../common/Components/Tools/PacksFilter/PacksFilter';
-import {Search} from '../../common/Components/Tools/Search/Search';
-import style from './PacksListContainer.module.css'
-import {DisableFilter} from '../../common/Components/Tools/DisableFilter/DisableFilter';
-import {useAppDispatch, useAppSelector} from '../../app/store';
-import {createPackCardsTC, getPacksTC, setPacksParams} from './packs-reducer';
-import {useParams} from 'react-router-dom';
-import {PacksList} from './PacksList/PacksList';
-import {Paginator} from '../../common/Components/Tools/Paginator/Paginator';
-import {CommonButton} from '../../common/Components/UI/Buttons/Button/CommonButton';
-import {Preloader} from '../../common/Components/UI/Preloader/Preloader';
-import {CardsNumberSlider} from '../../common/Components/UI/DoubleRangeSlider/CardsNumberSlider';
-import {BasicModal} from '../../common/Components/UI/Modals/BasicModal/BasicModal';
-import {AddPackModal} from '../../common/Components/UI/Modals/AddPackModal/AddPackModal';
+import React, {useEffect} from 'react';
+import {PacksFilter} from "../../common/Components/Tools/PacksFilter/PacksFilter";
+import {Search} from "../../common/Components/Tools/Search/Search";
+import style from "./PacksListContainer.module.css"
+import {DisableFilter} from "../../common/Components/Tools/DisableFilter/DisableFilter";
+import {useAppDispatch, useAppSelector} from "../../app/store";
+import {createPackCardsTC, getPacksTC} from "./packs-reducer";
+import {PacksList} from "./PacksList/PacksList";
+import {Paginator} from "../../common/Components/Tools/Paginator/Paginator";
+import {CommonButton} from "../../common/Components/UI/Buttons/Button/CommonButton";
+import {Preloader} from "../../common/Components/UI/Preloader/Preloader";
+import {CardsNumberSlider} from "../../common/Components/UI/DoubleRangeSlider/CardsNumberSlider";
 
 export const testPacksListData = [
     {
         cardsCount: 0,
-        created: '2022-09-26T19:39:37.156Z',
+        created: "2022-09-26T19:39:37.156Z",
         grade: 0,
-        more_id: '632ed6ddd2aeef10c8908d8b',
-        name: '1',
-        path: '/def',
+        more_id: "632ed6ddd2aeef10c8908d8b",
+        name: "1",
+        path: "/def",
         private: false,
         rating: 0,
         shots: 0,
-        type: 'pack',
-        updated: '2022-09-26T19:39:37.156Z',
-        user_id: '632ed6ddd2aeef10c8908d8b',
-        user_name: 'a',
+        type: "pack",
+        updated: "2022-09-26T19:39:37.156Z",
+        user_id: "632ed6ddd2aeef10c8908d8b",
+        user_name: "a",
         __v: 0,
-        _id: '6331fff9174cfb0118ea9d4b'
+        _id: "6331fff9174cfb0118ea9d4b"
     },
     {
         cardsCount: 0,
-        created: '2022-09-26T19:14:57.809Z',
+        created: "2022-09-26T19:14:57.809Z",
         grade: 0,
-        more_id: '6328a8602e93f416e0e31d82',
-        name: '12345 title test 12345',
-        path: '/def',
+        more_id: "6328a8602e93f416e0e31d82",
+        name: "12345 title test 12345",
+        path: "/def",
         private: false,
         rating: 0,
         shots: 0,
-        type: 'pack',
-        updated: '2022-09-26T19:15:28.783Z',
-        user_id: '6328a8602e93f416e0e31d82',
-        user_name: 'aweaw',
+        type: "pack",
+        updated: "2022-09-26T19:15:28.783Z",
+        user_id: "6328a8602e93f416e0e31d82",
+        user_name: "aweaw",
         __v: 0,
-        _id: '6331fa313d46fd2cd4d253eb'
+        _id: "6331fa313d46fd2cd4d253eb"
     },
     {
         cardsCount: 3,
-        created: '2022-09-26T15:15:41.072Z',
+        created: "2022-09-26T15:15:41.072Z",
         grade: 0,
-        more_id: '6328a8602e93f416e0e31d82',
-        name: 'test test test',
-        path: '/def',
+        more_id: "6328a8602e93f416e0e31d82",
+        name: "test test test",
+        path: "/def",
         private: false,
         rating: 0,
         shots: 0,
-        type: 'pack',
-        updated: '2022-09-26T18:33:31.378Z',
-        user_id: '6328a8602e93f416e0e31d82',
-        user_name: 'aweaw',
+        type: "pack",
+        updated: "2022-09-26T18:33:31.378Z",
+        user_id: "6328a8602e93f416e0e31d82",
+        user_name: "aweaw",
         __v: 0,
-        _id: '6331c21d3d46fd2cd4d253e5',
+        _id: "6331c21d3d46fd2cd4d253e5",
     },
     {
         cardsCount: 17,
-        created: '2022-09-26T09:26:35.044Z',
-        deckCover: 'url or base64',
+        created: "2022-09-26T09:26:35.044Z",
+        deckCover: "url or base64",
         grade: 0,
-        more_id: '63254ef1a16ae23408f00693',
-        name: '1',
-        path: '/def',
+        more_id: "63254ef1a16ae23408f00693",
+        name: "1",
+        path: "/def",
         private: false,
         rating: 0,
         shots: 0,
-        type: 'pack',
-        updated: '2022-09-26T16:46:59.706Z',
-        user_id: '63254ef1a16ae23408f00693',
-        user_name: 'engy',
+        type: "pack",
+        updated: "2022-09-26T16:46:59.706Z",
+        user_id: "63254ef1a16ae23408f00693",
+        user_name: "engy",
         __v: 0,
-        _id: '6331704b3c22f21db471fa5a',
+        _id: "6331704b3c22f21db471fa5a",
     }
 ] // не удалять, потом перенесем в тесты
 
 export const PacksListContainer = () => {
 
-    const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch()
 
-    const {packsUserId} = useParams<'packsUserId'>()
+  const userId = useAppSelector(state => state.auth.user._id)
+  const queryParams = useAppSelector(state => state.packs.queryParams)
+  const appStatus = useAppSelector(state => state.app.appStatus)
 
-    const userId = useAppSelector(state => state.auth.user._id)
-    const queryParams = useAppSelector(state => state.packs.queryParams)
-    const appStatus = useAppSelector(state => state.app.appStatus)
-
-    useEffect(() => {
-        console.log('get user_id')
-        dispatch(setPacksParams({user_id: packsUserId}))
-    }, [packsUserId])
-
-    useEffect(() => {
-        console.log('get packs')
-        dispatch(getPacksTC(queryParams))
-    }, [queryParams])
+  useEffect(() => {
+    dispatch(getPacksTC())
+  }, [queryParams])
 
     // const handleAddPackList = () => {
     //     dispatch(createPackCardsTC())
@@ -112,29 +101,29 @@ export const PacksListContainer = () => {
 
     return (
         <>
-            {appStatus === 'loading' ? <Preloader/> :
+
                 <div className={style.wrapper}>
                     <div className={style.packListHeader}>
                         <h2>Packs List</h2>
                         <AddPackModal nameButton={'Add new pack'} title={'Add new pack'}/>
                     </div>
+
                     <div className={style.tools}>
                         <Search/>
                         <PacksFilter
                             userId={userId}
-                            packsUserId={packsUserId || ''}
                         />
                         <CardsNumberSlider/>
                         <DisableFilter/>
                     </div>
-
+                  {appStatus === 'loading' ? <Preloader/> :
                     <PacksList/>
-
-                    <Paginator/>
+                  }
+                    <Paginator />
 
 
                 </div>
-            }
+
         </>
     )
         ;

@@ -1,5 +1,5 @@
 import {AppThunkType} from "../../app/store";
-import {CreatePackType, packAPI, PacksResponseType, PackType, UpdatePackType} from '../../api/cards-api';
+import {packAPI, PacksResponseType, PackType, UpdatePackType} from "../../api/cards-api";
 import {setAppStatusAC} from "../../app/app-reducer";
 import {handleServerNetworkError} from "../../common/Components/ErrorComponents/Error-utils/error-utils";
 
@@ -42,11 +42,10 @@ export const setPacksParams = (queryParams: PacksParamsType) =>
     ({type: 'PACKS/SET-PACKS-PARAMS', payload: {queryParams}} as const);
 
 //thunks
-export const getPacksTC = (queryParams: PacksParamsType): AppThunkType => async dispatch => {
+export const getPacksTC = (): AppThunkType => async (dispatch, getState) => {
     dispatch(setAppStatusAC('loading'))
     try {
-        const res = await packAPI.getPack(queryParams);
-        console.log(res)
+        const res = await packAPI.getPack(getState().packs.queryParams);
         dispatch(setPacks(res.data))
     } catch (e) {
         handleServerNetworkError(e, dispatch)
@@ -58,25 +57,25 @@ export const getPacksTC = (queryParams: PacksParamsType): AppThunkType => async 
 export const createPackCardsTC = (values: CreatePackType): AppThunkType => async (dispatch, getState) => {
     try {
         await packAPI.createPack(values)
-      dispatch(getPacksTC(getState().packs.queryParams))
+      dispatch(getPacksTC())
     } catch (e) {
         console.log(e)
     }
 }
-export const deletePackCardsTC = (packId: string): AppThunkType => async (dispatch, getState) => {
+export const deletePackCardsTC = (packId: string): AppThunkType => async dispatch => {
   try {
     await packAPI.deletePack(packId)
-    dispatch(getPacksTC(getState().packs.queryParams))
+    dispatch(getPacksTC())
   }catch (e) {
 
   }finally {
 
   }
 }
-export const updatePackCardsTC = (updatePackData: UpdatePackType): AppThunkType => async (dispatch, getState) => {
+export const updatePackCardsTC = (updatePackData: UpdatePackType): AppThunkType => async dispatch => {
   try {
     await packAPI.updatePack(updatePackData)
-    dispatch(getPacksTC(getState().packs.queryParams))
+    dispatch(getPacksTC())
   }catch (e) {
 
   }finally {
