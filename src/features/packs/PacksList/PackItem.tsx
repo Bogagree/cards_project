@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styles from './PacksList.module.css'
 import {TableCell, TableRow} from "@mui/material";
 import iconEdit from '../../../assets/icons/pencil.svg'
@@ -10,6 +10,8 @@ import {useAppDispatch, useAppSelector} from "../../../app/store";
 import {PackType} from "../../../api/cards-api";
 import {deletePackCardsTC, updatePackCardsTC} from "../packs-reducer";
 import {setPackIdAC} from "../../cards/cards-reducer";
+import {EditPackModal} from '../../../common/Components/UI/Modals/EditPackModal/EditPackModal';
+import {DeletePackModal} from '../../../common/Components/UI/Modals/DeletePackModal/DeletePackModal';
 
 type PropsType = {
   packData: PackType
@@ -20,6 +22,20 @@ export const PackItem: React.FC<PropsType> = ({packData}) => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const userId = useAppSelector(state => state.auth.user._id)
+
+  const [openModal, setOpenModal] = useState(false);
+  const openHandler = () => setOpenModal(true);
+  const closeHandler = () => setOpenModal(false);
+
+  const [typeModal, setTypeModal] = useState('')
+  const openEditHandler = () => {
+    setTypeModal('edit')
+    openHandler()
+  }
+  const openDeleteHandler = () => {
+    setTypeModal('delete')
+    openHandler()
+  }
 
   const getDate = (date: string) => {
     const day = new Date(date).getDate() < 10 ? `0${new Date(date).getDate()}` : new Date(date).getDate()
@@ -34,18 +50,6 @@ export const PackItem: React.FC<PropsType> = ({packData}) => {
   }
   const handleLearn = () => {
     console.log('learn pack')
-  }
-  const handleDelete = () => {
-    console.log('delete pack')
-    if(userId === packData.user_id){
-      dispatch(deletePackCardsTC(packData._id))
-    }
-  }
-  const handleEdit = () => {
-    console.log('edit pack')
-    if(userId === packData.user_id){
-      dispatch(updatePackCardsTC({_id: packData._id, name: 'new name pack'}))
-    }
   }
 
   return (
@@ -74,14 +78,14 @@ export const PackItem: React.FC<PropsType> = ({packData}) => {
             />
           </button>
           {packData.user_id === userId &&
-            <button onClick={handleEdit}>
+            <button onClick={openEditHandler}>
               <img src={iconEdit}
                    alt={'icon'}
                    className={styles.actionsIcon}
               />
             </button>}
           {packData.user_id === userId &&
-            <button onClick={handleDelete}>
+            <button onClick={openDeleteHandler}>
               <img src={iconDelete}
                    alt={'icon'}
                    className={styles.actionsIcon}
@@ -89,6 +93,13 @@ export const PackItem: React.FC<PropsType> = ({packData}) => {
             </button>}
         </div>
       </TableCell>
+      { typeModal === 'edit' &&
+        <EditPackModal title={'Edit pack'} openModal={openModal} closeHandler={closeHandler} packData={packData}/>
+      }
+      { typeModal === 'delete' &&
+        <DeletePackModal title={'Delete pack'} openModal={openModal} closeHandler={closeHandler} packData={packData}/>
+      }
     </TableRow>
+
   );
 };
