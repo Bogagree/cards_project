@@ -4,14 +4,12 @@ import {Search} from "../../common/Components/Tools/Search/Search";
 import style from "./PacksListContainer.module.css"
 import {DisableFilter} from "../../common/Components/Tools/DisableFilter/DisableFilter";
 import {useAppDispatch, useAppSelector} from "../../app/store";
-import {createPackCardsTC, getPacksTC, setPacksParams} from "./packs-reducer";
-import {useParams} from "react-router-dom";
+import {getPacksTC} from "./packs-reducer";
 import {PacksList} from "./PacksList/PacksList";
 import {Paginator} from "../../common/Components/Tools/Paginator/Paginator";
-import {CommonButton} from "../../common/Components/UI/Buttons/Button/CommonButton";
 import {Preloader} from "../../common/Components/UI/Preloader/Preloader";
 import {CardsNumberSlider} from "../../common/Components/UI/DoubleRangeSlider/CardsNumberSlider";
-import {log} from "util";
+import {AddPackModal} from '../../common/Components/UI/Modals/AddPackModal/AddPackModal';
 
 export const testPacksListData = [
     {
@@ -87,39 +85,27 @@ export const testPacksListData = [
 
 export const PacksListContainer = () => {
 
-    const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch()
 
-    const {packsUserId} = useParams<'packsUserId'>()
+  const userId = useAppSelector(state => state.auth.user._id)
+  const queryParams = useAppSelector(state => state.packs.queryParams)
+  const appStatus = useAppSelector(state => state.app.appStatus)
 
-    const userId = useAppSelector(state => state.auth.user._id)
-    const queryParams = useAppSelector(state => state.packs.queryParams)
-    const appStatus = useAppSelector(state => state.app.appStatus)
+  useEffect(() => {
+    dispatch(getPacksTC())
+  }, [queryParams])
 
-    useEffect(() => {
-        console.log("packsUserId: ", packsUserId)
-        dispatch(setPacksParams({user_id: packsUserId}))
-    }, [packsUserId])
-
-    useEffect(() => {
-        console.log('queryParams: ', queryParams)
-        dispatch(getPacksTC(queryParams))
-    }, [queryParams])
-
-    const handleAddPackList = () => {
-        dispatch(createPackCardsTC())
-    }
+    // const handleAddPackList = () => {
+    //     dispatch(createPackCardsTC())
+    // }
 
     return (
         <>
-            {appStatus === 'loading' ? <Preloader/> :
+
                 <div className={style.wrapper}>
                     <div className={style.packListHeader}>
                         <h2>Packs List</h2>
-                        <CommonButton
-                            onClick={handleAddPackList}
-                        >
-                            Add new pack
-                        </CommonButton>
+                        <AddPackModal nameButton={'Add new pack'} title={'Add new pack'}/>
                     </div>
 
                     <div className={style.tools}>
@@ -131,19 +117,18 @@ export const PacksListContainer = () => {
 
                         <PacksFilter
                             userId={userId}
-                            packsUserId={packsUserId || ''}
                         />
                         <CardsNumberSlider/>
                         <DisableFilter/>
                     </div>
-
+                  {appStatus === 'loading' ? <Preloader/> :
                     <PacksList/>
-
-                    <Paginator/>
+                  }
+                    <Paginator />
 
 
                 </div>
-            }
+
         </>
     )
         ;
