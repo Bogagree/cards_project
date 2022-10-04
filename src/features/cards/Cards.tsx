@@ -1,12 +1,11 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import style from "./Cards.module.css";
 import {Search} from "../../common/Components/Tools/Search/Search";
 import {BackArrowButton} from "../../common/Components/UI/Buttons/BackArrowButton/BackArrowButton";
 import {Path} from "../../common/Enum/path";
 import {CardsList} from "./cardsList/CardsList";
-import {useParams} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../app/store";
-import {createCardTC, getCardsTC} from "./cards-reducer";
+import {createCardTC} from "./cards-reducer";
 import {CommonButton} from "../../common/Components/UI/Buttons/Button/CommonButton";
 import {PackMenu} from "./PackMenu";
 import {Preloader} from "../../common/Components/UI/Preloader/Preloader";
@@ -31,13 +30,12 @@ export const Cards = () => {
         }))
     }
 
-    // useEffect(() => {
-    //     packId && dispatch(getCardsTC({cardsPack_id: packId}))
-    // }, [])
 
     return (
         <div className={style.wrapper}>
+
             <BackArrowButton path={Path.PACKS} title={'Back to Packs list'}/>
+
             <div className={style.cardsListHeader}>
                 <div className={style.packMenu}>
                     <h2>{packName}</h2>

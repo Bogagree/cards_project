@@ -2,9 +2,9 @@ import React, {ChangeEvent, useEffect, useState} from 'react';
 import style from "./Search.module.css";
 import {InputAdornment, OutlinedInput} from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
-import {CardsParamsType, CardsType, PackType} from "../../../../api/cards-api";
+import {CardsParamsType} from "../../../../api/cards-api";
 import {useAppDispatch} from "../../../../app/store";
-import {getPacksTC, PacksParamsType, setPacksParams} from "../../../../features/packs/packs-reducer";
+import {getPacksTC, PacksParamsType} from "../../../../features/packs/packs-reducer";
 import {useDebounce} from "../../../Hooks/useDebounce";
 
 export type SearchPropsType = {
@@ -12,31 +12,23 @@ export type SearchPropsType = {
     searchProperty: 'packName' | 'cardQuestion'
 }
 
-
-export const Search: React.FC<SearchPropsType> = ({queryParams,searchProperty}) => {
-
+export const Search: React.FC<SearchPropsType> = React.memo(({queryParams, searchProperty}) => {
     const dispatch = useAppDispatch()
 
     const [searchText, setSearchText] = useState('');
-
     const debouncedSearchTerm = useDebounce(searchText, 500);
-
-    useEffect(
-        () => {
-            if (debouncedSearchTerm) {
-                dispatch(setPacksParams({...queryParams, [searchProperty]: searchText}));
-            }
-        },
-        [debouncedSearchTerm]
-    );
 
     const onChangeSearchHandler = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setSearchText(e.currentTarget.value)
     };
 
     useEffect(() => {
-        getPacksTC({ ...queryParams, packName: debouncedSearchTerm})
-    }, [queryParams])
+        if (debouncedSearchTerm) {
+            dispatch(getPacksTC({...queryParams, [searchProperty]: debouncedSearchTerm}))
+        } else {
+            dispatch(getPacksTC({...queryParams, [searchProperty]: ''}))
+        }
+    }, [debouncedSearchTerm])
 
     return (
         <div className={style.container}>
@@ -62,4 +54,4 @@ export const Search: React.FC<SearchPropsType> = ({queryParams,searchProperty}) 
 
         </div>
     );
-};
+})

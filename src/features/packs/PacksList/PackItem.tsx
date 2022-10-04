@@ -9,7 +9,7 @@ import {Path} from "../../../common/Enum/path";
 import {useAppDispatch, useAppSelector} from "../../../app/store";
 import {PackType} from "../../../api/cards-api";
 import {deletePackCardsTC, updatePackCardsTC} from "../packs-reducer";
-import {getCardsTC, setPackIdAC} from "../../cards/cards-reducer";
+import {getCardsTC} from "../../cards/cards-reducer";
 
 type PropsType = {
     packData: PackType
@@ -36,6 +36,7 @@ export const PackItem: React.FC<PropsType> = ({packData}) => {
     const handleLearn = () => {
         console.log('learn pack')
     }
+
     const handleDelete = () => {
         console.log('delete pack')
         if (userId === packData.user_id) {
