@@ -6,23 +6,28 @@ import {setPacksParams} from "../../../../features/packs/packs-reducer";
 export type FilterType = 'all' | 'my'
 
 type PropsType = {
-  userId: string
+    userId: string
+    onFilterChange: () => void
 }
 
-export const PacksFilter: React.FC<PropsType> = ({userId}) => {
+export const PacksFilter: React.FC<PropsType> = ({userId, onFilterChange}) => {
 
-  const dispatch = useAppDispatch()
-  const queryParams = useAppSelector(state => state.packs.queryParams)
+    const dispatch = useAppDispatch()
+    const queryParams = useAppSelector(state => state.packs.queryParams)
+
     const [filter, setFilter] = useState<FilterType>(queryParams.user_id ? 'my' : 'all')
 
     const myFilterHandler = () => {
         setFilter('my')
-      dispatch(setPacksParams({user_id: userId}))
+        console.log('user_id: ', userId)
+        dispatch(setPacksParams({user_id: userId}))
+        onFilterChange()
     };
 
     const allFilterHandler = () => {
         setFilter('all')
-      dispatch(setPacksParams({user_id: ''}))
+        dispatch(setPacksParams({user_id: ''}))
+        onFilterChange()
     };
 
     const allFilterCell = filter === 'all' ? `${style.filterCell} ${style.active}` : style.filterCell

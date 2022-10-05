@@ -33,9 +33,14 @@ export const Packs = () => {
         dispatch(getPacksTC({...queryParams, page}))
         dispatch(setPacksParams({...queryParams, page}))
     }
+
     const onChangePageCount = (pageCount: number) => {
         dispatch(getPacksTC({...queryParams, pageCount}))
         dispatch(setPacksParams({...queryParams, pageCount}))
+    }
+
+    const onFilterChange = () => {
+        dispatch(getPacksTC({...queryParams}))
     }
 
     useEffect(() => {
@@ -61,6 +66,7 @@ export const Packs = () => {
 
                     <PacksFilter
                         userId={userId}
+                        onFilterChange={onFilterChange}
                     />
                     <CardsNumberSlider/>
                     <DisableFilter/>

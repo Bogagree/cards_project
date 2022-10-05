@@ -14,7 +14,7 @@ const PacksInitialState = {
     queryParams: {
         pageCount: 5,
         page: 1,
-        packName: ''
+        packName: '',
     } as PacksParamsType
 }
 
@@ -45,7 +45,6 @@ export const getPacksTC = (queryParams: PacksParamsType): AppThunkType => async 
     dispatch(setAppStatusAC('loading'))
     try {
         const res = await packAPI.getPack(queryParams);
-        dispatch(setPacksParams(queryParams))
         dispatch(setPacks(res.data))
     } catch (e) {
         handleServerNetworkError(e, dispatch)
