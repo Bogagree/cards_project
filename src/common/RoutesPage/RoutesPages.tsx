@@ -12,7 +12,7 @@ import {Error404} from "../Components/ErrorComponents/Error404/Error404";
 import {useSelector} from "react-redux";
 import {AppStateType} from "../../app/store";
 import {Cards} from "../../features/cards/Cards";
-import {PacksListContainer} from "../../features/packs/Packs";
+import {Packs} from "../../features/packs/Packs";
 
 export const RoutesPage = () => {
 
@@ -27,7 +27,7 @@ export const RoutesPage = () => {
         {path: Path.NEW_PASSWORD, component: <NewPassword/>},
         {path: Path.CHECK_EMAIL, component: <CheckEmail/>},
         {path: Path.CARDS, component: <Cards/>},
-        {path: Path.PACKS, component: <PacksListContainer/>},
+        {path: Path.PACKS, component: <Packs/>},
         {path: '*', component: <Error404/>},
     ]
 
@@ -50,7 +50,7 @@ export const RoutesPage = () => {
                 {routes.map(({path, component}) => (
                     <Route key={path} path={path} element={component}/>
                 ))}
-              <Route path={`${Path.PACKS}/:packsUserId`} element={<PacksListContainer />} />
+              <Route path={`${Path.PACKS}/:packsUserId`} element={<Packs />} />
               <Route path={`${Path.CARDS}/:packId`} element={<Cards />} />
             </Routes>
 

@@ -9,9 +9,9 @@ import {Path} from "../../../common/Enum/path";
 import {useAppDispatch, useAppSelector} from "../../../app/store";
 import {PackType} from "../../../api/cards-api";
 import {deletePackCardsTC, updatePackCardsTC} from "../packs-reducer";
-import {setPackIdAC} from "../../cards/cards-reducer";
 import {EditPackModal} from '../../../common/Components/UI/Modals/EditPackModal/EditPackModal';
 import {DeletePackModal} from '../../../common/Components/UI/Modals/DeletePackModal/DeletePackModal';
+import {setCardsParams, setPackIdAC} from "../../cards/cards-reducer";
 
 type PropsType = {
   packData: PackType
@@ -44,13 +44,33 @@ export const PackItem: React.FC<PropsType> = ({packData}) => {
     return `${day}.${month}.${year}`
   }
 
-  const handleGoToPack = () => {
-    dispatch(setPackIdAC(packData._id))
-    navigate(`${Path.CARDS}/${packData._id}`)
-  }
-  const handleLearn = () => {
-    console.log('learn pack')
-  }
+    const handleGoToPack = () => {
+        console.log('go to Pack')
+        console.log('user cardsPack_id: ', userId)
+        dispatch(setPackIdAC(packData._id))
+        dispatch(setCardsParams({
+            cardsPack_id: packData._id,
+            pageCount: 15,
+        }))
+        navigate(`${Path.CARDS}/${packData._id}`)
+    }
+
+    const handleLearn = () => {
+        console.log('learn pack')
+    }
+
+    const handleDelete = () => {
+        console.log('delete pack')
+        if (userId === packData.user_id) {
+            dispatch(deletePackCardsTC(packData._id))
+        }
+    }
+    const handleEdit = () => {
+        console.log('edit pack')
+        if (userId === packData.user_id) {
+            dispatch(updatePackCardsTC({_id: packData._id, name: 'new name pack'}))
+        }
+    }
 
   return (
     <TableRow
