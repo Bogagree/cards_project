@@ -1,16 +1,17 @@
 import React from 'react';
-import {BasicModal} from '../BasicModal/BasicModal';
+import {BasicModal} from '../../BasicModal/BasicModal';
 import {useFormik} from 'formik';
 import styles from './AddPackModal.module.css';
-import {CommonInputText} from '../../InputText/CommonInputText';
-import {CommonCheckbox} from '../../Checkbox/CommonCheckbox';
-import {useAppDispatch} from '../../../../../app/store';
-import {createPackCardsTC, getPacksTC} from '../../../../../features/packs/packs-reducer';
+import {CommonInputText} from '../../../InputText/CommonInputText';
+import {CommonCheckbox} from '../../../Checkbox/CommonCheckbox';
+import {useAppDispatch} from '../../../../../../app/store';
+import {createPackCardsTC} from '../../../../../../features/packs/packs-reducer';
 
 
 type PropsType = {
-    nameButton: string
     title: string
+    openModal: boolean
+    closeHandler: () => void
 }
 
 type RegistrationErrorType = {
@@ -18,7 +19,7 @@ type RegistrationErrorType = {
     private?: boolean
 }
 
-export const AddPackModal: React.FC<PropsType> = ({nameButton, title}) => {
+export const AddPackModal: React.FC<PropsType> = ({title, openModal, closeHandler}) => {
     const dispatch = useAppDispatch()
 
     const formik = useFormik({
@@ -38,23 +39,21 @@ export const AddPackModal: React.FC<PropsType> = ({nameButton, title}) => {
             return errors
         },
         onSubmit: values => {
-            dispatch(createPackCardsTC(values))
-            formik.resetForm()
-            console.log(values)
-        },
+        }
     });
 
     const saveHandler = () => {
         dispatch(createPackCardsTC(formik.values))
+        closeHandler()
         formik.resetForm()
     }
 
     return (
-        <BasicModal nameButton={nameButton} title={title} ActionButton={() => <button className={styles.buttonSave} onClick={saveHandler}>Save</button>}>
+        <BasicModal title={title} openModal={openModal} closeHandler={closeHandler}>
             <form className={styles.form} onSubmit={formik.handleSubmit}>
                 <div className={styles.inputWrapper}>
                     <CommonInputText
-                        inputName={'Name'}
+                        inputName={'Name pack'}
                         id={'name'}
                         {...formik.getFieldProps('name')}
                     />
@@ -69,11 +68,14 @@ export const AddPackModal: React.FC<PropsType> = ({nameButton, title}) => {
                         Private pack
                     </CommonCheckbox>
                 </div>
+                <div className={styles.buttonWrapper}>
+                    <button onClick={closeHandler} className={styles.buttonCancel}>Cancel</button>
+                    <button className={styles.buttonSave} onClick={saveHandler}>Save</button>
+                </div>
             </form>
         </BasicModal>
     )
 }
-
 
 AddPackModal.propTypes = {};
 

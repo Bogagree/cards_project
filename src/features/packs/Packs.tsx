@@ -1,15 +1,18 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {PacksFilter} from "../../common/Components/Tools/PacksFilter/PacksFilter";
 import {Search} from "../../common/Components/Tools/Search/Search";
 import style from "./PacksListContainer.module.css"
 import {DisableFilter} from "../../common/Components/Tools/DisableFilter/DisableFilter";
 import {useAppDispatch, useAppSelector} from "../../app/store";
-import {getPacksTC, setPacksParams} from "./packs-reducer";
+import {getPacksTC} from "./packs-reducer";
 import {PacksList} from "./PacksList/PacksList";
 import {Paginator} from "../../common/Components/Tools/Paginator/Paginator";
 import {Preloader} from "../../common/Components/UI/Preloader/Preloader";
 import {CardsNumberSlider} from "../../common/Components/UI/DoubleRangeSlider/CardsNumberSlider";
 import {AddPackModal} from '../../common/Components/UI/Modals/AddPackModal/AddPackModal';
+import {getPacksTC, setPacksParams} from "./packs-reducer";
+import {CommonButton} from '../../common/Components/UI/Buttons/Button/CommonButton';
+
 
 export const Packs = () => {
 
@@ -23,7 +26,9 @@ export const Packs = () => {
 
     const appStatus = useAppSelector(state => state.app.appStatus)
 
-    console.log('packs render')
+    const [openModal, setOpenModal] = useState(false);
+    const openHandler = () => setOpenModal(true);
+    const closeHandler = () => setOpenModal(false);
 
     const onChangePage = (page: number) => {
         dispatch(getPacksTC({...queryParams, page}))
@@ -43,7 +48,9 @@ export const Packs = () => {
             <div className={style.wrapper}>
                 <div className={style.packListHeader}>
                     <h2>Packs List</h2>
-                    <AddPackModal nameButton={'Add new pack'} title={'Add new pack'}/>
+                    <CommonButton onClick={openHandler}>
+                        Add new pack
+                    </CommonButton>
                 </div>
 
                 <div className={style.tools}>
@@ -72,7 +79,7 @@ export const Packs = () => {
                 />
 
             </div>
-
+            <AddPackModal title={'Add new pack'} openModal={openModal} closeHandler={closeHandler}/>
         </>
     )
         ;

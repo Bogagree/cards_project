@@ -2,7 +2,6 @@
     width: 395px;
     display: flex;
     flex-direction: column;
-    align-items: center;
     padding: 35px 5%;
     box-sizing: border-box;
 }
@@ -48,8 +47,8 @@ form input:focus-visible {
 
 .buttonWrapper {
     display: flex;
-    justify-content:space-between;
-    padding: 0 24px 47px 24px;
+    justify-content: space-between;
+    margin-top: 34px;
 }
 
 .buttonCancel {
@@ -75,4 +74,3 @@ form input:focus-visible {
     font-weight: 500;
     font-size: 16px;
 }
-

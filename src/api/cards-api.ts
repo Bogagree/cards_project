@@ -191,6 +191,7 @@ export type DeletePackType = {
 export type UpdatePackType = {
     _id: string
     name: string
+    private?: boolean
 }
 
 export type UpdateCardsPackType = {
