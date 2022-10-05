@@ -36,7 +36,6 @@ export const Packs = () => {
 
     useEffect(() => {
         dispatch(setPacksParams({...queryParams}))
-        // dispatch(getPacksTC({...queryParams, pageCount}))
     }, [])
 
     return (

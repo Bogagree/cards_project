@@ -4,13 +4,14 @@ import {InputAdornment, OutlinedInput} from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 import {CardsParamsType} from "../../../../api/cards-api";
 import {useAppDispatch, useAppSelector} from "../../../../app/store";
-import {getPacksTC, PacksParamsType, setPacksParams} from "../../../../features/packs/packs-reducer";
+import {getPacksTC, PacksParamsType} from "../../../../features/packs/packs-reducer";
 import {useDebounce} from "../../../Hooks/useDebounce";
-import {getCardsTC, setCardsParams} from '../../../../features/cards/cards-reducer';
+import {getCardsTC} from '../../../../features/cards/cards-reducer';
 
 export type SearchPropsType = {
     queryParams: PacksParamsType | CardsParamsType
     searchProperty: 'packName' | 'cardQuestion'
+    cardsPack_id?: string
 }
 
 export const Search: React.FC<SearchPropsType> = React.memo(({queryParams, searchProperty}) => {
@@ -26,22 +27,20 @@ export const Search: React.FC<SearchPropsType> = React.memo(({queryParams, searc
     };
 
     useEffect(() => {
-        if (debouncedSearchTerm) {
-            dispatch(getPacksTC({...queryParams, [searchProperty]: debouncedSearchTerm}))
-        } else {
+
+        if (debouncedSearchTerm === '' && searchProperty === 'packName') {
             dispatch(getPacksTC({...queryParams, [searchProperty]: ''}))
         }
-        // if (searchProperty === 'packName') {
-        //     if (debouncedSearchTerm) {
-        //         dispatch(setPacksParams({...queryParams, [searchProperty]: debouncedSearchTerm}))
-        //     } else {
-        //         dispatch(setPacksParams({...queryParams, [searchProperty]: ''}))
-        //     }
-        // } else {
-        //     dispatch(setCardsParams({...queryParams, cardsPack_id, [searchProperty]: debouncedSearchTerm}))
-        // }
-    }, [debouncedSearchTerm])
 
+        if (debouncedSearchTerm && searchProperty === 'packName') {
+            dispatch(getPacksTC({...queryParams, [searchProperty]: debouncedSearchTerm}))
+        }
+
+        if (debouncedSearchTerm && searchProperty === 'cardQuestion') {
+            dispatch(getCardsTC({...queryParams, cardsPack_id, [searchProperty]: debouncedSearchTerm}))
+        }
+
+    }, [debouncedSearchTerm])
 
     return (
         <div className={style.container}>

@@ -21,7 +21,7 @@ export const cardsReducer = (state: CardsStateType = cardsInitialState, action: 
             console.log("CARDS/SET-CARDS", action.payload)
             return {...state,  cards: [...action.payload]}
         case "CARDS/SET-CARDS-PARAMS":
-            return {...state, ...action.payload}
+            return {...state, queryParams: { ...state.queryParams, ...action.payload}}
         case "CARDS/SET-PACK-ID":
             console.log('reducer packID', action.packId)
             return {...state, packId: action.packId}

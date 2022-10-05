@@ -9,7 +9,6 @@ import {createCardTC, getCardsTC, setCardsParams} from "./cards-reducer";
 import {CommonButton} from "../../common/Components/UI/Buttons/Button/CommonButton";
 import {PackMenu} from "./PackMenu";
 import {Preloader} from "../../common/Components/UI/Preloader/Preloader";
-import {setPacksParams} from '../packs/packs-reducer';
 
 export const Cards = () => {
 
@@ -32,9 +31,8 @@ export const Cards = () => {
     }
 
     useEffect(() => {
-        console.log('cards')
         dispatch(getCardsTC({...queryParams, cardsPack_id: packId}))
-        // dispatch(getCardsTC(queryParams))
+        dispatch(setCardsParams({...queryParams, cardsPack_id: packId, cardQuestion: ''}))
     },[])
 
     return (
