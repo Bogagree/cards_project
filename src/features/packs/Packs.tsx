@@ -9,7 +9,7 @@ import {PacksList} from './PacksList/PacksList';
 import {Paginator} from '../../common/Components/Tools/Paginator/Paginator';
 import {Preloader} from '../../common/Components/UI/Preloader/Preloader';
 import {CardsNumberSlider} from '../../common/Components/UI/DoubleRangeSlider/CardsNumberSlider';
-import {AddPackModal} from '../../common/Components/UI/Modals/AddPackModal/AddPackModal';
+import {AddPackModal} from '../../common/Components/UI/Modals/PackModals/AddPackModal/AddPackModal';
 import {CommonButton} from '../../common/Components/UI/Buttons/Button/CommonButton';
 
 export const testPacksListData = [
@@ -124,7 +124,6 @@ export const PacksListContainer = () => {
                 }
                 <Paginator/>
                 <AddPackModal title={'Add new pack'} openModal={openModal} closeHandler={closeHandler}/>
-
             </div>
 
         </>

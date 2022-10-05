@@ -1,34 +1,30 @@
 import React from 'react';
-import {BasicModal} from '../BasicModal/BasicModal';
-import styles from './DeletePackModal.module.css';
-import {useAppDispatch} from '../../../../../app/store';
-import {deletePackCardsTC} from '../../../../../features/packs/packs-reducer';
-import {PackType} from '../../../../../api/cards-api';
+import {BasicModal} from '../../BasicModal/BasicModal';
+import styles from './DeleteCardModal.module.css';
+import {useAppDispatch} from '../../../../../../app/store';
+import {CardsType} from '../../../../../../api/cards-api';
+import {deleteCardTC} from '../../../../../../features/cards/cards-reducer';
 
 
 type PropsType = {
     title: string
     openModal: boolean
     closeHandler: () => void
-    packData: PackType
+    cardData: CardsType
 }
 
-type RegistrationErrorType = {
-    name?: string
-}
-
-export const DeletePackModal: React.FC<PropsType> = ({title, openModal, closeHandler, packData}) => {
+export const DeleteCardModal: React.FC<PropsType> = ({title, openModal, closeHandler, cardData}) => {
     const dispatch = useAppDispatch()
 
     const deleteHandler = () => {
-        dispatch(deletePackCardsTC(packData._id))
+        dispatch(deleteCardTC(cardData._id, cardData.cardsPack_id))
         closeHandler()
     }
 
     return (
         <BasicModal title={title} openModal={openModal} closeHandler={closeHandler}>
             <p className={styles.text}>
-                Do you really want to remove <b>{packData.name}</b>?
+                Do you really want to remove <b>{cardData.question}</b>?
                 <br/>
                 All cards will be deleted.
             </p>
@@ -40,6 +36,5 @@ export const DeletePackModal: React.FC<PropsType> = ({title, openModal, closeHan
     )
 }
 
-
-DeletePackModal.propTypes = {};
+DeleteCardModal.propTypes = {};
 

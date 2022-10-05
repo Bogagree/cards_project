@@ -8,10 +8,9 @@ import {useNavigate} from "react-router-dom";
 import {Path} from "../../../common/Enum/path";
 import {useAppDispatch, useAppSelector} from "../../../app/store";
 import {PackType} from "../../../api/cards-api";
-import {deletePackCardsTC, updatePackCardsTC} from "../packs-reducer";
 import {setPackIdAC} from "../../cards/cards-reducer";
-import {EditPackModal} from '../../../common/Components/UI/Modals/EditPackModal/EditPackModal';
-import {DeletePackModal} from '../../../common/Components/UI/Modals/DeletePackModal/DeletePackModal';
+import {EditPackModal} from '../../../common/Components/UI/Modals/PackModals/EditPackModal/EditPackModal';
+import {DeletePackModal} from '../../../common/Components/UI/Modals/PackModals/DeletePackModal/DeletePackModal';
 
 type PropsType = {
   packData: PackType
