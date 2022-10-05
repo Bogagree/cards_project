@@ -25,37 +25,37 @@ export const Cards = () => {
 
     const myPack = userId === packUserId
 
-  const handleAddCard = () => {
-    packId && dispatch(createCardTC({
-      cardsPack_id: packId, question: 'new question', answer: 'new answer'
-    }))
-  }
+    const handleAddCard = () => {
+        packId && dispatch(createCardTC({
+            cardsPack_id: packId, question: 'new question', answer: 'new answer'
+        }))
+    }
 
-  const [openModal, setOpenModal] = useState(false);
-  const openHandler = () => setOpenModal(true);
-  const closeHandler = () => setOpenModal(false);
+    const [openModal, setOpenModal] = useState(false);
+    const openHandler = () => setOpenModal(true);
+    const closeHandler = () => setOpenModal(false);
 
     useEffect(() => {
         dispatch(getCardsTC({...queryParams, cardsPack_id: packId}))
         dispatch(setCardsParams({...queryParams, cardsPack_id: packId, cardQuestion: ''}))
     },[])
 
-  return (
-    <div className={style.wrapper}>
-      <BackArrowButton path={Path.PACKS} title={'Back to Packs list'}/>
-      <div className={style.cardsListHeader}>
-        <div className={style.packMenu}>
-          <h2>{packName}</h2>
-          {myPack && <PackMenu packId={packId ? packId : ''}/>}
-        </div>
-        {myPack &&
-          <CommonButton
-            onClick={openHandler}
-            disabled={appStatus === 'loading'}
-          >
-            Add Card
-          </CommonButton>}
-      </div>
+    return (
+        <div className={style.wrapper}>
+            <BackArrowButton path={Path.PACKS} title={'Back to Packs list'}/>
+            <div className={style.cardsListHeader}>
+                <div className={style.packMenu}>
+                    <h2>{packName}</h2>
+                    {myPack && <PackMenu packId={packId ? packId : ''}/>}
+                </div>
+                {myPack &&
+                    <CommonButton
+                        onClick={openHandler}
+                        disabled={appStatus === 'loading'}
+                    >
+                        Add Card
+                    </CommonButton>}
+            </div>
 
             {appStatus === 'loading' ? <Preloader/> :
                 <div>
@@ -70,9 +70,9 @@ export const Cards = () => {
                         <CardsList cardsList={cardsList}/>
                     </div>
 
-        </div>}
-      <AddCardModal title={'Add new card'} openModal={openModal} closeHandler={closeHandler} packId={packId}/>
-    </div>
-  );
+                </div>}
+            <AddCardModal title={'Add new card'} openModal={openModal} closeHandler={closeHandler} packId={packId}/>
+        </div>
+    );
 };
 
