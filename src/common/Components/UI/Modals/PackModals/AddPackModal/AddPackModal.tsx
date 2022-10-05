@@ -1,19 +1,17 @@
 import React from 'react';
+import {BasicModal} from '../../BasicModal/BasicModal';
 import {useFormik} from 'formik';
-import styles from './EditPackModal.module.css';
-import {CommonInputText} from '../../InputText/CommonInputText';
-import {CommonCheckbox} from '../../Checkbox/CommonCheckbox';
-import {useAppDispatch, useAppSelector} from '../../../../../app/store';
-import {updatePackCardsTC} from '../../../../../features/packs/packs-reducer';
-import {PackType} from '../../../../../api/cards-api';
-import {BasicModal} from '../BasicModal/BasicModal';
+import styles from './AddPackModal.module.css';
+import {CommonInputText} from '../../../InputText/CommonInputText';
+import {CommonCheckbox} from '../../../Checkbox/CommonCheckbox';
+import {useAppDispatch} from '../../../../../../app/store';
+import {createPackCardsTC} from '../../../../../../features/packs/packs-reducer';
 
 
 type PropsType = {
     title: string
     openModal: boolean
     closeHandler: () => void
-    packData: PackType
 }
 
 type RegistrationErrorType = {
@@ -21,13 +19,12 @@ type RegistrationErrorType = {
     private?: boolean
 }
 
-export const EditPackModal: React.FC<PropsType> = ({title, openModal, closeHandler, packData}) => {
+export const AddPackModal: React.FC<PropsType> = ({title, openModal, closeHandler}) => {
     const dispatch = useAppDispatch()
-    const userId = useAppSelector(state => state.auth.user._id)
 
     const formik = useFormik({
         initialValues: {
-            name: packData.name,
+            name: '',
             private: false
         },
         validate: (values) => {
@@ -45,15 +42,14 @@ export const EditPackModal: React.FC<PropsType> = ({title, openModal, closeHandl
         }
     });
 
-    const editHandler = () => {
-        dispatch(updatePackCardsTC({_id: packData._id, name: formik.values.name,
-                        private: formik.values.private}))
+    const saveHandler = () => {
+        dispatch(createPackCardsTC(formik.values))
         closeHandler()
         formik.resetForm()
     }
 
     return (
-        <BasicModal title={title} openModal={openModal} closeHandler={closeHandler} packData={packData}>
+        <BasicModal title={title} openModal={openModal} closeHandler={closeHandler}>
             <form className={styles.form} onSubmit={formik.handleSubmit}>
                 <div className={styles.inputWrapper}>
                     <CommonInputText
@@ -74,13 +70,12 @@ export const EditPackModal: React.FC<PropsType> = ({title, openModal, closeHandl
                 </div>
                 <div className={styles.buttonWrapper}>
                     <button onClick={closeHandler} className={styles.buttonCancel}>Cancel</button>
-                    <button className={styles.buttonSave} onClick={editHandler}>Save</button>
+                    <button className={styles.buttonSave} onClick={saveHandler}>Save</button>
                 </div>
             </form>
         </BasicModal>
     )
 }
 
-
-EditPackModal.propTypes = {};
+AddPackModal.propTypes = {};
 
