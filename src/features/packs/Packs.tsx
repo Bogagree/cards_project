@@ -4,14 +4,13 @@ import {Search} from "../../common/Components/Tools/Search/Search";
 import style from "./PacksListContainer.module.css"
 import {DisableFilter} from "../../common/Components/Tools/DisableFilter/DisableFilter";
 import {useAppDispatch, useAppSelector} from "../../app/store";
-import {getPacksTC} from "./packs-reducer";
 import {PacksList} from "./PacksList/PacksList";
 import {Paginator} from "../../common/Components/Tools/Paginator/Paginator";
 import {Preloader} from "../../common/Components/UI/Preloader/Preloader";
 import {CardsNumberSlider} from "../../common/Components/UI/DoubleRangeSlider/CardsNumberSlider";
-import {AddPackModal} from '../../common/Components/UI/Modals/AddPackModal/AddPackModal';
 import {getPacksTC, setPacksParams} from "./packs-reducer";
 import {CommonButton} from '../../common/Components/UI/Buttons/Button/CommonButton';
+import {AddPackModal} from '../../common/Components/UI/Modals/PackModals/AddPackModal/AddPackModal';
 
 
 export const Packs = () => {
