@@ -5,7 +5,7 @@ import {BackArrowButton} from "../../common/Components/UI/Buttons/BackArrowButto
 import {Path} from "../../common/Enum/path";
 import {CardsList} from "./cardsList/CardsList";
 import {useAppDispatch, useAppSelector} from "../../app/store";
-import {createCardTC, getCardsTC, setCardsParams, setPackUserIdAC} from "./cards-reducer";
+import {createCardTC, getCardsTC} from "./cards-reducer";
 import {CommonButton} from "../../common/Components/UI/Buttons/Button/CommonButton";
 import {PackMenu} from "./PackMenu";
 import {Preloader} from "../../common/Components/UI/Preloader/Preloader";
@@ -36,10 +36,8 @@ export const Cards = () => {
     const closeHandler = () => setOpenModal(false);
 
     useEffect(() => {
-        dispatch(getCardsTC({...queryParams, cardsPack_id: packId}))
-        dispatch(setCardsParams({...queryParams, cardsPack_id: packId, cardQuestion: ''}))
-        dispatch(setPackUserIdAC(userId))
-    },[])
+        dispatch(getCardsTC())
+    },[queryParams])
 
     return (
         <div className={style.wrapper}>

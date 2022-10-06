@@ -13,7 +13,7 @@ import {CommonButton} from '../../common/Components/UI/Buttons/Button/CommonButt
 import {AddPackModal} from '../../common/Components/UI/Modals/PackModals/AddPackModal/AddPackModal';
 
 
-export const Packs = () => {
+export const Packs = (() => {
 
     const dispatch = useAppDispatch()
 
@@ -30,22 +30,18 @@ export const Packs = () => {
     const closeHandler = () => setOpenModal(false);
 
     const onChangePage = (page: number) => {
-        dispatch(getPacksTC({...queryParams, page}))
+        // dispatch(getPacksTC({...queryParams, page}))
         dispatch(setPacksParams({...queryParams, page}))
     }
 
     const onChangePageCount = (pageCount: number) => {
-        dispatch(getPacksTC({...queryParams, pageCount}))
+        // dispatch(getPacksTC({...queryParams, pageCount}))
         dispatch(setPacksParams({...queryParams, pageCount}))
     }
 
-    const onFilterChange = () => {
-        dispatch(getPacksTC({...queryParams}))
-    }
-
     useEffect(() => {
-        dispatch(setPacksParams({...queryParams}))
-    }, [])
+        dispatch(getPacksTC())
+    }, [queryParams])
 
     return (
         <>
@@ -66,7 +62,6 @@ export const Packs = () => {
 
                     <PacksFilter
                         userId={userId}
-                        onFilterChange={onFilterChange}
                     />
                     <CardsNumberSlider/>
                     <DisableFilter/>
@@ -88,5 +83,5 @@ export const Packs = () => {
         </>
     )
         ;
-};
+});
 

@@ -7,27 +7,24 @@ export type FilterType = 'all' | 'my'
 
 type PropsType = {
     userId: string
-    onFilterChange: () => void
 }
 
-export const PacksFilter: React.FC<PropsType> = ({userId, onFilterChange}) => {
+export const PacksFilter: React.FC<PropsType> = React.memo(({userId}) => {
 
     const dispatch = useAppDispatch()
     const queryParams = useAppSelector(state => state.packs.queryParams)
 
     const [filter, setFilter] = useState<FilterType>(queryParams.user_id ? 'my' : 'all')
 
+
     const myFilterHandler = () => {
         setFilter('my')
-        console.log('user_id: ', userId)
-        dispatch(setPacksParams({user_id: userId}))
-        onFilterChange()
+        dispatch(setPacksParams({...queryParams, user_id: userId}))
     };
 
     const allFilterHandler = () => {
         setFilter('all')
-        dispatch(setPacksParams({user_id: ''}))
-        onFilterChange()
+        dispatch(setPacksParams({...queryParams, user_id: ''}))
     };
 
     const allFilterCell = filter === 'all' ? `${style.filterCell} ${style.active}` : style.filterCell
@@ -44,4 +41,4 @@ export const PacksFilter: React.FC<PropsType> = ({userId, onFilterChange}) => {
 
         </div>
     );
-};
+});

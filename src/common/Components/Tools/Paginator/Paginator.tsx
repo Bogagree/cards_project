@@ -14,64 +14,63 @@ type PaginatorPropsType = {
 }
 
 
-export const Paginator: React.FC<PaginatorPropsType> =
-    ({
-         page,
-         pageCount,
-         totalElements,
-         onPaginationClick,
-         onSelectClick
-     }) => {
+export const Paginator: React.FC<PaginatorPropsType> = React.memo(({
+                                                                       page,
+                                                                       pageCount,
+                                                                       totalElements,
+                                                                       onPaginationClick,
+                                                                       onSelectClick
+                                                                   }) => {
 
-        const appStatus = useAppSelector(state => state.app.appStatus)
+    const appStatus = useAppSelector(state => state.app.appStatus)
 
-        const pageNumbers = Math.ceil(totalElements / pageCount);
+    const pageNumbers = Math.ceil(totalElements / pageCount);
 
-        const onPageChange = (e: ChangeEvent<unknown>, page: number) => {
-            onPaginationClick(page)
-        };
-
-        const changePageCountSelectHandler = (event: SelectChangeEvent): void => {
-            const pageCount = +event.target.value;
-            onSelectClick(pageCount)
-        };
-
-        return (
-            <div className={style.pagination}>
-
-                <Pagination
-                    sx={{mt: '40px'}}
-                    shape="rounded"
-                    size="medium"
-                    page={page}
-                    count={pageNumbers}
-                    onChange={onPageChange}
-                    showFirstButton
-                    showLastButton
-                    disabled={appStatus === 'loading' as RequestStatusType}
-                />
-
-                <Box sx={{minWidth: 120}}>
-                    <FormControl
-                        sx={{mt: '35px'}}
-                        size="small"
-                        variant="outlined"
-                        disabled={appStatus === 'loading' as RequestStatusType}
-                    >
-                        <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            value={pageCount.toString()}
-                            label="Age"
-                            onChange={changePageCountSelectHandler}
-                        >
-                            <MenuItem value={5}>5</MenuItem>
-                            <MenuItem value={10}>10</MenuItem>
-                            <MenuItem value={25}>25</MenuItem>
-                            <MenuItem value={50}>50</MenuItem>
-                        </Select>
-                    </FormControl>
-                </Box>
-            </div>
-        );
+    const onPageChange = (e: ChangeEvent<unknown>, page: number) => {
+        onPaginationClick(page)
     };
+
+    const changePageCountSelectHandler = (event: SelectChangeEvent): void => {
+        const pageCount = +event.target.value;
+        onSelectClick(pageCount)
+    };
+
+    return (
+        <div className={style.pagination}>
+
+            <Pagination
+                sx={{mt: '40px'}}
+                shape="rounded"
+                size="medium"
+                page={page}
+                count={pageNumbers}
+                onChange={onPageChange}
+                showFirstButton
+                showLastButton
+                disabled={appStatus === 'loading' as RequestStatusType}
+            />
+
+            <Box sx={{minWidth: 120}}>
+                <FormControl
+                    sx={{mt: '35px'}}
+                    size="small"
+                    variant="outlined"
+                    disabled={appStatus === 'loading' as RequestStatusType}
+                >
+                    <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={pageCount.toString()}
+                        label="Age"
+                        onChange={changePageCountSelectHandler}
+                    >
+                        <MenuItem value={5}>5</MenuItem>
+                        <MenuItem value={10}>10</MenuItem>
+                        <MenuItem value={25}>25</MenuItem>
+                        <MenuItem value={50}>50</MenuItem>
+                    </Select>
+                </FormControl>
+            </Box>
+        </div>
+    );
+});

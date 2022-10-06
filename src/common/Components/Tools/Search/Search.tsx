@@ -4,9 +4,9 @@ import {InputAdornment, OutlinedInput} from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 import {CardsParamsType} from "../../../../api/cards-api";
 import {useAppDispatch, useAppSelector} from "../../../../app/store";
-import {getPacksTC, PacksParamsType} from "../../../../features/packs/packs-reducer";
+import {PacksParamsType, setPacksParams} from "../../../../features/packs/packs-reducer";
 import {useDebounce} from "../../../Hooks/useDebounce";
-import {getCardsTC} from '../../../../features/cards/cards-reducer';
+import {setCardsParams} from '../../../../features/cards/cards-reducer';
 
 export type SearchPropsType = {
     queryParams: PacksParamsType | CardsParamsType
@@ -29,16 +29,22 @@ export const Search: React.FC<SearchPropsType> = React.memo(({queryParams, searc
     useEffect(() => {
 
         if (debouncedSearchTerm === '' && searchProperty === 'packName') {
-            dispatch(getPacksTC({...queryParams, [searchProperty]: ''}))
+            // dispatch(getPacksTC({...queryParams, [searchProperty]: ''}))
+            dispatch(setPacksParams({...queryParams, [searchProperty]: ''}))
+
         }
 
         if (debouncedSearchTerm && searchProperty === 'packName') {
-            dispatch(getPacksTC({...queryParams, [searchProperty]: debouncedSearchTerm}))
+            // dispatch(getPacksTC({...queryParams, [searchProperty]: debouncedSearchTerm}))
+            dispatch(setPacksParams({...queryParams, [searchProperty]: debouncedSearchTerm}))
+
         }
 
         if (debouncedSearchTerm && searchProperty === 'cardQuestion') {
-            dispatch(getCardsTC({...queryParams, cardsPack_id, [searchProperty]: debouncedSearchTerm}))
+            // dispatch(getCardsTC({...queryParams, cardsPack_id, [searchProperty]: debouncedSearchTerm}))
+            dispatch(setCardsParams({...queryParams, cardsPack_id, [searchProperty]: debouncedSearchTerm}))
         }
+
 
     }, [debouncedSearchTerm])
 

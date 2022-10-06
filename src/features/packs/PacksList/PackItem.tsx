@@ -8,7 +8,7 @@ import {useNavigate} from "react-router-dom";
 import {Path} from "../../../common/Enum/path";
 import {useAppDispatch, useAppSelector} from "../../../app/store";
 import {PackType} from "../../../api/cards-api";
-import {setPackIdAC} from "../../cards/cards-reducer";
+import {setCardsParams, setPackIdAC, setPackUserIdAC} from "../../cards/cards-reducer";
 import {EditPackModal} from '../../../common/Components/UI/Modals/PackModals/EditPackModal/EditPackModal';
 import {DeletePackModal} from '../../../common/Components/UI/Modals/PackModals/DeletePackModal/DeletePackModal';
 import {deletePackCardsTC, updatePackCardsTC} from "../packs-reducer";
@@ -44,9 +44,10 @@ export const PackItem: React.FC<PropsType> = React.memo(({packData}) => {
         openHandler()
     }
 
-
     const handleGoToPack = () => {
         dispatch(setPackIdAC(packData._id))
+        dispatch(setCardsParams({cardsPack_id: packData._id}))
+        dispatch(setPackUserIdAC(packData.user_id))
         navigate(`${Path.CARDS}/${packData._id}`)
     }
     const handleLearn = () => {

@@ -78,11 +78,9 @@ export const registrationTC = (data: RegistrationDataType): AppThunkType => asyn
     dispatch(setAppStatusAC('loading'))
     try {
         const res = await authAPI.registration(data)
-        console.log('server response', res)
         dispatch(setIsRegistered(true))
         dispatch(loginTC({...data, rememberMe: false}))
     } catch (e) {
-        console.log(e)
         handleServerNetworkError(e, dispatch);
     } finally {
         dispatch(setAppStatusAC('succeeded'))

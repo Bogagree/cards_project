@@ -1,11 +1,11 @@
-import React, {FC} from 'react';
+import React from 'react';
 import {useDispatch} from 'react-redux';
 import {Alert, Snackbar} from "@mui/material";
 import {useAppSelector} from "../../../../app/store";
 import {setAppError} from "../../../../app/app-reducer";
 
 
-export const ErrorSnackbar: FC = () => {
+export const ErrorSnackbar: React.FC = () => {
 
     const error = useAppSelector(state => state.app.error)
     const dispatch = useDispatch();

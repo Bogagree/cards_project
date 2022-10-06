@@ -38,15 +38,13 @@ export const setCardsParams = (queryParams: CardsParamsType) => ({
     payload: queryParams
 } as const)
 
-export const getCardsTC = (queryParams: CardsParamsType): AppThunkType => async (dispatch, getState) => {
+export const getCardsTC = (): AppThunkType => async (dispatch, getState) => {
 
     dispatch(setAppStatusAC('loading'))
-
     const params = getState().cards.queryParams
 
     try {
         const cards = await cardAPI.getCard(params)
-        console.log('cards', cards.data.cards)
         dispatch(setCardsAC(cards.data.cards))
         dispatch(setPackUserIdAC(cards.data.packUserId))
     } catch (e) {
@@ -56,35 +54,34 @@ export const getCardsTC = (queryParams: CardsParamsType): AppThunkType => async 
     }
 }
 
-export const createCardTC = (createCardData: CreateCardsType): AppThunkType => async dispatch => {
+export const createCardTC = (createCardData: CreateCardsType): AppThunkType => async (dispatch) => {
     dispatch(setAppStatusAC('loading'))
+
     try {
-        const res = await cardAPI.createCard(createCardData)
-        dispatch(getCardsTC(createCardData))
+        await cardAPI.createCard(createCardData)
+        dispatch(getCardsTC())
     } catch (e) {
         alert(e)
     } finally {
         dispatch(setAppStatusAC('succeeded'))
     }
 }
-export const updateCardTC = (updateCardData: UpdateCardsType, packId: string): AppThunkType => async (dispatch, getState) => {
+export const updateCardTC = (updateCardData: UpdateCardsType, packId: string): AppThunkType => async (dispatch) => {
     dispatch(setAppStatusAC('loading'))
-    const param = getState().cards.queryParams
     try {
         await cardAPI.updateCard(updateCardData)
-        dispatch(getCardsTC(param))
+        dispatch(getCardsTC())
     } catch (e) {
         alert(e)
     } finally {
         dispatch(setAppStatusAC('succeeded'))
     }
 }
-export const deleteCardTC = (cardID: string, packId: string): AppThunkType => async (dispatch, getState) => {
+export const deleteCardTC = (cardID: string, packId: string): AppThunkType => async (dispatch) => {
     dispatch(setAppStatusAC('loading'))
-    const param = getState().cards.queryParams
     try {
         await cardAPI.deleteCards(cardID)
-        dispatch(getCardsTC(param))
+        dispatch(getCardsTC())
     } catch (e) {
         alert(e)
     } finally {
