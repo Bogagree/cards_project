@@ -12,10 +12,13 @@ const PacksInitialState = {
     pageCount: 5,
     page: 1,
     queryParams: {
-        user_id: '',
+        // user_id: '',
         pageCount: 5,
-        page: 1,
-        packName: '',
+        // page: 1,
+        // packName: '',
+        // min: 0,
+        // max: 0,
+        // sortPacks: ''
     } as PacksParamsType
 }
 
@@ -43,6 +46,7 @@ export const setPacksParams = (queryParams: PacksParamsType) => ({
 
 //thunks
 export const getPacksTC = (): AppThunkType => async (dispatch,getState) => {
+
     dispatch(setAppStatusAC('loading'))
 
     const params = getState().packs.queryParams
@@ -50,6 +54,7 @@ export const getPacksTC = (): AppThunkType => async (dispatch,getState) => {
     try {
         const res = await packAPI.getPack(params);
         dispatch(setPacks(res.data))
+
     } catch (e) {
         handleServerNetworkError(e, dispatch)
     } finally {
@@ -100,4 +105,7 @@ export type PacksParamsType = {
     pageCount?: number;
     user_id?: string;
     page?: number
+    min?: number;
+    max?: number;
+    sortPacks?: string;
 }

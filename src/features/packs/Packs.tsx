@@ -16,9 +16,10 @@ import {AddPackModal} from '../../common/Components/UI/Modals/PackModals/AddPack
 export const Packs = (() => {
 
     const dispatch = useAppDispatch()
-
     const userId = useAppSelector(state => state.auth.user._id)
     const queryParams = useAppSelector(state => state.packs.queryParams)
+    const maxCardsCount = useAppSelector(state => state.packs.maxCardsCount)
+    const minCardsCount = useAppSelector(state => state.packs.minCardsCount)
     const cardPacksTotalCount = useAppSelector(state => state.packs.cardPacksTotalCount)
     const page = useAppSelector(state => state.packs.page)
     const pageCount = useAppSelector(state => state.packs.pageCount)
@@ -30,12 +31,10 @@ export const Packs = (() => {
     const closeHandler = () => setOpenModal(false);
 
     const onChangePage = (page: number) => {
-        // dispatch(getPacksTC({...queryParams, page}))
         dispatch(setPacksParams({...queryParams, page}))
     }
 
     const onChangePageCount = (pageCount: number) => {
-        // dispatch(getPacksTC({...queryParams, pageCount}))
         dispatch(setPacksParams({...queryParams, pageCount}))
     }
 
@@ -63,7 +62,10 @@ export const Packs = (() => {
                     <PacksFilter
                         userId={userId}
                     />
-                    <CardsNumberSlider/>
+                    <CardsNumberSlider
+                        minCardsCount={minCardsCount}
+                        maxCardsCount={maxCardsCount}
+                    />
                     <DisableFilter/>
                 </div>
                 {appStatus === 'loading'

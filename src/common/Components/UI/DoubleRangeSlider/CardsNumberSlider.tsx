@@ -1,30 +1,35 @@
-import React, {ChangeEvent, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {DoubleRange} from "./DoubleRange";
 import style from './CardsNumber.module.css'
+import {useAppDispatch, useAppSelector} from '../../../../app/store';
+import {getPackQueryParams} from '../../../../features/packs/packs-selector';
+import {setPacksParams} from '../../../../features/packs/packs-reducer';
+import {useDebounce} from '../../../Hooks/useDebounce';
 
+type CardsNumberSlider = {
+    minCardsCount: number
+    maxCardsCount: number
+}
 
-export function CardsNumberSlider() {
+export const CardsNumberSlider: React.FC<CardsNumberSlider> = React.memo(({minCardsCount,maxCardsCount}) => {
+    const dispatch = useAppDispatch();
 
-    const [minValue, setMinValue] = useState(0)
-    const maxValue = 100
+    const queryParams = useAppSelector(getPackQueryParams);
 
-    const [value1, setValue1] = useState(minValue)
-    const [value2, setValue2] = useState(maxValue)
+    const [range, setRange] = useState<number[]>([minCardsCount, maxCardsCount]);
 
+    const debouncedRange = useDebounce<number[]>(range, 500);
 
-    const onChangeRange = ([value1, value2]: [number, number]) => {
-        setValue1(value1)
-        setValue2(value2)
-    }
+    const onChangeRange = (event: Event, range: number | number[]) => {
+        const value = range as number[];
+        setRange(value);
+    };
 
-    function handlerMinValue(e: ChangeEvent<HTMLInputElement>) {
-        let mV = +e.currentTarget.value
-        if (mV > 100) {
-            mV = 100
-        }
-        setMinValue(mV)
-        setValue1(mV)
-    }
+    useEffect(() => {
+
+        dispatch(setPacksParams({...queryParams, min: range[0] || minCardsCount, max: range[1] || maxCardsCount}))
+
+    }, [debouncedRange])
 
     return (
         <div>
@@ -34,19 +39,22 @@ export function CardsNumberSlider() {
 
                 <div className={style.rangeContainer}>
 
-                    <span className={style.cardsNumber}>{value1}</span>
+                    <span className={style.cardsNumber}>{range[0]}</span>
 
                     <div className={style.doubleRange}>
                         <DoubleRange
                             onChangeRange={onChangeRange}
-                            value={[value1, value2]}
+                            value={range}
+                            disabled={false}
+                            minValue={minCardsCount}
+                            maxValue={maxCardsCount}
                         />
                     </div>
 
-                    <span className={style.cardsNumber}>{value2}</span></div>
+                    <span className={style.cardsNumber}>{range[1]}</span></div>
 
             </div>
 
         </div>
     )
-}
+});
