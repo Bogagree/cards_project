@@ -1,6 +1,7 @@
 import {AppThunkType} from "./store";
 import {authAPI} from "../api/cards-api";
 import {loginAC, setIsLogged} from "../features/auth/auth-reducer";
+import {setPacksParams} from '../features/packs/packs-reducer';
 
 const initialState = {
     appStatus: 'idle' as RequestStatusType,

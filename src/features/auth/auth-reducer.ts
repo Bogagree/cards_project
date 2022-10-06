@@ -77,12 +77,10 @@ export const registrationTC = (data: RegistrationDataType): AppThunkType => asyn
     console.log(data)
     dispatch(setAppStatusAC('loading'))
     try {
-        const res = await authAPI.registration(data)
-        console.log('server response', res)
+        await authAPI.registration(data)
         dispatch(setIsRegistered(true))
         dispatch(loginTC({...data, rememberMe: false}))
     } catch (e) {
-        console.log(e)
         handleServerNetworkError(e, dispatch);
     } finally {
         dispatch(setAppStatusAC('succeeded'))
@@ -101,8 +99,7 @@ export const sendPingDataTC = (): AppThunkType => async () => {
 export const logoutTC = (): AppThunkType => async dispatch => {
     dispatch(setAppStatusAC('loading'));
     try {
-        const res = await authAPI.logout()
-        console.log(res)
+        await authAPI.logout()
         dispatch(setIsLogged(false));
         dispatch(setIsRegistered(false))
     } catch (e) {
@@ -127,7 +124,7 @@ export const changeUserTC = (name: string): AppThunkType => async dispatch => {
 export const forgotTC = (forgotData: ForgotDataType): AppThunkType => async dispatch => {
     dispatch(setAppStatusAC('loading'))
     try {
-        const res = await authAPI.forgot(forgotData)
+        await authAPI.forgot(forgotData)
         dispatch(setForgotPasswordSuccessAC(true))
     } catch (e) {
         handleServerNetworkError(e, dispatch);
@@ -139,7 +136,7 @@ export const forgotTC = (forgotData: ForgotDataType): AppThunkType => async disp
 export const newPasswordTC = (passwordData: PasswordDataType): AppThunkType => async dispatch => {
     dispatch(setAppStatusAC('loading'))
     try {
-        const res = await authAPI.newPassword(passwordData)
+        await authAPI.newPassword(passwordData)
         dispatch(setNewPasswordSuccessAC(true))
     } catch (e) {
         handleServerNetworkError(e, dispatch);

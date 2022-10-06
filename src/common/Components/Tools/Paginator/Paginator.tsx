@@ -3,27 +3,36 @@ import style from "../../../../features/packs/PacksListContainer.module.css";
 import Pagination from "@mui/material/Pagination";
 import {Box, FormControl, MenuItem, Select, SelectChangeEvent} from "@mui/material";
 import {RequestStatusType} from "../../../../app/app-reducer";
-import {useAppDispatch, useAppSelector} from "../../../../app/store";
-import {setPacksParams} from "../../../../features/packs/packs-reducer";
+import {useAppSelector} from "../../../../app/store";
+
+type PaginatorPropsType = {
+    page: number
+    totalElements: number
+    pageCount: number
+    onPaginationClick: (page: number) => void
+    onSelectClick: (pageCount: number) => void
+}
 
 
-export const Paginator = () => {
-    const dispatch = useAppDispatch();
+export const Paginator: React.FC<PaginatorPropsType> = React.memo(({
+                                                                       page,
+                                                                       pageCount,
+                                                                       totalElements,
+                                                                       onPaginationClick,
+                                                                       onSelectClick
+                                                                   }) => {
 
-    const pageCount = useAppSelector(state => state.packs.pageCount)
-    const page = useAppSelector(state => state.packs.queryParams.page)
-    const cardPacksTotalCount = useAppSelector(state => state.packs.cardPacksTotalCount)
     const appStatus = useAppSelector(state => state.app.appStatus)
 
-    const pageNumbers = Math.ceil(cardPacksTotalCount / pageCount);
+    const pageNumbers = Math.ceil(totalElements / pageCount);
 
     const onPageChange = (e: ChangeEvent<unknown>, page: number) => {
-        dispatch(setPacksParams({page}));
+        onPaginationClick(page)
     };
 
     const changePageCountSelectHandler = (event: SelectChangeEvent): void => {
         const pageCount = +event.target.value;
-        dispatch(setPacksParams({pageCount}));
+        onSelectClick(pageCount)
     };
 
     return (
@@ -64,4 +73,4 @@ export const Paginator = () => {
             </Box>
         </div>
     );
-};
+});

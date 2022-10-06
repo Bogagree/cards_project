@@ -6,23 +6,25 @@ import {setPacksParams} from "../../../../features/packs/packs-reducer";
 export type FilterType = 'all' | 'my'
 
 type PropsType = {
-  userId: string
+    userId: string
 }
 
-export const PacksFilter: React.FC<PropsType> = ({userId}) => {
+export const PacksFilter: React.FC<PropsType> = React.memo(({userId}) => {
 
-  const dispatch = useAppDispatch()
-  const queryParams = useAppSelector(state => state.packs.queryParams)
+    const dispatch = useAppDispatch()
+    const queryParams = useAppSelector(state => state.packs.queryParams)
+
     const [filter, setFilter] = useState<FilterType>(queryParams.user_id ? 'my' : 'all')
+
 
     const myFilterHandler = () => {
         setFilter('my')
-      dispatch(setPacksParams({user_id: userId}))
+        dispatch(setPacksParams({...queryParams, user_id: userId}))
     };
 
     const allFilterHandler = () => {
         setFilter('all')
-      dispatch(setPacksParams({user_id: ''}))
+        dispatch(setPacksParams({...queryParams, user_id: ''}))
     };
 
     const allFilterCell = filter === 'all' ? `${style.filterCell} ${style.active}` : style.filterCell
@@ -39,4 +41,4 @@ export const PacksFilter: React.FC<PropsType> = ({userId}) => {
 
         </div>
     );
-};
+});

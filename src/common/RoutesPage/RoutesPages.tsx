@@ -12,7 +12,7 @@ import {Error404} from "../Components/ErrorComponents/Error404/Error404";
 import {useSelector} from "react-redux";
 import {AppStateType} from "../../app/store";
 import {Cards} from "../../features/cards/Cards";
-import {PacksListContainer} from "../../features/packs/Packs";
+import {Packs} from "../../features/packs/Packs";
 import {Learn} from "../../features/learn/Learn";
 
 export const RoutesPage = () => {
@@ -28,6 +28,7 @@ export const RoutesPage = () => {
         {path: Path.NEW_PASSWORD, component: <NewPassword/>},
         {path: Path.CHECK_EMAIL, component: <CheckEmail/>},
         {path: Path.CARDS, component: <Cards/>},
+        {path: Path.PACKS, component: <Packs/>},
         {path: Path.PACKS, component: <PacksListContainer/>},
         {path: Path.LEARN, component: <Learn/>},
         {path: '*', component: <Error404/>},

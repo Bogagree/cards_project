@@ -7,11 +7,11 @@ import {PackItem} from "./PackItem";
 
 export const PacksList: React.FC = () => {
 
-  const cardPacks = useAppSelector(state => state.packs.cardPacks)
   const appStatus = useAppSelector(state => state.app.appStatus)
-
+  const cardsPacks = useAppSelector(state => state.packs.cardPacks)
 
   return (
+
     <div>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -30,7 +30,7 @@ export const PacksList: React.FC = () => {
 
           {appStatus === 'loading' ? <Preloader/> : ''}
           <TableBody>
-            { cardPacks.map((item) => (
+            { cardsPacks.map((item) => (
               <PackItem
                 key={item._id}
                 packData={item} />
@@ -40,4 +40,4 @@ export const PacksList: React.FC = () => {
       </TableContainer>
     </div>
   );
-};
+}

@@ -1,5 +1,5 @@
 import {AppThunkType} from "../../app/store";
-import {CreatePackType, packAPI, PacksResponseType, PackType, UpdatePackType} from '../../api/cards-api';
+import {packAPI, PacksResponseType, PackType, UpdatePackType, CreatePackType} from "../../api/cards-api";
 import {setAppStatusAC} from "../../app/app-reducer";
 import {handleServerNetworkError} from "../../common/Components/ErrorComponents/Error-utils/error-utils";
 
@@ -10,43 +10,51 @@ const PacksInitialState = {
     maxCardsCount: 0,
     minCardsCount: 0,
     pageCount: 5,
+    page: 1,
     queryParams: {
-      pageCount: 5,
-      page: 1,
-      user_id: ''
+        // user_id: '',
+        pageCount: 5,
+        // page: 1,
+        // packName: '',
+        // min: 0,
+        // max: 0,
+        // sortPacks: ''
     } as PacksParamsType
 }
-
 
 export const packsReducer = (state: PacksStateType = PacksInitialState, action: PackActionType): PacksStateType => {
     switch (action.type) {
         case "PACKS/SET-PACKS":
-            return { ...state, ...action.payload.packs}
+        case "PACKS/SET-PACKS-PAGE":
         case "PACKS/SET-PAGE-COUNT":
-            return {...state, pageCount: action.payload.pageCount}
+            return {...state, ...action.payload}
         case "PACKS/SET-PACKS-PARAMS":
-            return {...state, queryParams: {...state.queryParams ,...action.payload.queryParams}}
+            return {...state, queryParams: {...action.payload}}
         default:
             return state
     }
 };
 
-
 //actions
-export const setPacks = (packs: PacksResponseType) => ({type: 'PACKS/SET-PACKS', payload: {packs}} as const)
-export const setPageCount = (pageCount: number) => ({
-    type: 'PACKS/SET-PAGE-COUNT',
-    payload: {pageCount: pageCount}
-} as const)
-export const setPacksParams = (queryParams: PacksParamsType) =>
-    ({type: 'PACKS/SET-PACKS-PARAMS', payload: {queryParams}} as const);
+export const setPacks = (packs: PacksResponseType) => ({type: 'PACKS/SET-PACKS', payload: packs} as const)
+export const setPacksPage = (page: number) => ({type: 'PACKS/SET-PACKS-PAGE', payload: {page}} as const);
+export const setPageCount = (pageCount: number) => ({type: 'PACKS/SET-PAGE-COUNT', payload: {pageCount}} as const)
+export const setPacksParams = (queryParams: PacksParamsType) => ({
+    type: 'PACKS/SET-PACKS-PARAMS',
+    payload: queryParams
+} as const);
 
 //thunks
-export const getPacksTC = (): AppThunkType => async (dispatch, getState) => {
+export const getPacksTC = (): AppThunkType => async (dispatch,getState) => {
+
     dispatch(setAppStatusAC('loading'))
+
+    const params = getState().packs.queryParams
+
     try {
-        const res = await packAPI.getPack(getState().packs.queryParams);
+        const res = await packAPI.getPack(params);
         dispatch(setPacks(res.data))
+
     } catch (e) {
         handleServerNetworkError(e, dispatch)
     } finally {
@@ -54,45 +62,50 @@ export const getPacksTC = (): AppThunkType => async (dispatch, getState) => {
     }
 }
 
-export const createPackCardsTC = (values: CreatePackType): AppThunkType => async (dispatch, getState) => {
+export const createPackCardsTC = (values: CreatePackType): AppThunkType => async (dispatch,) => {
     try {
         await packAPI.createPack(values)
-      dispatch(getPacksTC())
+        dispatch(getPacksTC())
     } catch (e) {
         console.log(e)
     }
 }
-export const deletePackCardsTC = (packId: string): AppThunkType => async dispatch => {
-  try {
-    await packAPI.deletePack(packId)
-    dispatch(getPacksTC())
-  }catch (e) {
+export const deletePackCardsTC = (packId: string): AppThunkType => async (dispatch) => {
+    try {
+        await packAPI.deletePack(packId)
+        dispatch(getPacksTC())
+    } catch (e) {
+        alert(e)
+    } finally {
 
-  }finally {
-
-  }
+    }
 }
-export const updatePackCardsTC = (updatePackData: UpdatePackType): AppThunkType => async dispatch => {
-  try {
-    await packAPI.updatePack(updatePackData)
-    dispatch(getPacksTC())
-  }catch (e) {
+export const updatePackCardsTC = (updatePackData: UpdatePackType): AppThunkType => async (dispatch) => {
+    try {
+        await packAPI.updatePack(updatePackData)
+        dispatch(getPacksTC())
+    } catch (e) {
 
-  }finally {
+    } finally {
 
-  }
+    }
 }
 
 // types
 export type PackActionType = ReturnType<typeof setPacks>
     | ReturnType<typeof setPageCount>
     | ReturnType<typeof setPacksParams>
+    | ReturnType<typeof setPacksPage>
 
 
 export type PacksStateType = typeof PacksInitialState;
 
 export type PacksParamsType = {
+    packName?: string
     pageCount?: number;
     user_id?: string;
     page?: number
+    min?: number;
+    max?: number;
+    sortPacks?: string;
 }

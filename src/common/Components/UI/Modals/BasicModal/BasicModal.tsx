@@ -4,7 +4,6 @@ import Modal from '@mui/material/Modal';
 import {ReactNode} from 'react';
 import s from './BasicModal.module.css'
 import cross from '../../../../../assets/icons/cross.svg';
-import {PackType} from '../../../../../api/cards-api';
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -21,12 +20,11 @@ type PropsType = {
     openModal: boolean
     children: ReactNode
     closeHandler: () => void
-    packData?: PackType
 }
 
 export const BasicModal: React.FC<PropsType> = (
     {openModal, title, closeHandler,
-        children, packData}) => {
+        children}) => {
 
     return (
         <div>

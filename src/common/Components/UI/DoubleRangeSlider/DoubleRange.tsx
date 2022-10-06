@@ -1,21 +1,21 @@
 import React from 'react'
 import {Slider} from "@mui/material";
 
-type SuperDoubleRangePropsType = {
-    onChangeRange?: (value: [number, number]) => void
-    value?: [number, number]
+type DoubleRangePropsType = {
+    onChangeRange?: (event: Event, newValue: number | number[]) => void
+    value: number[]
     minValue?: number
     maxValue?: number
     disabled?: boolean
 }
 
-export const DoubleRange: React.FC<SuperDoubleRangePropsType> = ({
-                                                                   onChangeRange, value, disabled,
-                                                                   minValue, maxValue,
-                                                               }) => {
+export const DoubleRange: React.FC<DoubleRangePropsType> = ({
+                                                                           onChangeRange, value, disabled,
+                                                                           minValue, maxValue,
+                                                                       }) => {
 
     const handleChange = (event: Event, newValue: number | number[]) => {
-        onChangeRange && onChangeRange(newValue as [number, number])
+        onChangeRange && onChangeRange(event, newValue as [number, number])
     }
 
     return (
@@ -25,8 +25,8 @@ export const DoubleRange: React.FC<SuperDoubleRangePropsType> = ({
                 value={value}
                 onChange={handleChange}
                 disableSwap
-                min={minValue ? minValue : 0}
-                max={maxValue ? maxValue : 100}
+                min={minValue}
+                max={maxValue}
                 disabled={disabled}
             />
         </>
