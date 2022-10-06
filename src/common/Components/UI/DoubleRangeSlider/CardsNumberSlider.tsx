@@ -25,9 +25,13 @@ export const CardsNumberSlider: React.FC<CardsNumberSlider> = React.memo(({minCa
         setRange(value);
     };
 
-    useEffect(() => {
 
-        dispatch(setPacksParams({...queryParams, min: range[0] || minCardsCount, max: range[1] || maxCardsCount}))
+    useEffect(() => {
+        dispatch(setPacksParams({
+            ...queryParams,
+            min: range[0],
+            max: range[1]
+        }))
 
     }, [debouncedRange])
 
@@ -51,10 +55,10 @@ export const CardsNumberSlider: React.FC<CardsNumberSlider> = React.memo(({minCa
                         />
                     </div>
 
-                    <span className={style.cardsNumber}>{range[1]}</span></div>
+                    <span className={style.cardsNumber}>{maxCardsCount}</span></div>
 
             </div>
 
         </div>
     )
-});
+})

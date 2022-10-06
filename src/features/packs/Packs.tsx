@@ -17,6 +17,7 @@ export const Packs = (() => {
 
     const dispatch = useAppDispatch()
     const userId = useAppSelector(state => state.auth.user._id)
+
     const queryParams = useAppSelector(state => state.packs.queryParams)
     const maxCardsCount = useAppSelector(state => state.packs.maxCardsCount)
     const minCardsCount = useAppSelector(state => state.packs.minCardsCount)
@@ -39,6 +40,7 @@ export const Packs = (() => {
     }
 
     useEffect(() => {
+        queryParams.hasOwnProperty('min')  &&
         dispatch(getPacksTC())
     }, [queryParams])
 

@@ -3,7 +3,7 @@ import {Slider} from "@mui/material";
 
 type DoubleRangePropsType = {
     onChangeRange?: (event: Event, newValue: number | number[]) => void
-    value?: number[]
+    value: number[]
     minValue?: number
     maxValue?: number
     disabled?: boolean
