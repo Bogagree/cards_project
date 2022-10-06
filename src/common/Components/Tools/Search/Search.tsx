@@ -4,7 +4,7 @@ import {InputAdornment, OutlinedInput} from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 import {CardsParamsType} from "../../../../api/cards-api";
 import {useAppDispatch, useAppSelector} from "../../../../app/store";
-import {getPacksTC, PacksParamsType, setPacksParams} from "../../../../features/packs/packs-reducer";
+import {PacksParamsType, setPacksParams} from "../../../../features/packs/packs-reducer";
 import {useDebounce} from "../../../Hooks/useDebounce";
 import {setCardsParams} from '../../../../features/cards/cards-reducer';
 
@@ -18,7 +18,6 @@ export const Search: React.FC<SearchPropsType> = React.memo(({queryParams, searc
     const dispatch = useAppDispatch()
 
     const cardsPack_id = useAppSelector(state => state.cards.queryParams.cardsPack_id)
-    const packName = useAppSelector(state => state.packs.queryParams.packName)
 
     const [searchText, setSearchText] = useState('');
 
@@ -27,6 +26,8 @@ export const Search: React.FC<SearchPropsType> = React.memo(({queryParams, searc
     const onChangeSearchHandler = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setSearchText(e.currentTarget.value)
     };
+
+
 
     useEffect(() => {
 

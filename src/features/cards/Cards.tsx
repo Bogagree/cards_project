@@ -10,6 +10,7 @@ import {CommonButton} from "../../common/Components/UI/Buttons/Button/CommonButt
 import {PackMenu} from "./PackMenu";
 import {Preloader} from "../../common/Components/UI/Preloader/Preloader";
 import {AddCardModal} from '../../common/Components/UI/Modals/CardModals/AddCardModal/AddCardModal';
+import {ResetCardsSearch} from './ResetCardsSearch/ResetCardsSearch';
 
 export const Cards = () => {
 
@@ -37,7 +38,7 @@ export const Cards = () => {
 
     useEffect(() => {
         dispatch(getCardsTC())
-    },[queryParams])
+    }, [queryParams])
 
     return (
         <div className={style.wrapper}>
@@ -63,6 +64,7 @@ export const Cards = () => {
                             queryParams={queryParams}
                             searchProperty={'cardQuestion'}
                         />
+                        <ResetCardsSearch/>
                     </div>
 
                     <div className={style.cardsList}>
