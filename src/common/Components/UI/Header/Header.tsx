@@ -1,31 +1,35 @@
 import React from 'react';
-import incubator from '../../../../assets/img/Incubator_logo.png'
+import logo from '../../../../assets/img/Logo3.png'
 import style from './Header.module.css'
 import {CommonButton} from "../Buttons/Button/CommonButton";
 import {useAppSelector} from '../../../../app/store';
 import {Path} from '../../../Enum/path';
 import {useNavigate} from 'react-router-dom';
-import avatar from '../../../../assets/img/avatar.png';
+import {HeaderMenu} from '../Menu/HeaderMenu/HeaderMenu';
 
 export const Header = () => {
+
     const isLogged = useAppSelector(state => state.auth.isLogged)
-    const user = useAppSelector(state => state.auth.user)
     const navigate = useNavigate();
 
     const signIntHandler = () => {
         navigate(Path.LOGIN)
     }
 
+    const onclickHandler = () => {
+
+    };
+
     return (
         <div className={style.header}>
-            <img src={incubator} alt="incubator logo"/>
+            <img src={logo} alt="incubator logo" className={style.logo}/>
 
             <div>
                 {isLogged
-                    ? <div className={style.headerUser}>
-                        <span className={style.headerName}>{user.name}</span>
-                        <img className={style.headerAvatar} src={avatar} alt="avatar"/>
+                    ? <div className={style.headerUser} onClick={onclickHandler}>
+                        <HeaderMenu/>
                     </div>
+
                     : <CommonButton onClick={signIntHandler} children={'Sign in'}/>
                 }
             </div>

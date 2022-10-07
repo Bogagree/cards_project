@@ -7,7 +7,7 @@ import {CardsList} from "./cardsList/CardsList";
 import {useAppDispatch, useAppSelector} from "../../app/store";
 import {getCardsTC} from "./cards-reducer";
 import {CommonButton} from "../../common/Components/UI/Buttons/Button/CommonButton";
-import {PackMenu} from "./PackMenu";
+import {PackMenu} from "../../common/Components/UI/Menu/PackMenu";
 import {Preloader} from "../../common/Components/UI/Preloader/Preloader";
 import {AddCardModal} from '../../common/Components/UI/Modals/CardModals/AddCardModal/AddCardModal';
 import {ResetCardsSearch} from './ResetCardsSearch/ResetCardsSearch';
