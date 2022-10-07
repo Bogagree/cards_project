@@ -27,9 +27,10 @@ const choiceAnswerArr = [
 
 type PropsType = {
   nextQuestionCallback: (value: number) => void
+  answer: string
 }
 
-export const Answer: React.FC<PropsType> = ({nextQuestionCallback}) => {
+export const Answer: React.FC<PropsType> = ({nextQuestionCallback, answer}) => {
 
   const [choiceAnswer, setChoiceAnswer] = useState(choiceAnswerArr[0].grade)
 
@@ -41,12 +42,12 @@ export const Answer: React.FC<PropsType> = ({nextQuestionCallback}) => {
   }
 
   useEffect(() => {
-    console.log('rerender Answer')
+
   },[])
 
   return (
     <>
-      <h4>answer: Lorem ipsum dolor sit amet.</h4>
+      <h4>Answer: {answer}</h4>
       <p>Rate yourself:</p>
 
       {choiceAnswerArr.map(answer => (

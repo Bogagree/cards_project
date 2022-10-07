@@ -69,6 +69,9 @@ export const cardAPI = {
     },
     deleteCards(cardID: string) {
         return instance.delete(`cards/card?id=${cardID}`)
+    },
+    updateGrade(updatedGradeData: UpdatedGradeRequestType){
+      return instance.put<UpdatedGradeType>('cards/grade', updatedGradeData)
     }
 }
 
@@ -265,3 +268,18 @@ export type UpdateCardsType = {
     comments?: string
     answer?: string
 }
+
+export type UpdatedGradeRequestType = {
+  grade: number
+  card_id: string
+}
+
+export type UpdatedGradeType = {
+  updatedGrade: {
+  _id: string
+  cardsPack_id: string
+  card_id: string
+  user_id: string
+  grade: number
+  shots: number
+}}

@@ -7,5 +7,5 @@ export enum Path {
     CHECK_EMAIL = '/check-email',
     PACKS = '/packs',
     CARDS = '/cards',
-    LEARN = '/learn/:packId',
+    LEARN = '/learn',
 }

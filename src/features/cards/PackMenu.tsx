@@ -3,12 +3,19 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import iconMenu from './../../assets/icons/iconMenu.png'
+import {Path} from "../../common/Enum/path";
+import {setCardsParams, setPackIdAC} from "./cards-reducer";
+import {useNavigate} from "react-router-dom";
+import {useAppDispatch} from "../../app/store";
 
 type PropsType = {
   packId: string
 }
 
 export const PackMenu: React.FC<PropsType> = ({packId}) => {
+
+  const navigate = useNavigate()
+  const dispatch = useAppDispatch()
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -24,7 +31,9 @@ export const PackMenu: React.FC<PropsType> = ({packId}) => {
 
   const handleLearn = () => {
     handleClose()
-    console.log('learn pack')
+    navigate(`${Path.LEARN}/${packId}`)
+    dispatch(setCardsParams({cardsPack_id: packId}))
+    dispatch(setPackIdAC(packId))
   }
   const handleDelete = () => {
     handleClose()

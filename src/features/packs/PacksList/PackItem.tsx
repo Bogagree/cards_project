@@ -51,7 +51,9 @@ export const PackItem: React.FC<PropsType> = React.memo(({packData}) => {
         navigate(`${Path.CARDS}/${packData._id}`)
     }
     const handleLearn = () => {
-        console.log('learn pack')
+      navigate(`${Path.LEARN}/${packData._id}`)
+      dispatch(setCardsParams({cardsPack_id: packData._id}))
+      dispatch(setPackIdAC(packData._id))
     }
     const handleDelete = () => {
         console.log('delete pack')

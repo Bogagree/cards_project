@@ -29,7 +29,6 @@ export const RoutesPage = () => {
         {path: Path.CHECK_EMAIL, component: <CheckEmail/>},
         {path: Path.CARDS, component: <Cards/>},
         {path: Path.PACKS, component: <Packs/>},
-        {path: Path.PACKS, component: <PacksListContainer/>},
         {path: Path.LEARN, component: <Learn/>},
         {path: '*', component: <Error404/>},
     ]
@@ -53,8 +52,9 @@ export const RoutesPage = () => {
                 {routes.map(({path, component}) => (
                     <Route key={path} path={path} element={component}/>
                 ))}
-              <Route path={`${Path.PACKS}/:packsUserId`} element={<PacksListContainer />} />
+              <Route path={`${Path.PACKS}/:packsUserId`} element={<Packs />} />
               <Route path={`${Path.CARDS}/:packId`} element={<Cards />} />
+              <Route path={`${Path.LEARN}/:packId`} element={<Learn />} />
             </Routes>
 
         </div>
