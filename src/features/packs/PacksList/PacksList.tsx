@@ -3,7 +3,7 @@ import styles from './PacksList.module.css'
 import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import {useAppSelector} from "../../../app/store";
 import {Preloader} from "../../../common/Components/UI/Preloader/Preloader";
-import {PackItem} from "./PackItem";
+import {PackItem} from "./PackItem/PackItem";
 
 export const PacksList: React.FC = () => {
 

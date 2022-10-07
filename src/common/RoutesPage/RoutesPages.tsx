@@ -15,23 +15,25 @@ import {Cards} from "../../features/cards/Cards";
 import {Packs} from "../../features/packs/Packs";
 import {Learn} from "../../features/learn/Learn";
 
+export const routes = [
+    {path: Path.LOGIN, component: <Login/>},
+    {path: Path.REGISTRATION, component: <Registration/>},
+    {path: Path.PROFILE, component: <Profile/>},
+    {path: Path.FORGOT_PASSWORD, component: <ForgotPassword/>},
+    {path: Path.NEW_PASSWORD, component: <NewPassword/>},
+    {path: Path.CHECK_EMAIL, component: <CheckEmail/>},
+    {path: Path.CARDS, component: <Cards/>},
+    {path: Path.PACKS, component: <Packs/>},
+    {path: Path.LEARN, component: <Learn/>},
+    {path: '*', component: <Error404/>},
+]
+
 export const RoutesPage = () => {
 
   const navigate = useNavigate()
   const isLogged = useSelector((state: AppStateType) => state.auth.isLogged)
 
-    const routes = [
-        {path: Path.LOGIN, component: <Login/>},
-        {path: Path.REGISTRATION, component: <Registration/>},
-        {path: Path.PROFILE, component: <Profile/>},
-        {path: Path.FORGOT_PASSWORD, component: <ForgotPassword/>},
-        {path: Path.NEW_PASSWORD, component: <NewPassword/>},
-        {path: Path.CHECK_EMAIL, component: <CheckEmail/>},
-        {path: Path.CARDS, component: <Cards/>},
-        {path: Path.PACKS, component: <Packs/>},
-        {path: Path.LEARN, component: <Learn/>},
-        {path: '*', component: <Error404/>},
-    ]
+
 
   useEffect(() => {
     if(!isLogged){

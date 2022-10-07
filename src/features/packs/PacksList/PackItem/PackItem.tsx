@@ -1,16 +1,16 @@
 import React, {useState} from 'react';
-import styles from './PacksList.module.css'
+import styles from '../PacksList.module.css'
 import {TableCell, TableRow} from "@mui/material";
-import iconEdit from '../../../assets/icons/pencil.svg'
-import iconDelete from '../../../assets/icons/iconDelete.png'
-import iconLearn from '../../../assets/icons/iconLearn.png'
+import iconEdit from '../../../../assets/icons/pencil.svg'
+import iconDelete from '../../../../assets/icons/iconDelete.png'
+import iconLearn from '../../../../assets/icons/iconLearn.png'
 import {useNavigate} from "react-router-dom";
-import {Path} from "../../../common/Enum/path";
-import {useAppDispatch, useAppSelector} from "../../../app/store";
-import {PackType} from "../../../api/cards-api";
-import {setCardsParams, setPackIdAC, setPackUserIdAC} from "../../cards/cards-reducer";
-import {EditPackModal} from '../../../common/Components/UI/Modals/PackModals/EditPackModal/EditPackModal';
-import {DeletePackModal} from '../../../common/Components/UI/Modals/PackModals/DeletePackModal/DeletePackModal';
+import {Path} from "../../../../common/Enum/path";
+import {useAppDispatch, useAppSelector} from "../../../../app/store";
+import {PackType} from "../../../../api/cards-api";
+import {setCardsParams, setPackIdAC, setPackUserIdAC} from "../../../cards/cards-reducer";
+import {EditPackModal} from '../../../../common/Components/UI/Modals/PackModals/EditPackModal/EditPackModal';
+import {DeletePackModal} from '../../../../common/Components/UI/Modals/PackModals/DeletePackModal/DeletePackModal';
 
 type PropsType = {
     packData: PackType
@@ -66,7 +66,6 @@ export const PackItem: React.FC<PropsType> = React.memo(({packData}) => {
     //         dispatch(updatePackCardsTC({_id: packData._id, name: 'new name pack'}))
     //     }
     // }
-    console.log(packData.user_name)
 
     return (
         <TableRow key={packData._id} sx={{'&:last-child td, &:last-child th': {border: 0}}}>

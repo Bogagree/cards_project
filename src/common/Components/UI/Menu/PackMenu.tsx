@@ -2,11 +2,11 @@ import React, {useState} from 'react';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import iconMenu from './../../assets/icons/iconMenu.png'
-import {Path} from "../../common/Enum/path";
-import {setCardsParams, setPackIdAC} from "./cards-reducer";
+import iconMenu from '../../../../assets/icons/iconMenu.png'
+import {Path} from "../../../Enum/path";
+import {setCardsParams, setPackIdAC} from "../../../../features/cards/cards-reducer";
 import {useNavigate} from "react-router-dom";
-import {useAppDispatch} from "../../app/store";
+import {useAppDispatch} from "../../../../app/store";
 
 type PropsType = {
     packId: string

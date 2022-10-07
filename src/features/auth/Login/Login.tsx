@@ -62,7 +62,7 @@ export const Login = () => {
 
     useEffect(() => {
         if (isLogged) {
-            navigate(Path.PROFILE)
+            navigate(Path.PACKS)
         }
     }, [isLogged])
 
