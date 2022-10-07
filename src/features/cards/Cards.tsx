@@ -24,13 +24,7 @@ export const Cards = () => {
     const queryParams = useAppSelector(state => state.cards.queryParams)
     const cardsList = useAppSelector(state => state.cards.cards)
 
-    const myPack = userId === packUserId
-
-    const handleAddCard = () => {
-        packId && dispatch(createCardTC({
-            cardsPack_id: packId, question: 'new question', answer: 'new answer'
-        }))
-    }
+    const isMyPack = userId === packUserId
 
     const [openModal, setOpenModal] = useState(false);
     const openHandler = () => setOpenModal(true);
@@ -42,13 +36,18 @@ export const Cards = () => {
 
     return (
         <div className={style.wrapper}>
+
+
             <BackArrowButton path={Path.PACKS} title={'Back to Packs list'}/>
             <div className={style.cardsListHeader}>
                 <div className={style.packMenu}>
                     <h2>{packName}</h2>
-                    {myPack && <PackMenu packId={packId ? packId : ''}/>}
+                    {<PackMenu
+                        packId={packId ? packId : ''}
+                        isMyPack={isMyPack}
+                    />}
                 </div>
-                {myPack &&
+                {isMyPack &&
                     <CommonButton
                         onClick={openHandler}
                         disabled={appStatus === 'loading'}

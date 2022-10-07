@@ -9,71 +9,78 @@ import {useNavigate} from "react-router-dom";
 import {useAppDispatch} from "../../app/store";
 
 type PropsType = {
-  packId: string
+    packId: string
+    isMyPack: boolean
 }
 
-export const PackMenu: React.FC<PropsType> = ({packId}) => {
+export const PackMenu: React.FC<PropsType> = ({packId, isMyPack}) => {
 
-  const navigate = useNavigate()
-  const dispatch = useAppDispatch()
+    const navigate = useNavigate()
+    const dispatch = useAppDispatch()
 
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const open = Boolean(anchorEl);
+    const open = Boolean(anchorEl);
 
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
-  const handleLearn = () => {
-    handleClose()
-    navigate(`${Path.LEARN}/${packId}`)
-    dispatch(setCardsParams({cardsPack_id: packId}))
-    dispatch(setPackIdAC(packId))
-  }
-  const handleDelete = () => {
-    handleClose()
-    console.log('delete pack')
-  }
-  const handleEdit = () => {
-    handleClose()
-    console.log('edit pack')
-  }
+    const handleLearn = () => {
+        handleClose()
+        navigate(`${Path.LEARN}/${packId}`)
+        dispatch(setCardsParams({cardsPack_id: packId}))
+        dispatch(setPackIdAC(packId))
+    }
+    const handleDelete = () => {
+        handleClose()
+        console.log('delete pack')
+    }
+    const handleEdit = () => {
+        handleClose()
+        console.log('edit pack')
+    }
 
-  return (
-    <div>
-      <Button
-        id="demo-positioned-button"
-        aria-controls={open ? 'demo-positioned-menu' : undefined}
-        aria-haspopup="true"
-        aria-expanded={open ? 'true' : undefined}
-        onClick={handleClick}
-      >
-        <img src={iconMenu} alt={'icon'} />
-      </Button>
-      <Menu
-        id="demo-positioned-menu"
-        aria-labelledby="demo-positioned-button"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'left',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'left',
-        }}
-      >
-        <MenuItem onClick={handleEdit}>Edit</MenuItem>
-        <MenuItem onClick={handleDelete}>Delete</MenuItem>
-        <MenuItem onClick={handleLearn}>Learn</MenuItem>
-      </Menu>
-    </div>
-  );
+    return (
+        <div>
+            <Button
+                id="demo-positioned-button"
+                aria-controls={open ? 'demo-positioned-menu' : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? 'true' : undefined}
+                onClick={handleClick}
+            >
+                <img src={iconMenu} alt={'icon'}/>
+            </Button>
+            <Menu
+                id="demo-positioned-menu"
+                aria-labelledby="demo-positioned-button"
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'left',
+                }}
+                transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'left',
+                }}
+            >
+                {!isMyPack
+                    ? <MenuItem onClick={handleLearn}>Learn</MenuItem>
+                    : <>
+                        <MenuItem onClick={handleEdit}>Edit</MenuItem>
+                        <MenuItem onClick={handleDelete}>Delete</MenuItem>
+                        <MenuItem onClick={handleLearn}>Learn</MenuItem>
+                    </>
+                }
+
+            </Menu>
+        </div>
+    );
 };
