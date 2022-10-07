@@ -8,6 +8,7 @@ import {useAppDispatch} from "../../../app/store";
 import {CardsType} from "../../../api/cards-api";
 import {EditCardModal} from '../../../common/Components/UI/Modals/CardModals/EditCardModal/EditCardModal';
 import {DeleteCardModal} from '../../../common/Components/UI/Modals/CardModals/DeleteCardModal/DeleteCardModal';
+import stars from '../../../assets/img/stars.png'
 
 type PropsType = {
   cardData: CardsType
@@ -39,6 +40,9 @@ export const Card: React.FC<PropsType> = ({cardData, userId}) => {
     return `${day}.${month}.${year}`
   }
 
+  const gr = Math.floor(cardData.grade * 20)
+  console.log(gr)
+
   return (
     <TableRow
       key={'packData._id'}
@@ -53,11 +57,13 @@ export const Card: React.FC<PropsType> = ({cardData, userId}) => {
       <TableCell align="center">{cardData.answer}</TableCell>
       <TableCell align="center">{getDate(cardData.updated)}</TableCell>
       <TableCell align="center">
-        <img src={star} alt={'star'}/>
-        <img src={star} alt={'star'}/>
-        <img src={star} alt={'star'}/>
-        <img src={star} alt={'star'}/>
-        <img src={star} alt={'star'}/>
+        <div className={styles.stars}
+          style={{background:
+`linear-gradient(90deg, rgba(255,252,0,1) 0%, rgba(255,252,0,1) ${gr}%, rgb(218, 218, 218) ${gr}%, rgb(218, 218, 218) 100%)`
+        }}
+        >
+          <img src={stars} alt={'img'}/>
+        </div>
       </TableCell>
       {cardData.user_id === userId &&
         <TableCell align="center">
