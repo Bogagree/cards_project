@@ -7,37 +7,32 @@ import {PackItem} from "./PackItem";
 
 export const PacksList: React.FC = () => {
 
-  const appStatus = useAppSelector(state => state.app.appStatus)
-  const cardsPacks = useAppSelector(state => state.packs.cardPacks)
+    const appStatus = useAppSelector(state => state.app.appStatus)
+    const cardsPacks = useAppSelector(state => state.packs.cardPacks)
 
-  return (
+    return (
+        <div>
+            <TableContainer component={Paper}>
+                <Table sx={{minWidth: 650}} aria-label="simple table">
+                    <TableHead className={styles.tableHead}>
+                        <TableRow>
+                            <TableCell>Pack Name</TableCell>
+                          {['Cards Count', 'Last Update', 'Created By', 'Actions'].map( cell =>
+                              <TableCell key={cell} align="center">{cell}</TableCell>
+                          )}
+                        </TableRow>
+                    </TableHead>
 
-    <div>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead className={styles.tableHead}>
-            <TableRow>
-              <TableCell>Pack Name</TableCell>
-              <TableCell align="center">Cards Count</TableCell>
-              <TableCell
-                align="center">
-                Last Update
-              </TableCell>
-              <TableCell align="center">Created By</TableCell>
-              <TableCell align="center">Actions</TableCell>
-            </TableRow>
-          </TableHead>
-
-          {appStatus === 'loading' ? <Preloader/> : ''}
-          <TableBody>
-            { cardsPacks.map((item) => (
-              <PackItem
-                key={item._id}
-                packData={item} />
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </div>
-  );
+                    {appStatus === 'loading' ? <Preloader/> : ''}
+                    <TableBody>
+                        {cardsPacks.map((item) => (
+                            <PackItem
+                                key={item._id}
+                                packData={item}/>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        </div>
+    );
 }

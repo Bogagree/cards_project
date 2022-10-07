@@ -5,7 +5,7 @@ import {BackArrowButton} from "../../common/Components/UI/Buttons/BackArrowButto
 import {Path} from "../../common/Enum/path";
 import {CardsList} from "./cardsList/CardsList";
 import {useAppDispatch, useAppSelector} from "../../app/store";
-import {createCardTC, getCardsTC} from "./cards-reducer";
+import {getCardsTC} from "./cards-reducer";
 import {CommonButton} from "../../common/Components/UI/Buttons/Button/CommonButton";
 import {PackMenu} from "./PackMenu";
 import {Preloader} from "../../common/Components/UI/Preloader/Preloader";
@@ -37,17 +37,19 @@ export const Cards = () => {
     return (
         <div className={style.wrapper}>
 
-
             <BackArrowButton path={Path.PACKS} title={'Back to Packs list'}/>
             <div className={style.cardsListHeader}>
                 <div className={style.packMenu}>
                     <h2>{packName}</h2>
-                    {<PackMenu
-                        packId={packId ? packId : ''}
-                        isMyPack={isMyPack}
-                    />}
+                    {
+                        <PackMenu
+                            packId={packId ? packId : ''}
+                            isMyPack={isMyPack}
+                        />
+                    }
                 </div>
-                {isMyPack &&
+                {
+                    isMyPack &&
                     <CommonButton
                         onClick={openHandler}
                         disabled={appStatus === 'loading'}

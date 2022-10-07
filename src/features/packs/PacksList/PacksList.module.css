@@ -1,24 +1,37 @@
 .tableHead {
-  background: #EFEFEF;
+    background: #EFEFEF;
 }
+
 .tablePackName {
-  cursor: pointer;
+    cursor: pointer;
 }
+
 .itemActions {
-  display: flex;
-  justify-content: space-around;
+    display: flex;
+    justify-content: space-around;
 }
+
 .itemActions button {
-  margin: 0;
-  padding: 0;
-  border: none;
-  background: none;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: none;
 }
-.itemActions button[disabled]>.actionsIcon {
-  cursor: not-allowed;
+
+.itemActions button[disabled] > .actionsIcon {
+    cursor: not-allowed;
 }
+
 .actionsIcon {
-  width: 16px;
-  height: 16px;
-  cursor: pointer;
+    padding: 5px;
+    width: 16px;
+    height: 16px;
 }
+
+.actionsIcon:hover {
+    border-radius: 50%;
+    cursor: pointer;
+    background: #666666;
+    opacity: 0.3;
+}
+

@@ -11,7 +11,6 @@ import {PackType} from "../../../api/cards-api";
 import {setCardsParams, setPackIdAC, setPackUserIdAC} from "../../cards/cards-reducer";
 import {EditPackModal} from '../../../common/Components/UI/Modals/PackModals/EditPackModal/EditPackModal';
 import {DeletePackModal} from '../../../common/Components/UI/Modals/PackModals/DeletePackModal/DeletePackModal';
-import {deletePackCardsTC, updatePackCardsTC} from "../packs-reducer";
 
 type PropsType = {
     packData: PackType
@@ -51,45 +50,35 @@ export const PackItem: React.FC<PropsType> = React.memo(({packData}) => {
         navigate(`${Path.CARDS}/${packData._id}`)
     }
     const handleLearn = () => {
-      navigate(`${Path.LEARN}/${packData._id}`)
-      dispatch(setCardsParams({cardsPack_id: packData._id}))
-      dispatch(setPackIdAC(packData._id))
+        navigate(`${Path.LEARN}/${packData._id}`)
+        dispatch(setCardsParams({cardsPack_id: packData._id}))
+        dispatch(setPackIdAC(packData._id))
     }
-    const handleDelete = () => {
-        console.log('delete pack')
-        if(userId === packData.user_id){
-            dispatch(deletePackCardsTC(packData._id))
-        }
-    }
-    const handleEdit = () => {
-        console.log('edit pack')
-        if(userId === packData.user_id){
-            dispatch(updatePackCardsTC({_id: packData._id, name: 'new name pack'}))
-        }
-    }
+    // const handleDelete = () => {
+    //     console.log('delete pack')
+    //     if (userId === packData.user_id) {
+    //         dispatch(deletePackCardsTC(packData._id))
+    //     }
+    // }
+    // const handleEdit = () => {
+    //     console.log('edit pack')
+    //     if (userId === packData.user_id) {
+    //         dispatch(updatePackCardsTC({_id: packData._id, name: 'new name pack'}))
+    //     }
+    // }
+    console.log(packData.user_name)
 
     return (
-        <TableRow
-            key={packData._id}
-            sx={{'&:last-child td, &:last-child th': {border: 0}}}
-        >
-            <TableCell
-                className={styles.tablePackName}
-                onClick={handleGoToPack}
-            >
-                {packData.name}
-            </TableCell>
+        <TableRow key={packData._id} sx={{'&:last-child td, &:last-child th': {border: 0}}}>
+            <TableCell className={styles.tablePackName} onClick={handleGoToPack}>{packData.name}</TableCell>
             <TableCell align="center">{packData.cardsCount}</TableCell>
             <TableCell align="center">{getDate(packData.updated)}</TableCell>
-            <TableCell align="center">{getDate(packData.created)}</TableCell>
+            <TableCell align="center">{packData.user_name}</TableCell>
             <TableCell align="center">
                 <div className={styles.itemActions}>
-                    <button
-                        onClick={handleLearn}
-                        disabled={packData.cardsCount === 0}
-                    >
+                    <button onClick={handleLearn} disabled={packData.cardsCount === 0}>
                         <img src={iconLearn}
-                             alt={'icon'}
+                             alt={'learn'}
                              className={styles.actionsIcon}
                         />
                     </button>
@@ -109,11 +98,13 @@ export const PackItem: React.FC<PropsType> = React.memo(({packData}) => {
                         </button>}
                 </div>
             </TableCell>
-            { typeModal === 'edit' &&
-                <EditPackModal title={'Edit pack'} openModal={openModal} closeHandler={closeHandler} packData={packData}/>
+            {typeModal === 'edit' &&
+                <EditPackModal title={'Edit pack'} openModal={openModal} closeHandler={closeHandler}
+                               packData={packData}/>
             }
-            { typeModal === 'delete' &&
-                <DeletePackModal title={'Delete pack'} openModal={openModal} closeHandler={closeHandler} packData={packData}/>
+            {typeModal === 'delete' &&
+                <DeletePackModal title={'Delete pack'} openModal={openModal} closeHandler={closeHandler}
+                                 packData={packData}/>
             }
         </TableRow>
 

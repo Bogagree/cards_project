@@ -1,10 +1,8 @@
 import React, {useState} from 'react';
 import {TableCell, TableRow} from "@mui/material";
-import star from '../../../assets/icons/star.png'
 import editIcon from '../../../assets/icons/pencil.svg'
 import deleteIcon from '../../../assets/icons/iconDelete.png'
 import styles from './CardsList.module.css'
-import {useAppDispatch} from "../../../app/store";
 import {CardsType} from "../../../api/cards-api";
 import {EditCardModal} from '../../../common/Components/UI/Modals/CardModals/EditCardModal/EditCardModal';
 import {DeleteCardModal} from '../../../common/Components/UI/Modals/CardModals/DeleteCardModal/DeleteCardModal';
@@ -16,8 +14,6 @@ type PropsType = {
 }
 
 export const Card: React.FC<PropsType> = ({cardData, userId}) => {
-
-    const dispatch = useAppDispatch()
 
     const [openModal, setOpenModal] = useState(false);
     const openHandler = () => setOpenModal(true);
@@ -45,15 +41,9 @@ export const Card: React.FC<PropsType> = ({cardData, userId}) => {
 
     return (
         <TableRow
-            key={'packData._id'}
             sx={{'&:last-child td, &:last-child th': {border: 0}}}
         >
-            <TableCell
-                component="th"
-                scope="row"
-            >
-                {cardData.question}
-            </TableCell>
+            <TableCell component="th" scope="row">{cardData.question}</TableCell>
             <TableCell align="center">{cardData.answer}</TableCell>
             <TableCell align="center">{getDate(cardData.updated)}</TableCell>
             <TableCell align="center">

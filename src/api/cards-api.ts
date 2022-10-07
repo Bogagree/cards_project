@@ -155,22 +155,22 @@ export type PacksResponseType = {
 }
 
 export type PackType = {
+    cardsCount: number
     created: string
     grade: number
-    user_name: string
-    private: boolean
     more_id: string
+    private: boolean
     name: string
     path: string
     rating: number
     shots: number
     deckCover?: string
-    cardsCount: number
     type: string
     updated: string
     user_id: string,
     __v: number
     _id: string
+    user_name: string
 }
 
 export type CreatePackType = {
@@ -223,8 +223,8 @@ export type CardsResponseType = {
 
 export type CardsType = {
     _id: string;
-    cardsPack_id: string;
     user_id: string;
+    cardsPack_id: string;
     answer: string;
     question: string;
     grade: number;
