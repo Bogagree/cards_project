@@ -33,6 +33,7 @@ export const HeaderMenu = () => {
             icon: logout,
             action: (): void => {
                 dispatch(logoutTC());
+                navigate(Path.LOGIN);
             },
         },
     ];

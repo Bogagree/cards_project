@@ -71,13 +71,14 @@ export const PackMenu: React.FC<PropsType> = ({packId, isMyPack}) => {
                     horizontal: 'left',
                 }}
             >
-                {!isMyPack
-                    ? <MenuItem onClick={handleLearn}>Learn</MenuItem>
-                    : <>
+                {isMyPack
+                    ? <>
                         <MenuItem onClick={handleEdit}>Edit</MenuItem>
                         <MenuItem onClick={handleDelete}>Delete</MenuItem>
                         <MenuItem onClick={handleLearn}>Learn</MenuItem>
                     </>
+                    : <MenuItem onClick={handleLearn}>Learn</MenuItem>
+
                 }
 
             </Menu>

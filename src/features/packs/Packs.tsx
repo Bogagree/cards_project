@@ -39,7 +39,9 @@ export const Packs = (() => {
         dispatch(setPacksParams({...queryParams, pageCount}))
     }
 
+
     useEffect(() => {
+        // for 1st render dont get packs
         queryParams.hasOwnProperty('min')  &&
         dispatch(getPacksTC())
     }, [queryParams])
