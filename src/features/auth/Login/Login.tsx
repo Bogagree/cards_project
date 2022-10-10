@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import styles from './Login.module.css'
 import {useFormik} from "formik";
 import {useSelector} from "react-redux";
 import {AppStateType, useAppDispatch, useAppSelector} from "../../../app/store";
-import {Link, useNavigate} from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
 import {loginTC} from "../auth-reducer";
 import {Path} from "../../../common/Enum/path";
 import iconEye from '../../../assets/icons/iconEye.png'
@@ -19,7 +19,6 @@ type RegistrationErrorType = {
 
 export const Login = () => {
 
-    const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const isLogged = useSelector((state: AppStateType) => state.auth.isLogged)
     const appStatus = useAppSelector(state => state.app.appStatus)
@@ -31,8 +30,6 @@ export const Login = () => {
 
     const formik = useFormik({
         initialValues: {
-            // email: 'nya-admin@nya.nya',
-            // password: '1qazxcvBG',
             email: '',
             password: '',
             rememberMe: false,
@@ -60,11 +57,9 @@ export const Login = () => {
         },
     });
 
-    useEffect(() => {
-        if (isLogged) {
-            navigate(Path.PACKS)
-        }
-    }, [isLogged])
+  if(isLogged){
+    return <Navigate to={Path.PROFILE} />
+  }
 
     return (
         <>
