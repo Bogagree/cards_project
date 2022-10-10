@@ -1,19 +1,28 @@
+.main{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ffffff;
+    width: 395px;
+}
+
 .titleBox {
     display: flex;
     justify-content: space-between;
-    height: 60px;
+    align-items: center;
     border-bottom: 1px solid #D9D9D9;
+    padding: 18px 24px;
 }
 
 .titleBox h3 {
     font-weight: 500;
     font-size: 18px;
     line-height: 21.94px;
-    margin: 19px 0 0 24px;
+    margin: 0;
 }
 
 .titleBox img {
-    margin: 23px 24px 0 0;
     cursor: pointer;
     width: 14px;
     height: 14px;

@@ -33,14 +33,16 @@ export const AddPackModal: React.FC<PropsType> = ({title, openModal, closeHandle
 
             if (!values.name) {
                 errors.name = 'Name is required'
-            } else if (values.name.length <= 2) {
-                errors.name = 'Name should be more then 2 symbols'
+            } else if (values.name.length <= 1) {
+                errors.name = 'Name should be more then 1 symbols'
             }
             return errors
         },
         onSubmit: values => {
         }
     });
+
+    const { isValid, dirty } = { ...formik };
 
     const saveHandler = () => {
         dispatch(createPackCardsTC(formik.values))
@@ -58,7 +60,7 @@ export const AddPackModal: React.FC<PropsType> = ({title, openModal, closeHandle
                         {...formik.getFieldProps('name')}
                     />
                     {formik.touched.name && formik.errors.name &&
-                        <div style={{color: 'red'}}>{formik.errors.name}</div>}
+                        <div className={styles.error} style={{color: 'red'}}>{formik.errors.name}</div>}
                 </div>
                 <div className={styles.checkboxWrapper}>
                     <CommonCheckbox
@@ -70,12 +72,12 @@ export const AddPackModal: React.FC<PropsType> = ({title, openModal, closeHandle
                 </div>
                 <div className={styles.buttonWrapper}>
                     <button onClick={closeHandler} className={styles.buttonCancel}>Cancel</button>
-                    <button className={styles.buttonSave} onClick={saveHandler}>Save</button>
+                    <button className={styles.buttonSave} onClick={saveHandler}
+                            disabled={!isValid || !dirty}>Save</button>
                 </div>
             </form>
         </BasicModal>
     )
 }
 
-AddPackModal.propTypes = {};
 

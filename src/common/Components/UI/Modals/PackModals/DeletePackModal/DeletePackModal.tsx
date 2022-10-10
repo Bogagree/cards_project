@@ -36,5 +36,5 @@ export const DeletePackModal: React.FC<PropsType> = ({title, openModal, closeHan
     )
 }
 
-DeletePackModal.propTypes = {};
+
 

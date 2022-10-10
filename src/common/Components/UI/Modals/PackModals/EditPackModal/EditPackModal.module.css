@@ -28,7 +28,12 @@ form input:focus-visible {
 .inputWrapper label{
     font-weight: 400;
     font-size: 13px;
-    opacity: .5;
+}
+
+.error {
+    position: absolute;
+    bottom: 0;
+    left: 0.5rem;
 }
 
 .checkboxWrapper {

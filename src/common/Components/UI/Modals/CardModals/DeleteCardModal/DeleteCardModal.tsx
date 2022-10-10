@@ -36,5 +36,4 @@ export const DeleteCardModal: React.FC<PropsType> = ({title, openModal, closeHan
     )
 }
 
-DeleteCardModal.propTypes = {};
 

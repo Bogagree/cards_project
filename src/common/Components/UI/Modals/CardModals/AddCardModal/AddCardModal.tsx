@@ -33,20 +33,22 @@ export const AddCardModal: React.FC<PropsType> = ({title, openModal, closeHandle
 
             if (!values.question) {
                 errors.question = 'Question is required'
-            } else if (values.question.length <= 2) {
-                errors.question = 'Question should be more then 2 symbols'
+            } else if (values.question.length <= 1) {
+                errors.question = 'Question should be more then 1 symbols'
             }
 
             if (!values.answer) {
                 errors.answer = 'Answer is required'
-            } else if (values.answer.length <= 2) {
-                errors.answer = 'Answer should be more then 2 symbols'
+            } else if (values.answer.length <= 1) {
+                errors.answer = 'Answer should be more then 1 symbols'
             }
             return errors
         },
         onSubmit: values => {
         }
     });
+
+    const { isValid, dirty } = { ...formik };
 
     const saveHandler = () => {
         packId && dispatch(createCardTC({
@@ -66,7 +68,7 @@ export const AddCardModal: React.FC<PropsType> = ({title, openModal, closeHandle
                         {...formik.getFieldProps('question')}
                     />
                     {formik.touched.question && formik.errors.question &&
-                        <div style={{color: 'red'}}>{formik.errors.question}</div>}
+                        <div className={styles.error} style={{color: 'red'}}>{formik.errors.question}</div>}
                 </div>
                 <div className={styles.inputWrapper}>
                     <CommonInputText
@@ -75,16 +77,17 @@ export const AddCardModal: React.FC<PropsType> = ({title, openModal, closeHandle
                         {...formik.getFieldProps('answer')}
                     />
                     {formik.touched.answer && formik.errors.answer &&
-                        <div style={{color: 'red'}}>{formik.errors.answer}</div>}
+                        <div className={styles.error} style={{color: 'red'}}>{formik.errors.answer}</div>}
                 </div>
                 <div className={styles.buttonWrapper}>
                     <button onClick={closeHandler} className={styles.buttonCancel}>Cancel</button>
-                    <button className={styles.buttonSave} onClick={saveHandler}>Save</button>
+                    <button className={styles.buttonSave} onClick={saveHandler}
+                            disabled={!isValid || !dirty}>Save</button>
                 </div>
             </form>
         </BasicModal>
     )
 }
 
-AddCardModal.propTypes = {};
+
 

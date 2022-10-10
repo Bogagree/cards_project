@@ -12,9 +12,9 @@
     font-family: 'Permanent Marker', cursive;
 }
 
-div{
-    transform-style: preserve-3d;
-}
+/*div{*/
+/*    transform-style: preserve-3d;*/
+/*}*/
 
 svg{
     width: clamp(300px , 70% , 600px);

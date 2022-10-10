@@ -31,8 +31,8 @@ export const HeaderMenu = () => {
         {
             title: 'Log out',
             icon: logout,
-            action: (): void => {
-                dispatch(logoutTC());
+            action: async() => {
+                await dispatch(logoutTC());
                 navigate(Path.LOGIN);
             },
         },
