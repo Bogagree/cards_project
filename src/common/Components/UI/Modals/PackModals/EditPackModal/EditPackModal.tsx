@@ -13,7 +13,7 @@ type PropsType = {
     title: string
     openModal: boolean
     closeHandler: () => void
-    packData: PackType
+    packData?: PackType
 }
 
 type RegistrationErrorType = {
@@ -21,13 +21,14 @@ type RegistrationErrorType = {
     private?: boolean
 }
 
-export const EditPackModal: React.FC<PropsType> = ({title, openModal, closeHandler, packData}) => {
+export const EditPackModal: React.FC<PropsType> = (
+    {title, openModal, closeHandler, packData}) => {
     const dispatch = useAppDispatch()
     const userId = useAppSelector(state => state.auth.user._id)
 
-    const formik = useFormik({
+    const formik = useFormik<{name:string, private:boolean}>({
         initialValues: {
-            name: packData.name,
+            name: packData ? packData.name : '',
             private: false
         },
         validate: (values) => {
@@ -48,7 +49,7 @@ export const EditPackModal: React.FC<PropsType> = ({title, openModal, closeHandl
     const { isValid } = { ...formik };
 
     const editHandler = () => {
-        dispatch(updatePackCardsTC({_id: packData._id, name: formik.values.name,
+        dispatch(updatePackCardsTC({_id: packData ? packData._id : '', name: formik.values.name,
                         private: formik.values.private}))
         closeHandler()
         formik.resetForm()

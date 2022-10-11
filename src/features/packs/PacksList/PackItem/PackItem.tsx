@@ -54,18 +54,6 @@ export const PackItem: React.FC<PropsType> = React.memo(({packData}) => {
         dispatch(setCardsParams({cardsPack_id: packData._id}))
         dispatch(setPackIdAC(packData._id))
     }
-    // const handleDelete = () => {
-    //     console.log('delete pack')
-    //     if (userId === packData.user_id) {
-    //         dispatch(deletePackCardsTC(packData._id))
-    //     }
-    // }
-    // const handleEdit = () => {
-    //     console.log('edit pack')
-    //     if (userId === packData.user_id) {
-    //         dispatch(updatePackCardsTC({_id: packData._id, name: 'new name pack'}))
-    //     }
-    // }
 
     return (
         <TableRow key={packData._id} sx={{'&:last-child td, &:last-child th': {border: 0}}}>

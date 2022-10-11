@@ -10,21 +10,22 @@ type PropsType = {
     title: string
     openModal: boolean
     closeHandler: () => void
-    packData: PackType
+    packData?: PackType
 }
 
-export const DeletePackModal: React.FC<PropsType> = ({title, openModal, closeHandler, packData}) => {
+export const DeletePackModal: React.FC<PropsType> = (
+    {title, openModal, closeHandler, packData}) => {
     const dispatch = useAppDispatch()
 
     const deleteHandler = () => {
-        dispatch(deletePackCardsTC(packData._id))
+        dispatch(deletePackCardsTC(packData ? packData._id : ''))
         closeHandler()
     }
 
     return (
         <BasicModal title={title} openModal={openModal} closeHandler={closeHandler}>
             <p className={styles.text}>
-                Do you really want to remove <b>{packData.name}</b>?
+                Do you really want to remove <b>{packData ? packData.name : ''}</b>?
                 <br/>
                 All packs will be deleted.
             </p>

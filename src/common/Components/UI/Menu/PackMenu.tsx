@@ -7,13 +7,17 @@ import {Path} from "../../../Enum/path";
 import {setCardsParams, setPackIdAC} from "../../../../features/cards/cards-reducer";
 import {useNavigate} from "react-router-dom";
 import {useAppDispatch} from "../../../../app/store";
+import {EditPackModal} from '../Modals/PackModals/EditPackModal/EditPackModal';
+import {DeletePackModal} from '../Modals/PackModals/DeletePackModal/DeletePackModal';
+import {PackType} from '../../../../api/cards-api';
 
 type PropsType = {
     packId: string
     isMyPack: boolean
+    packData?: PackType
 }
 
-export const PackMenu: React.FC<PropsType> = ({packId, isMyPack}) => {
+export const PackMenu: React.FC<PropsType> = ({packId, isMyPack, packData}) => {
 
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
@@ -21,6 +25,20 @@ export const PackMenu: React.FC<PropsType> = ({packId, isMyPack}) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
     const open = Boolean(anchorEl);
+
+    const [openModal, setOpenModal] = useState(false);
+    const openHandler = () => setOpenModal(true);
+    const closeHandler = () => setOpenModal(false);
+
+    const [typeModal, setTypeModal] = useState('')
+    const openEditHandler = () => {
+        setTypeModal('edit')
+        openHandler()
+    }
+    const openDeleteHandler = () => {
+        setTypeModal('delete')
+        openHandler()
+    }
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -38,11 +56,11 @@ export const PackMenu: React.FC<PropsType> = ({packId, isMyPack}) => {
     }
     const handleDelete = () => {
         handleClose()
-        console.log('delete pack')
+        openDeleteHandler()
     }
     const handleEdit = () => {
         handleClose()
-        console.log('edit pack')
+        openEditHandler()
     }
 
     return (
@@ -82,6 +100,14 @@ export const PackMenu: React.FC<PropsType> = ({packId, isMyPack}) => {
                 }
 
             </Menu>
+            {typeModal === 'edit' &&
+                <EditPackModal title={'Edit pack'} openModal={openModal} closeHandler={closeHandler}
+                               packData={packData}/>
+            }
+            {typeModal === 'delete' &&
+                <DeletePackModal title={'Delete pack'} openModal={openModal} closeHandler={closeHandler}
+                                 packData={packData}/>
+            }
         </div>
     );
 };

@@ -11,18 +11,22 @@ import {PackMenu} from "../../common/Components/UI/Menu/PackMenu";
 import {Preloader} from "../../common/Components/UI/Preloader/Preloader";
 import {AddCardModal} from '../../common/Components/UI/Modals/CardModals/AddCardModal/AddCardModal';
 import {ResetCardsSearch} from './ResetCardsSearch/ResetCardsSearch';
+import {useNavigate} from 'react-router-dom';
 
 export const Cards = () => {
 
     const dispatch = useAppDispatch()
+    const navigate = useNavigate();
 
     const userId = useAppSelector(state => state.auth.user._id)
     const appStatus = useAppSelector(state => state.app.appStatus)
     const packUserId = useAppSelector(state => state.cards.packUserId)
-    const packName = useAppSelector(state => state.cards.packName)
     const packId = useAppSelector(state => state.cards.packId)
     const queryParams = useAppSelector(state => state.cards.queryParams)
     const cardsList = useAppSelector(state => state.cards.cards)
+    const cardPacks = useAppSelector(state => state.packs.cardPacks)
+    const packData = cardPacks.find(item => item._id === packId);
+    const packName = packData ? packData.name : ''
 
     const isMyPack = userId === packUserId
 
@@ -33,6 +37,10 @@ export const Cards = () => {
     useEffect(() => {
         dispatch(getCardsTC())
     }, [queryParams])
+
+    if (!packData) {
+        navigate(Path.PACKS)
+    }
 
     return (
         <div className={style.wrapper}>
@@ -45,6 +53,7 @@ export const Cards = () => {
                         <PackMenu
                             packId={packId ? packId : ''}
                             isMyPack={isMyPack}
+                            packData={packData}
                         />
                     }
                 </div>
