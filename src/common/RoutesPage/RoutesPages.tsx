@@ -14,18 +14,19 @@ import {AppStateType} from "../../app/store";
 import {Cards} from "../../features/cards/Cards";
 import {Packs} from "../../features/packs/Packs";
 import {Learn} from "../../features/learn/Learn";
+import {PrivateRoute} from "./PrivateRoute";
 
 export const routes = [
-    {path: Path.LOGIN, component: <Login/>},
-    {path: Path.REGISTRATION, component: <Registration/>},
-    {path: Path.PROFILE, component: <Profile/>},
-    {path: Path.FORGOT_PASSWORD, component: <ForgotPassword/>},
-    {path: Path.NEW_PASSWORD, component: <NewPassword/>},
-    {path: Path.CHECK_EMAIL, component: <CheckEmail/>},
-    {path: Path.CARDS, component: <Cards/>},
-    {path: Path.PACKS, component: <Packs/>},
-    {path: Path.LEARN, component: <Learn/>},
-    {path: '*', component: <Error404/>},
+  {path: Path.LOGIN, component: <Login/>},
+  {path: Path.REGISTRATION, component: <Registration/>},
+  {path: Path.PROFILE, component: <Profile/>},
+  {path: Path.FORGOT_PASSWORD, component: <ForgotPassword/>},
+  {path: Path.NEW_PASSWORD, component: <NewPassword/>},
+  {path: Path.CHECK_EMAIL, component: <CheckEmail/>},
+  {path: Path.CARDS, component: <Cards/>},
+  {path: Path.PACKS, component: <Packs/>},
+  {path: Path.LEARN, component: <Learn/>},
+  {path: '*', component: <Error404/>},
 ]
 
 export const RoutesPage = () => {
@@ -34,31 +35,71 @@ export const RoutesPage = () => {
   const isLogged = useSelector((state: AppStateType) => state.auth.isLogged)
 
 
-
   useEffect(() => {
-    if(!isLogged){
+    if (!isLogged) {
       navigate(Path.LOGIN)
     }
-  },[])
+  }, [])
 
-    return (
-        <div>
-            <ul className={style.nav}>
-                {routes.map( ({path}, index) => <li key={index}><NavLink to={path} children={path} className={style.link}></NavLink></li>) }
-            </ul>
+  return (
+    <div>
+      <ul className={style.nav}>
+        {routes.map(({path}, index) => <li key={index}><NavLink to={path} children={path}
+                                                                className={style.link}></NavLink></li>)}
+      </ul>
 
-            <Routes>
-                {/*побаловаться и порадоваться ракете*/}
-                {/*<Route path={'/'} element={<Navigate to={'*'}/>}/>*/}
-                <Route path={'/'} element={<Navigate to={Path.LOGIN}/>}/>
-                {routes.map(({path, component}) => (
-                    <Route key={path} path={path} element={component}/>
-                ))}
-              <Route path={`${Path.PACKS}/:packsUserId`} element={<Packs />} />
-              <Route path={`${Path.CARDS}/:packId`} element={<Cards />} />
-              <Route path={`${Path.LEARN}/:packId`} element={<Learn />} />
-            </Routes>
+      <Routes>
+        {/*побаловаться и порадоваться ракете*/}
+        {/*<Route path={'/'} element={<Navigate to={'*'}/>}/>*/}
+        {/*<Route path={'/'} element={<Navigate to={Path.LOGIN}/>}/>*/}
+        {/*{routes.map(({path, component}) => (*/}
+        {/*    <Route key={path} path={path} element={component}/>*/}
+        {/*))}*/}
+        <Route path={'*'} element={<Error404/>}/>
+        <Route path={'/'} element={<Navigate to={Path.LOGIN}/>}/>
+        <Route path={Path.LOGIN} element={<Login/>}/>
+        <Route path={Path.REGISTRATION} element={<Registration/>}/>
+        <Route path={Path.PROFILE} element={
+          <PrivateRoute>
+            <Profile/>
+          </PrivateRoute>
+        }/>
+        <Route path={Path.FORGOT_PASSWORD} element={<ForgotPassword/>}/>
+        <Route path={Path.NEW_PASSWORD} element={<NewPassword/>}/>
+        <Route path={Path.CHECK_EMAIL} element={<CheckEmail/>}/>
 
-        </div>
-    )
+        <Route path={`${Path.PACKS}`} element={
+          <PrivateRoute>
+            <Packs/>
+          </PrivateRoute>
+        }/>
+        <Route path={`${Path.PACKS}/:packsUserId`} element={
+          <PrivateRoute>
+            <Packs/>
+          </PrivateRoute>
+        }/>
+        <Route path={`${Path.CARDS}`} element={
+          <PrivateRoute>
+            <Cards/>
+          </PrivateRoute>
+        }/>
+        <Route path={`${Path.CARDS}/:packId`} element={
+          <PrivateRoute>
+            <Cards/>
+          </PrivateRoute>
+        }/>
+        <Route path={`${Path.LEARN}`} element={
+          <PrivateRoute>
+            <Learn/>
+          </PrivateRoute>
+        }/>
+        <Route path={`${Path.LEARN}/:packId`} element={
+          <PrivateRoute>
+            <Learn/>
+          </PrivateRoute>
+        }/>
+      </Routes>
+
+    </div>
+  )
 }

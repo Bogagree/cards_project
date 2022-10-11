@@ -12,9 +12,7 @@ import {Preloader} from "../../common/Components/UI/Preloader/Preloader";
 
 export const Learn = () => {
 
-  const packName = useAppSelector(state => state.cards.packName)
   const cardData = useAppSelector(state => state.cards)
-  const learnCard = useAppSelector(state => state.cards.learnCard)
   const appStatus = useAppSelector(state => state.app.appStatus)
   const dispatch = useAppDispatch()
   const [answerIsShow, setAnswerIsShow] = useState(false)
@@ -24,7 +22,7 @@ export const Learn = () => {
   }
   const handleNextQuestion = (value: number) => {
     setAnswerIsShow(false)
-    dispatch(updateGradeTC({grade: value, card_id: learnCard._id}))
+    dispatch(updateGradeTC({grade: value, card_id: cardData.learnCard._id}))
     dispatch(getRandomCardAC(cardData.cards))
   }
 
@@ -35,24 +33,24 @@ export const Learn = () => {
     dispatch(getRandomCardAC(cardData.cards))
   }, [cardData.cards])
 
+  if(appStatus === 'loading'){
+    return <Preloader />
+  }
+
   return (
     <div className={style.wrapper}>
       <BackArrowButton path={Path.PACKS} title={'Back to Packs list'}/>
-      <h2>{packName}</h2>
-      {cardData && <div className={style.inner}>
-        {appStatus === 'loading' ? <Preloader/> :<>
-          {learnCard && <Question
-            question={learnCard.question}
-            shots={learnCard.shots}
-          />}
-
-        {!answerIsShow ?
-          <CommonButton onClick={handleShowAnswer}>Show answer</CommonButton> :
-          <Answer nextQuestionCallback={handleNextQuestion} answer={learnCard.answer}/>
+      <h2>{cardData.packName}</h2>
+      <div className={style.inner}>
+          <Question
+            question={cardData.learnCard.question}
+            shots={cardData.learnCard.shots}
+          />
+        {answerIsShow ?
+          <Answer nextQuestionCallback={handleNextQuestion} answer={cardData.learnCard.answer}/> :
+          <CommonButton onClick={handleShowAnswer}>Show answer</CommonButton>
         }
-        </>
-        }
-      </div>}
+      </div>
     </div>
   );
 };
