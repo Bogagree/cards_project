@@ -1,4 +1,4 @@
-import {authAPI, ForgotDataType, PasswordDataType, UserType} from '../../api/cards-api';
+import {authAPI, ForgotDataType, PasswordDataType, UpdateUserType, UserType} from '../../api/cards-api';
 import {AppThunkType} from '../../app/store';
 import {setAppStatusAC} from '../../app/app-reducer';
 import {handleServerNetworkError} from '../../common/Components/ErrorComponents/Error-utils/error-utils';
@@ -35,7 +35,7 @@ export const authReducer = (state = initialState, action: AuthActionType): initi
         case 'AUTH/SET-NEW-PASSWORD-SUCCESS':
             return {...state, ...action.payload};
         case 'AUTH/CHANGE-USER':
-            return {...state, user: {...state.user, name: action.payload.name}}
+            return {...state, user: {...state.user, ...action.payload}}
         default:
             return state
     }
@@ -44,7 +44,7 @@ export const authReducer = (state = initialState, action: AuthActionType): initi
 //Actions
 export const loginAC = (userData: UserType) => ({type: 'AUTH/LOGIN', payload: {userData}} as const)
 export const setIsLogged = (isLogged: boolean) => ({type: 'AUTH/SET-IS-LOGGED-IN', payload: {isLogged}} as const);
-export const changeUserAC = (name: string) => ({type: 'AUTH/CHANGE-USER', payload: {name}} as const)
+export const changeUserAC = (data: UserType) => ({type: 'AUTH/CHANGE-USER', payload: data} as const)
 export const setIsRegistered = (isRegistered: boolean) => ({
     type: 'AUTH/SET-IS-REGISTERED',
     payload: {isRegistered}
@@ -109,11 +109,11 @@ export const logoutTC = (): AppThunkType => async dispatch => {
     }
 }
 
-export const changeUserTC = (name: string): AppThunkType => async dispatch => {
+export const changeUserTC = (data: UpdateUserType): AppThunkType => async dispatch => {
     dispatch(setAppStatusAC('loading'))
     try {
-        const res = await authAPI.updateUser(name)
-        dispatch(changeUserAC(res.data.updatedUser.name))
+        const res = await authAPI.updateUser(data)
+        dispatch(changeUserAC(res.data.updatedUser))
     } catch (e) {
         handleServerNetworkError(e, dispatch);
     } finally {

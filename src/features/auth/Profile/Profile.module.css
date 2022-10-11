@@ -25,10 +25,22 @@
     margin-top: 27px;
 }
 
-.profileAvatar {
-    width: 96px;
-    height: 96px;
+.profileAvatarBox {
+    position: relative;
     margin-top: 30px;
+}
+
+.profileAvatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+.photoButton {
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    cursor: pointer;
 }
 
 .profileNameBox {

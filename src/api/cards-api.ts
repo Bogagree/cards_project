@@ -22,8 +22,8 @@ export const authAPI = {
         return instance.post<UserType>('auth/me', {})
         // .then(res => res.data)
     },
-    updateUser(name: string) {
-        return instance.put<{ name: string }, AxiosResponse<{ updatedUser: UserType }>>('auth/me', {name})
+    updateUser(data: UpdateUserType) {
+        return instance.put<UpdateUserType, AxiosResponse<{ updatedUser: UserType }>>('auth/me', data)
     },
     logout() {
         return instance.delete<{ info: string }>('auth/me')
@@ -132,6 +132,11 @@ export type PasswordDataType = {
 export type PasswordDataResponseType = {
     info: string
     error: string
+}
+
+export type UpdateUserType = {
+    name?: string
+    avatar?: string
 }
 
 //type packsAPI

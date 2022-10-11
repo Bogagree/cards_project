@@ -25,10 +25,14 @@ export const EditableSpan = React.memo(function (props: EditableSpanPropsType) {
         setName(e.currentTarget.value)
     }
 
+    const onblurHandler = () => {
+        setEditMode(false)
+    }
+
     return editMode
         ? <div className={style.inputBox}>
-            <input value={name} onChange={changeName} autoFocus/>
-            <CommonButton onClick={activateViewMode} children={'SAVE'}/>
+            <input value={name} onChange={changeName} autoFocus onBlur={onblurHandler}/>
+            <CommonButton onMouseDown={activateViewMode} children={'SAVE'}/>
         </div>
         : <div className={style.profileNameBox} onClick={activateEditMode}>
             <span className={style.profileName}>{props.value}</span>

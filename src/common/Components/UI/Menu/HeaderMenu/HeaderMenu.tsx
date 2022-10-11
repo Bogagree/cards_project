@@ -12,7 +12,7 @@ import {useAppDispatch, useAppSelector} from '../../../../../app/store';
 import {Path} from '../../../../Enum/path';
 import {logoutTC} from '../../../../../features/auth/auth-reducer';
 import {OptionalMenu} from '../OptionalMenu/OptionalMenu';
-import avatar from '../../../../../assets/img/avatar.png';
+import avatar from '../../../../../assets/img/defaultAvatar.png';
 
 export const HeaderMenu = () => {
 
