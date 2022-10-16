@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import Avatar from '@mui/material/Avatar/Avatar';
 import Typography from '@mui/material/Typography/Typography';
@@ -12,13 +12,19 @@ import {useAppDispatch, useAppSelector} from '../../../../../app/store';
 import {Path} from '../../../../Enum/path';
 import {logoutTC} from '../../../../../features/auth/auth-reducer';
 import {OptionalMenu} from '../OptionalMenu/OptionalMenu';
-import avatar from '../../../../../assets/img/defaultAvatar.png';
+import defaultAvatar from '../../../../../assets/img/defaultAvatar.png';
 
 export const HeaderMenu = () => {
 
-    const navigate = useNavigate();
-    const dispatch = useAppDispatch();
-    const userName = useAppSelector(state => state.auth.user.name);
+    const navigate = useNavigate()
+    const dispatch = useAppDispatch()
+    const user = useAppSelector(state => state.auth.user)
+
+    const [isAvaBroken, setIsAvaBroken] = useState(false)
+
+    const errorHandler = () => {
+        setIsAvaBroken(true)
+    }
 
     const menuItems = [
         {
@@ -40,9 +46,9 @@ export const HeaderMenu = () => {
 
     return (
         <div className={styles.container}>
-            <Typography className={styles.userName}>{userName}</Typography>
+            <Typography className={styles.userName}>{user.name}</Typography>
             <OptionalMenu menuItems={menuItems}>
-                <Avatar alt="avatar" src={avatar} className={styles.avatar}/>
+                <Avatar alt="avatar" src={isAvaBroken ? defaultAvatar : user.avatar} className={styles.avatar} onError={errorHandler}/>
             </OptionalMenu>
         </div>
     )

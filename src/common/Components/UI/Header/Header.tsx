@@ -16,20 +16,15 @@ export const Header = () => {
         navigate(Path.LOGIN)
     }
 
-    const onclickHandler = () => {
-
-    };
-
     return (
         <div className={style.header}>
             <img src={logo} alt="incubator logo" className={style.logo}/>
 
             <div>
                 {isLogged
-                    ? <div className={style.headerUser} onClick={onclickHandler}>
+                    ? <div className={style.headerUser}>
                         <HeaderMenu/>
                     </div>
-
                     : <CommonButton onClick={signIntHandler} children={'Sign in'}/>
                 }
             </div>
