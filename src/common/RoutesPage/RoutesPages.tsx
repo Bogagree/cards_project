@@ -55,6 +55,7 @@ export const RoutesPage = () => {
         {/*{routes.map(({path, component}) => (*/}
         {/*    <Route key={path} path={path} element={component}/>*/}
         {/*))}*/}
+
         <Route path={'*'} element={<Error404/>}/>
         <Route path={'/'} element={<Navigate to={Path.LOGIN}/>}/>
         <Route path={Path.LOGIN} element={<Login/>}/>

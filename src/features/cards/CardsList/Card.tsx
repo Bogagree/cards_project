@@ -37,12 +37,9 @@ export const Card: React.FC<PropsType> = ({cardData, userId}) => {
     }
 
     const gr = Math.floor(cardData.grade * 20)
-    console.log(gr)
 
     return (
-        <TableRow
-            sx={{'&:last-child td, &:last-child th': {border: 0}}}
-        >
+        <TableRow sx={{'&:last-child td, &:last-child th': {border: 0}}}>
             <TableCell component="th" scope="row">{cardData.question}</TableCell>
             <TableCell align="center">{cardData.answer}</TableCell>
             <TableCell align="center">{getDate(cardData.updated)}</TableCell>

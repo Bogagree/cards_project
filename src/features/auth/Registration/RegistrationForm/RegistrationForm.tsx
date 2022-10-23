@@ -49,7 +49,6 @@ export const RegistrationForm = () => {
         },
 
         onSubmit: values => {
-            console.log('values: ', values)
             const data = {email:values.email, password:values.password}
             dispatch(registrationTC(data))
             formik.resetForm()

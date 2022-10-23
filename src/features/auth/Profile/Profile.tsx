@@ -77,6 +77,7 @@ export const Profile = () => {
                     <BackArrowButton path={Path.PACKS} title={'Back to Packs list'}/>
 
                     <div className={style.profileBox}>
+
                         <h2 className={style.profileTitle}>Personal Information</h2>
                         <div className={style.profileAvatarBox}>
                             <img className={style.profileAvatar} src={isAvaBroken ? defaultAvatar : user.avatar}
@@ -84,12 +85,14 @@ export const Profile = () => {
                             <div className={style.photoButton} onClick={selectFileHandler}>
                                 <img src={photoicon} alt="photoicon"/>
                             </div>
+
                             <input style={{display: 'none'}}
                                    ref={inputRef}
                                    type="file"
                                    accept="image/*"
                                    onChange={uploadHandler}
                             />
+
                         </div>
                         <EditableSpan value={user.name} onChange={changeUser}/>
                         <div className={style.profileEmail}>{user.email}</div>

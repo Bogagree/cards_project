@@ -16,10 +16,11 @@ export const PacksList: React.FC = () => {
                 <Table sx={{minWidth: 650}} aria-label="simple table">
                     <TableHead className={styles.tableHead}>
                         <TableRow>
+                            <TableCell align='center'>Cover</TableCell>
                             <TableCell>Pack Name</TableCell>
-                          {['Cards Count', 'Last Update', 'Created By', 'Actions'].map( cell =>
-                              <TableCell key={cell} align="center">{cell}</TableCell>
-                          )}
+                            {['Cards Count', 'Last Update', 'Created By', 'Actions'].map(cell =>
+                                <TableCell key={cell} align="center">{cell}</TableCell>
+                            )}
                         </TableRow>
                     </TableHead>
 

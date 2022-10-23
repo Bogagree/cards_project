@@ -3,7 +3,7 @@ import style from "./Cards.module.css";
 import {Search} from "../../common/Components/Tools/Search/Search";
 import {BackArrowButton} from "../../common/Components/UI/Buttons/BackArrowButton/BackArrowButton";
 import {Path} from "../../common/Enum/path";
-import {CardsList} from "./cardsList/CardsList";
+import {CardsList} from "./CardsList/CardsList";
 import {useAppDispatch, useAppSelector} from "../../app/store";
 import {getCardsTC} from "./cards-reducer";
 import {CommonButton} from "../../common/Components/UI/Buttons/Button/CommonButton";

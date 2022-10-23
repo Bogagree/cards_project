@@ -23,14 +23,12 @@ export const CardsList: React.FC<PropsType> = ({cardsList}) => {
                   <TableRow>
                     <TableCell>Question</TableCell>
                     <TableCell align="center">Answer</TableCell>
-                    <TableCell
-                      align="center">
-                      Last Update
-                    </TableCell>
+                    <TableCell align="center">Last Update</TableCell>
                     <TableCell align="center">Grade</TableCell>
                     {packUserId === userId && <TableCell align="center"></TableCell>}
                   </TableRow>
                 </TableHead>
+
                 <TableBody>
                   {cardsList.map((item) => (
                     <Card

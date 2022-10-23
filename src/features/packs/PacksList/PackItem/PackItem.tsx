@@ -57,6 +57,7 @@ export const PackItem: React.FC<PropsType> = React.memo(({packData}) => {
 
     return (
         <TableRow key={packData._id} sx={{'&:last-child td, &:last-child th': {border: 0}}}>
+            <TableCell align="center">COVER</TableCell>
             <TableCell className={styles.tablePackName} onClick={handleGoToPack}>{packData.name}</TableCell>
             <TableCell align="center">{packData.cardsCount}</TableCell>
             <TableCell align="center">{getDate(packData.updated)}</TableCell>

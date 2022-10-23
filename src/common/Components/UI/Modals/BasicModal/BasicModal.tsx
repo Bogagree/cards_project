@@ -1,7 +1,6 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
 import {ReactNode} from 'react';
+import Modal from '@mui/material/Modal';
 import s from './BasicModal.module.css'
 import cross from '../../../../../assets/icons/cross.svg';
 
